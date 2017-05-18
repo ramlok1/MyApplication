@@ -17,7 +17,7 @@
         android:gravity="center"
         android:id="@+id/txtTituloScreen1"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="19dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -34,11 +34,13 @@
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/logo" android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/txtTituloScreen2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/logo_splash" />
 
     <TextView
         android:layout_width="wrap_content"
