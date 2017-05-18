@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GoNatural Survey</string>
+    <string name="nombre">Nombre:</string>
+    <string name="hotel">Hotel:</string>
+    <string name="email">E-mail:</string>
+    <string name="titulo">Gracias por promocionarnos información acerca de su experiencia</string>
+
+    <string-array name="testarray">
+        <item>José Perez Eleazar</item>
+        <item>Pedro Henrique</item>
+        <item>Julio da Silva</item>
+        <item>Pedro Pedroza</item>
+        <item>Miguel Hernández</item>
+    </string-array>
+    <string name="title_activity_no_show">NoShow</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:background="#eeeeee"
+    tools:context="com.example.mobilesdblack.ejemplo2.EncuestaAgregarFolio">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/lblFecha">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="ALTA DE ORDEN DE SERVICIO"
+            android:id="@+id/lblWizard1"
+            android:textStyle="bold"
+            android:background="#2f3958"
+            android:textColor="#ffffff"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ingrese el número de la orden de servicio:"
+            android:id="@+id/txtEncuestasRestantes"
+            android:layout_marginTop="25dp"
+            android:textColor="#6E6E6E"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:layout_below="@+id/lblWizard1"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="phone"
+            android:id="@+id/txtFolio"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:textColor="#000000"
+            android:textCursorDrawable="@null"
+            android:background="@drawable/edittextstyle"
+            android:layout_toLeftOf="@+id/btn_buscarFolio"
+            android:layout_alignLeft="@+id/txtEncuestasRestantes"
+            android:layout_alignStart="@+id/txtEncuestasRestantes"
+            android:layout_alignTop="@+id/btn_buscarFolio"
+            android:layout_alignBottom="@+id/btn_buscarFolio" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:text="BUSCAR"
+            android:id="@+id/btn_buscarFolio"
+            android:textSize="25dp"
+            android:textColor="#ffffff"
+            android:background="#61a6dd"
+            android:layout_below="@+id/txtEncuestasRestantes"
+            android:layout_alignRight="@+id/txtEncuestasRestantes"
+            android:layout_alignEnd="@+id/txtEncuestasRestantes" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/txtGuia"
+            android:textSize="30dp"
+            android:gravity="left"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/lblGuiaCupon"
+            android:layout_toRightOf="@+id/lblGuiaCupon"
+            android:layout_alignTop="@+id/lblGuiaCupon"
+            android:layout_above="@+id/txtVehiculo" />
+
+        <Button
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:text="INICIAR ORDEN DE SERVICIO"
+            android:id="@+id/btnCancelarCambioCupon"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:background="#61a6dd"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
+            android:layout_alignLeft="@+id/txtFolio"
+            android:layout_alignStart="@+id/txtFolio"
+            android:layout_alignRight="@+id/btn_buscarFolio"
+            android:layout_alignEnd="@+id/btn_buscarFolio" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/txtVehiculo"
+            android:textSize="30dp"
+            android:gravity="left"
+            android:layout_alignTop="@+id/lblNuevoCupon"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/txtGuia"
+            android:layout_alignStart="@+id/txtGuia"
+            android:layout_above="@+id/txtTransporte" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/txtTransporte"
+            android:textSize="30dp"
+            android:gravity="left"
+            android:layout_above="@+id/txtOtro"
+            android:layout_toRightOf="@+id/lblObservaciones"
+            android:layout_alignRight="@+id/txtOtro"
+            android:layout_alignEnd="@+id/txtOtro"
+            android:layout_alignTop="@+id/lblObservaciones" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/txtOtro"
+            android:textColor="#000000"
+            android:textSize="30dp"
+            android:gravity="left"
+            android:layout_alignTop="@+id/lblOrdenServicioLabel"
+            android:layout_toRightOf="@+id/lblOrdenServicioLabel"
+            android:layout_alignRight="@+id/txtVehiculo"
+            android:layout_alignEnd="@+id/txtVehiculo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Vehículo:"
+            android:id="@+id/lblNuevoCupon"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/lblGuiaCupon"
+            android:layout_alignLeft="@+id/txtFolio"
+            android:layout_alignStart="@+id/txtFolio"
+            android:layout_marginLeft="44dp"
+            android:layout_marginStart="44dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Guía:"
+            android:id="@+id/lblGuiaCupon"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/lblNuevoCupon"
+            android:layout_alignEnd="@+id/lblNuevoCupon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Transportadora:"
+            android:id="@+id/lblObservaciones"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:gravity="right"
+            android:layout_marginTop="26dp"
+            android:layout_below="@+id/lblNuevoCupon"
+            android:layout_toLeftOf="@+id/txtVehiculo"
+            android:layout_toStartOf="@+id/txtVehiculo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Orden de Servicio:"
+            android:id="@+id/lblOrdenServicioLabel"
+            android:textColor="#6E6E6E"
+            android:textSize="30dp"
+            android:gravity="right"
+            android:layout_above="@+id/btnCancelarCambioCupon"
+            android:layout_alignRight="@+id/lblObservaciones"
+            android:layout_alignEnd="@+id/lblObservaciones"
+            android:layout_marginBottom="27dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/lblFecha"
+        android:background="#2f3958"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

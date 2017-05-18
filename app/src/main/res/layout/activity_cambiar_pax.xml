@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:background="#eeeeee"
+    tools:context="com.example.mobilesdblack.ejemplo2.CambiarPAX">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/lblFecha">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="CAMBIAR NUMERO DE PAX"
+            android:id="@+id/lblWizard1"
+            android:textStyle="bold"
+            android:background="#2f3958"
+            android:textColor="#ffffff"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:id="@+id/txtNumInfantes"
+            android:textSize="35dp"
+            android:textColor="#6E6E6E"
+            android:gravity="center"
+            android:background="@drawable/edittextstyle"
+            android:layout_alignBottom="@+id/plusInfantes"
+            android:layout_toRightOf="@+id/plusInfantes"
+            android:layout_toEndOf="@+id/plusInfantes" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/minusInfantes"
+            android:onClick="minusInfantes"
+            android:src="@drawable/minus"
+            android:layout_alignBottom="@+id/txtNumInfantes"
+            android:layout_toRightOf="@+id/txtNumInfantes"
+            android:layout_toEndOf="@+id/txtNumInfantes" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/minusNinos"
+            android:onClick="minusNinos"
+            android:src="@drawable/minus"
+            android:layout_alignBottom="@+id/txtNumNinos"
+            android:layout_toRightOf="@+id/txtNumNinos"
+            android:layout_toEndOf="@+id/txtNumNinos" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/minusAdultos"
+            android:onClick="minusAdultos"
+            android:src="@drawable/minus"
+            android:layout_alignBottom="@+id/txtNumAdultos"
+            android:layout_toRightOf="@+id/txtNumAdultos"
+            android:layout_toEndOf="@+id/txtNumAdultos" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Infantes:"
+            android:id="@+id/textView8"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:gravity="right"
+            android:layout_alignBottom="@+id/minusNinos"
+            android:layout_alignRight="@+id/btnCambiarPAX"
+            android:layout_alignEnd="@+id/btnCambiarPAX"
+            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Cupón"
+            android:id="@+id/lblGuiaCupon"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:gravity="right"
+            android:layout_marginRight="58dp"
+            android:layout_marginEnd="58dp"
+            android:layout_alignBaseline="@+id/txtCupon"
+            android:layout_alignBottom="@+id/txtCupon"
+            android:layout_toLeftOf="@+id/btnCambiarPAX"
+            android:layout_toStartOf="@+id/btnCambiarPAX" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:id="@+id/txtNumAdultos"
+            android:textSize="35dp"
+            android:textColor="#6E6E6E"
+            android:gravity="center"
+            android:background="@drawable/edittextstyle"
+            android:layout_alignBottom="@+id/plusAdultos"
+            android:layout_toRightOf="@+id/plusAdultos"
+            android:layout_toEndOf="@+id/plusAdultos" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:text="Cancelar"
+            android:id="@+id/btnCancelarCambioCupon"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:background="#dd4262"
+            android:onClick="CancelarNoShow"
+            android:layout_marginBottom="38dp"
+            android:layout_marginLeft="291dp"
+            android:layout_marginStart="291dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="---------"
+            android:id="@+id/txtCupon"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:textAlignment="center"
+            android:layout_marginTop="36dp"
+            android:layout_below="@+id/lblWizard1"
+            android:layout_toRightOf="@+id/minusAdultos"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:layout_alignRight="@+id/minusNinos"
+            android:layout_alignEnd="@+id/minusNinos" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Adultos:"
+            android:id="@+id/lblNuevoCupon"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:gravity="right"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignBaseline="@+id/textView18"
+            android:layout_alignBottom="@+id/textView18"
+            android:layout_toLeftOf="@+id/plusAdultos"
+            android:layout_toStartOf="@+id/plusAdultos" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/plusAdultos"
+            android:onClick="plusAdultos"
+            android:src="@drawable/plus"
+            android:layout_alignBottom="@+id/lblNuevoCupon"
+            android:layout_toLeftOf="@+id/lblGuiaCupon"
+            android:layout_toStartOf="@+id/lblGuiaCupon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Niños:"
+            android:id="@+id/textView18"
+            android:textSize="30dp"
+            android:textColor="#6E6E6E"
+            android:gravity="right"
+            android:layout_marginTop="175dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginStart="45dp"
+            android:layout_below="@+id/txtCupon"
+            android:layout_toRightOf="@+id/minusAdultos"
+            android:layout_toEndOf="@+id/minusAdultos" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/plusNinos"
+            android:onClick="plusNinos"
+            android:src="@drawable/plus"
+            android:layout_alignBottom="@+id/textView18"
+            android:layout_toRightOf="@+id/textView18"
+            android:layout_toEndOf="@+id/textView18"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:id="@+id/txtNumNinos"
+            android:textSize="35dp"
+            android:textColor="#6E6E6E"
+            android:gravity="center"
+            android:background="@drawable/edittextstyle"
+            android:layout_alignBottom="@+id/plusNinos"
+            android:layout_toRightOf="@+id/plusNinos"
+            android:layout_toEndOf="@+id/plusNinos" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/plusInfantes"
+            android:onClick="plusInfantes"
+            android:src="@drawable/plus"
+            android:layout_alignBottom="@+id/textView8"
+            android:layout_alignLeft="@+id/textView8"
+            android:layout_alignStart="@+id/textView8"
+            android:layout_marginLeft="127dp"
+            android:layout_marginStart="127dp" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:text="CAMBIAR NUM. PAX"
+            android:id="@+id/btnCambiarPAX"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:background="#1e9267"
+            android:onClick="CambiarPAX"
+            android:layout_marginLeft="108dp"
+            android:layout_marginStart="108dp"
+            android:layout_alignBottom="@+id/btnCancelarCambioCupon"
+            android:layout_toRightOf="@+id/btnCancelarCambioCupon"
+            android:layout_toEndOf="@+id/btnCancelarCambioCupon"
+            android:layout_alignTop="@+id/btnCancelarCambioCupon" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/lblFecha"
+        android:background="#2f3958"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

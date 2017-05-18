@@ -1,0 +1,249 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.mobilesdblack.ejemplo2.MeetingPoint">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/linearLayout2">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/txtEncuestasRestantes"
+            android:layout_above="@+id/lstCupones"
+            android:weightSum="12">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1.3"
+                android:layout_height="wrap_content"
+                android:text="CUPON"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:id="@+id/lblnumCuponTitle"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:text="A"
+                android:id="@+id/lblAdultosTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:text="N"
+                android:id="@+id/lblNinosTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:text="I"
+                android:id="@+id/lblITitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:text="IC"
+                android:id="@+id/lblIcentivoTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1.3"
+                android:layout_height="wrap_content"
+                android:text="NOMBRE"
+                android:id="@+id/lblHuespedTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1.3"
+                android:layout_height="wrap_content"
+                android:text="HOTEL"
+                android:id="@+id/lbl_HotelTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="HAB"
+                android:id="@+id/lbl_HabitacionTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:id="@+id/lbl_IdiomaTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content"
+                android:text="Pick Up LOBBY"
+                android:id="@+id/lbl_PickuplobbyTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="AGENCIA"
+                android:id="@+id/lbl_AgenciaTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="REP"
+                android:id="@+id/lbl_RepresentanteTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1.6"
+                android:layout_height="wrap_content"
+                android:text="DETALLES"
+                android:id="@+id/lbl_ObservacionesTitle"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#2f3958"
+                android:textColor="#ffffff"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="---"
+            android:id="@+id/txtEncuestasRestantes"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="CUPONES RESTANTES:"
+            android:id="@+id/lblEncuestasRestantes"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/txtEncuestasRestantes"
+            android:layout_toStartOf="@+id/txtEncuestasRestantes" />
+
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lstCupones"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/lblOrdenServicio"
+            android:layout_marginTop="25dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Obtener Go Show"
+            android:id="@+id/lblOrdenServicio"
+            android:onClick="AbrirConfiguraciones"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/lblFecha"
+        android:background="#2f3958"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</FrameLayout>
+
+

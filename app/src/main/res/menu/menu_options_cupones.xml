@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/mniABordo" android:title="Abordar"/>
+    <item android:id="@+id/mniNoShow" android:title="Marcar No Show"/>
+    <item android:id="@+id/mniCambiarCupon" android:title="Cambiar Número de Cupón"/>
+    <item android:id="@+id/mniCambioPasajeros" android:title="Cambio de pasajeros"/>
+    <item android:id="@+id/mniAbordarSinCupon" android:title="Abordar sin cupón"/>
+    <item android:id="@+id/mniRegresarStatus" android:title="Regresar Estado"/>
+    <item android:id="@+id/mniVerObservaciones" android:title="Ver observaciones"/>
+
+</menu>
