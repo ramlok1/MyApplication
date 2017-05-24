@@ -52,13 +52,13 @@ public class Operacion extends AppCompatActivity {
     EditText txtSearch;
 
     ListView Lista;
-    TextView txtEncuestasRestantes;
+    TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans;
 
     ImageView imgEncuesta;
 
     String numero_cupon = "";
 
-    String idOpVehi;
+    String idOpVehi,guia,trans;
 
     variables_publicas variables = new variables_publicas();
     private Integer versionBD = variables.version_local_database;
@@ -74,9 +74,13 @@ public class Operacion extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         idOpVehi = b.getString("idOpVehi");
+        guia = b.getString("guia");
+        trans = b.getString("trans");
 
         Inicializar();
-
+        lblguia.setText(lblguia.getText()+" "+guia);
+        lblorden.setText(lblorden.getText()+" "+idOpVehi);
+        lbltrans.setText(trans);
         if(!idOpVehi.equals("")){
             Inicio();
         }
@@ -84,7 +88,7 @@ public class Operacion extends AppCompatActivity {
             CargaCuponesLocales();
             visualiza_cupones();
         }
-
+        cabecera();
         txtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -217,6 +221,9 @@ public class Operacion extends AppCompatActivity {
     private void Inicializar(){
 
         txtEncuestasRestantes = (TextView)findViewById(R.id.txtEncuestasRestantes);
+        lblguia = (TextView)findViewById(R.id.lblguia);
+        lblorden = (TextView)findViewById(R.id.lblorden);
+        lbltrans = (TextView)findViewById(R.id.lblcamioneta);
         imgEncuesta = (ImageView)findViewById(R.id.imgEncuesta);
         Lista = (ListView) findViewById(R.id.lstCupones);
         this.registerForContextMenu(Lista);
@@ -643,10 +650,15 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
             try{
 
-            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status from cupones where Habilitado = 1 order by (status = 13) desc,  status", null); //where Habilitado = 1
+            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status from cupones where Habilitado = 1 order by (status = 13) desc,  status", null);
+
+
 
             data = null;
             data = new ArrayList<Entity_CuponesHoja>();
+
+
+
 
             if (c != null ) {
                 if  (c.moveToFirst()) {
@@ -696,7 +708,7 @@ public class Operacion extends AppCompatActivity {
     private class TareaWSObtenerCupones extends AsyncTask<String,Integer,Boolean> {
 
         private Entity_CuponesHoja[] CuponesHoja;
-        ProgressDialog progressDialog = new ProgressDialog(Operacion.this,R.style.AppTheme_Dark_Dialog);
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -795,6 +807,7 @@ public class Operacion extends AppCompatActivity {
             {
                 visualiza_cupones();
                 progressDialog.dismiss();
+
 
             }
             else
@@ -1346,6 +1359,28 @@ public class Operacion extends AppCompatActivity {
         txtEncuestasRestantes.setText("" + Pendientes);
         imgEncuesta.setEnabled(true);
         imgEncuesta.setVisibility(View.VISIBLE);
+    }
+
+    private void cabecera(){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+
+                "cuestionarios", null, versionBD);
+
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+        Cursor v = bd.rawQuery("select idopveh, guia, camioneta, operador from vehiculo", null);
+
+
+
+
+        if (v != null ) {
+            if (v.moveToFirst()) {
+                lblorden.setText(Integer.toString(v.getInt(v.getColumnIndex("idopveh"))));
+                lblguia.setText(v.getString(v.getColumnIndex("guia")));
+                lbltrans.setText(v.getString(v.getColumnIndex("camioneta")));
+                //v.getString(v.getColumnIndex("operador"));
+            }
+        }
     }
 
 }

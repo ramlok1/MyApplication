@@ -9,54 +9,43 @@
     android:background= "@drawable/fondo">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="BIENVENIDO"
-        android:textSize="80sp"
-        android:gravity="center"
         android:id="@+id/txtTituloScreen1"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="19dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="A TU APLICACIÓN DE ENCUESTAS"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:id="@+id/txtTituloScreen2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal|top"
-        android:layout_below="@+id/txtTituloScreen1"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="19dp"
+        android:gravity="center"
+        android:text="BIENVENIDO"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="80sp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTituloScreen2"
+        android:layout_alignTop="@+id/txtTituloScreen1"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/logo_splash" />
 
     <TextView
+        android:id="@+id/txtPowered"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Powered by MobileSD    ©2016 Todos los derechos reservados"
-        android:id="@+id/txtPowered"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:background="#2f3958"
-        android:scrollbarSize="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:background="#2f3958"
+        android:gravity="center"
+        android:scrollbarSize="30dp"
+        android:text="Powered by MobileSD    ©2017 Todos los derechos reservados"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
 </RelativeLayout>

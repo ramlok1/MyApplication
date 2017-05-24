@@ -1,5 +1,6 @@
 package com.example.mobilesdblack.ejemplo2;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -103,6 +104,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
 
                     Intent intent_cupon = new Intent(EncuestaAgregarFolio.this,Operacion.class); //tenia WizardMain'
                     intent_cupon.putExtra("idOpVehi",folioString);
+                    intent_cupon.putExtra("guia",txtGuia.getText());
+                    intent_cupon.putExtra("trans",txtTransporte.getText());
                     startActivity(intent_cupon);
                 }
                 else{
@@ -121,15 +124,14 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
 
         SQLiteDatabase bd = admin.getWritableDatabase();
 
-        ContentValues registro = new ContentValues();
+        ContentValues cv = new ContentValues();
+        cv.put("idopveh", idOpVehi);
+        cv.put("guia", txtGuia.getText().toString());
+        cv.put("camioneta", txtTransporte.getText().toString());
+        cv.put("operador", txtGuia.getText().toString());
 
-        registro.put("idOpVehi", idOpVehi);
-        registro.put("habilitado", Habilitado);
-        registro.put("enviado", enviado);
-        registro.put("idGuia", idGuia);
 
-        // los inserto en la base de datos
-        bd.insert("encuesta",null, registro);
+        bd.insert("vehiculo", null, cv);
 
         bd.close();
 
@@ -154,6 +156,16 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
     private class TareaWSObtenerOrdenServicio extends AsyncTask<String,Integer,Boolean> {
 
         private Entity_OrdenServicio[] OrdenServicio;
+        ProgressDialog progressDialog = new ProgressDialog(EncuestaAgregarFolio.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Buscando información...");
+            progressDialog.show();
+        }
 
         protected Boolean doInBackground(String... params) {
 
@@ -227,6 +239,7 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
 
             if (result)
             {
+                progressDialog.dismiss();
                 //Rellenamos la lista con los nombres de los clientes
                 final String[] datos = new String[OrdenServicio.length];
 

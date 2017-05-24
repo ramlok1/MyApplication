@@ -23,11 +23,11 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/txtEncuestasRestantes"
             android:weightSum="12"
-            android:layout_above="@+id/textView17"
-            android:id="@+id/linearLayout3">
+            android:id="@+id/linearLayout3"
+            android:layout_below="@+id/lblguia"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:layout_width="0px"
@@ -37,7 +37,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:id="@+id/lblnumCuponTitle"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -49,7 +49,7 @@
                 android:id="@+id/lblAdultosTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -61,7 +61,7 @@
                 android:id="@+id/lblNinosTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -73,7 +73,7 @@
                 android:id="@+id/lblITitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -85,7 +85,7 @@
                 android:id="@+id/lblIcentivoTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -97,7 +97,7 @@
                 android:id="@+id/lblHuespedTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center"/>
 
@@ -109,7 +109,7 @@
                 android:id="@+id/lbl_HotelTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -121,7 +121,7 @@
                 android:id="@+id/lbl_HabitacionTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center"/>
 
@@ -133,7 +133,7 @@
                 android:id="@+id/lbl_IdiomaTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -145,7 +145,7 @@
                 android:id="@+id/lbl_PickuplobbyTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -157,7 +157,7 @@
                 android:id="@+id/lbl_AgenciaTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -169,7 +169,7 @@
                 android:id="@+id/lbl_RepresentanteTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -181,7 +181,7 @@
                 android:id="@+id/lbl_ObservacionesTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -217,25 +217,27 @@
 
 
         <ListView
+            android:id="@+id/lstCupones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lstCupones"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
+            android:layout_above="@+id/textView19"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/lblOrdenServicio"
-            android:layout_marginTop="35dp"
-            android:layout_above="@+id/textView19" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lblguia"
+            android:layout_marginTop="25dp" />
 
         <TextView
+            android:id="@+id/lblOrdenServicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView21"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/textView21"
             android:text="ÓRDEN DE SERVICIO"
-            android:id="@+id/lblOrdenServicio"
-            android:textSize="35dp"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/linearLayout3" />
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -272,9 +274,9 @@
             android:textColor="#6E6E6E"
             android:textSize="20dp"
             android:gravity="center"
-            android:layout_below="@+id/linearLayout3"
             android:layout_toRightOf="@+id/textView19"
-            android:layout_toEndOf="@+id/textView19" />
+            android:layout_toEndOf="@+id/textView19"
+            android:layout_alignTop="@+id/textView22" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -285,9 +287,9 @@
             android:textColor="#6E6E6E"
             android:textSize="20dp"
             android:gravity="center"
-            android:layout_below="@+id/linearLayout3"
             android:layout_toRightOf="@+id/textView21"
-            android:layout_toEndOf="@+id/textView21" />
+            android:layout_toEndOf="@+id/textView21"
+            android:layout_alignTop="@+id/textView24" />
 
         <TextView
         android:layout_width="wrap_content"
@@ -298,9 +300,9 @@
         android:textColor="#6E6E6E"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView23"
-        android:layout_toEndOf="@+id/textView23" />
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/textView23"
+            android:layout_toEndOf="@+id/textView23" />
 
         <ImageView
             android:layout_width="45dp"
@@ -369,6 +371,16 @@
             android:layout_toRightOf="@+id/textView20"
             android:layout_toEndOf="@+id/textView20" />
 
+        <TextView
+            android:id="@+id/lblguia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/lblOrdenServicio"
+            android:layout_alignStart="@+id/lblOrdenServicio"
+            android:layout_below="@+id/lblOrdenServicio"
+            android:text="Guia:"
+            android:textSize="20sp" />
+
     </RelativeLayout>
 
     <TextView
@@ -376,7 +388,7 @@
         android:layout_height="60dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/lblFecha"
-        android:background="#2f3958"
+        android:background="#ee7d00"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -437,5 +449,26 @@
         android:layout_below="@+id/lblFecha"
         android:layout_toRightOf="@+id/txtsearch"
         android:layout_toEndOf="@+id/txtsearch" />
+
+    <TextView
+        android:id="@+id/lblorden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N°"
+        android:textSize="22sp"
+        android:layout_alignBaseline="@+id/txtsearch"
+        android:layout_alignBottom="@+id/txtsearch"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/lblcamioneta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="-5dp"
+        android:text="xxxxxxx"
+        android:textSize="20sp"
+        android:layout_alignBottom="@+id/imgCancelarFiltro"
+        android:layout_alignLeft="@+id/lblorden"
+        android:layout_alignStart="@+id/lblorden" />
 
 </RelativeLayout>

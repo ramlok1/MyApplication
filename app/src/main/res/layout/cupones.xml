@@ -1,173 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:weightSum="12">
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="1.3"
-        android:layout_height="fill_parent"
-        android:text="CUPON"
-        android:id="@+id/lblnumCupon"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
-
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="0.4"
-        android:layout_height="fill_parent"
-        android:text="A"
-        android:id="@+id/lblAdultos"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
-
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="0.4"
-        android:layout_height="fill_parent"
-        android:text="N"
-        android:id="@+id/lblNinos"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
-
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="0.4"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="I"
-        android:id="@+id/lblI"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
+        android:layout_weight="6">
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="0.4"
-        android:layout_height="fill_parent"
-        android:text="IC"
-        android:id="@+id/lblIncentivos"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/lblnumCupon"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.3"
+            android:gravity="center"
+            android:text="CUPON"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="1.5"
-        android:layout_height="fill_parent"
-        android:text="NOMBRE"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:id="@+id/lblHuesped"
-        android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/lblAdultos"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:text="A"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="1.3"
-        android:layout_height="fill_parent"
-        android:text="HOTEL"
-        android:id="@+id/lbl_Hotel"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/lblNinos"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:text="N"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="0.5"
-        android:layout_height="fill_parent"
-        android:text="HAB"
-        android:id="@+id/lbl_Habitacion"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/lblI"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:text="I"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <ImageView
-        android:layout_width="0px"
-        android:layout_weight="0.8"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:id="@+id/lbl_Idioma" />
+        <TextView
+            android:id="@+id/lblIncentivos"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:text="IC"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="1.5"
-        android:layout_height="fill_parent"
-        android:text="Pick Up LOBBY"
-        android:id="@+id/lbl_Pickuplobby"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/lblHuesped"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="NOMBRE"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="1.2"
-        android:layout_height="fill_parent"
-        android:text="AGENCIA"
-        android:id="@+id/lbl_Agencia"
-        android:textColor="#6E6E6E"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/lbl_Hotel"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.3"
+            android:gravity="center"
+            android:text="HOTEL"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="0px"
-        android:layout_weight="1.2"
-        android:layout_height="fill_parent"
-        android:text="REP"
-        android:id="@+id/lbl_Representante"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/lbl_Habitacion"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="HAB"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/lbl_ididioma"
-        android:layout_width="0px"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/lbl_Idioma"
+            android:layout_width="0px"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center" />
 
-    <TextView
-        android:id="@+id/lbl_tour_padre"
-        android:layout_width="0px"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/lbl_Pickuplobby"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="Pick Up LOBBY"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/lbl_id_detalleov"
-        android:layout_width="0px"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/lbl_Agencia"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="AGENCIA"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp" />
 
-    <ImageView
-        android:layout_width="0px"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:id="@+id/lbl_Observaciones"
-        android:layout_height="80dp" />
+        <TextView
+            android:id="@+id/lbl_Representante"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="REP"
+            android:textAlignment="center"
+            android:textSize="20dp" />
 
+        <TextView
+            android:id="@+id/lbl_ididioma"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lbl_tour_padre"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lbl_id_detalleov"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/lbl_Observaciones"
+            android:layout_width="0px"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lorem ipsu"
+            android:textSize="26sp" />
+    </LinearLayout>
 </LinearLayout>

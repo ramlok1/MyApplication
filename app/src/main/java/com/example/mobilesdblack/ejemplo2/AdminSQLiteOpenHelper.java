@@ -26,6 +26,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
         db.execSQL("create table cuestionarios(idCuestionarios integer ,idCategoriaPregunta integer ,nombreCategoriaPregunta text,pregunta text, tipo integer, idIdioma integer, orden_categoria integer,orden_pregunta integer,tour_padre integer )");
 
+        db.execSQL("create table vehiculo (idopveh integer,guia text, camioneta text, operador text,entrada datetime, salida datetime)");
+
         db.execSQL("create table encuesta (idEncuesta integer primary key,idDetalleOpVehi integer, idCupon integer, comentario text, email text,fecha datetime)");
 
         db.execSQL("create table cupones(idDetalleOpVehi integer, numCupon text, Huesped text, numAdultos integer, numNinos integer, numInfantes integer, Incentivos integer, Hotel text, Habitacion text, Idioma text, PickUpLobby text, nombreAgencia text, nombreRepresentante text, Observaciones text, Habilitado bit, status integer,tour_padre integer, ididioma integer )");
@@ -40,6 +42,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
     public void onUpgrade(SQLiteDatabase db, int version1, int version2) {
 
+        db.execSQL("drop table if exists vehiculo");
         db.execSQL("drop table if exists cuestionarios");
         db.execSQL("drop table if exists encuesta");
         db.execSQL("drop table if exists cupones");

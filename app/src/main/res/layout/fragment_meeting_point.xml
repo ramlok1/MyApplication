@@ -33,7 +33,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:id="@+id/lblnumCuponTitle"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -45,7 +45,7 @@
                 android:id="@+id/lblAdultosTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -57,7 +57,7 @@
                 android:id="@+id/lblNinosTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -69,7 +69,7 @@
                 android:id="@+id/lblITitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -81,7 +81,7 @@
                 android:id="@+id/lblIcentivoTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -93,7 +93,7 @@
                 android:id="@+id/lblHuespedTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center"/>
 
@@ -105,7 +105,7 @@
                 android:id="@+id/lbl_HotelTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -117,7 +117,7 @@
                 android:id="@+id/lbl_HabitacionTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center"/>
 
@@ -129,7 +129,7 @@
                 android:id="@+id/lbl_IdiomaTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -141,7 +141,7 @@
                 android:id="@+id/lbl_PickuplobbyTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -153,7 +153,7 @@
                 android:id="@+id/lbl_AgenciaTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -165,7 +165,7 @@
                 android:id="@+id/lbl_RepresentanteTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -177,7 +177,7 @@
                 android:id="@+id/lbl_ObservacionesTitle"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="#2f3958"
+                android:background="#ee7d00"
                 android:textColor="#ffffff"
                 android:textAlignment="center" />
 
@@ -238,7 +238,7 @@
         android:layout_height="60dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/lblFecha"
-        android:background="#2f3958"
+        android:background="#ee7d00"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"

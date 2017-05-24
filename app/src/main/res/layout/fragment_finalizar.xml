@@ -19,7 +19,7 @@
             android:layout_below="@+id/editText6"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:background="#61a6dd"
+            android:background="#808080"
             android:gravity="center"
             android:onClick="EventoFinalizarEncuesta"
             android:text="Finalizar"
