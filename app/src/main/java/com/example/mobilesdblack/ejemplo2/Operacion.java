@@ -50,9 +50,9 @@ import java.util.Set;
 public class Operacion extends AppCompatActivity {
 
     EditText txtSearch;
-
+    List<Entity_CuponesHoja> data;
     ListView Lista;
-    TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans;
+    TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans,lbloperador;
 
     ImageView imgEncuesta;
 
@@ -224,6 +224,7 @@ public class Operacion extends AppCompatActivity {
         lblguia = (TextView)findViewById(R.id.lblguia);
         lblorden = (TextView)findViewById(R.id.lblorden);
         lbltrans = (TextView)findViewById(R.id.lblcamioneta);
+        lbloperador = (TextView)findViewById(R.id.lbloperador);
         imgEncuesta = (ImageView)findViewById(R.id.imgEncuesta);
         Lista = (ListView) findViewById(R.id.lstCupones);
         this.registerForContextMenu(Lista);
@@ -585,7 +586,7 @@ public class Operacion extends AppCompatActivity {
         sincroniza_encuesta();
     }
 
-    List<Entity_CuponesHoja> data;
+
 
     public void CargaCuponesLocalesSearch(String cadena){
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
@@ -650,7 +651,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
             try{
 
-            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status from cupones where Habilitado = 1 order by (status = 13) desc,  status", null);
+            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,hentrada from cupones where Habilitado = 1 order by (status = 13) desc,  status", null);
 
 
 
@@ -1375,9 +1376,10 @@ public class Operacion extends AppCompatActivity {
 
         if (v != null ) {
             if (v.moveToFirst()) {
-                lblorden.setText(Integer.toString(v.getInt(v.getColumnIndex("idopveh"))));
-                lblguia.setText(v.getString(v.getColumnIndex("guia")));
-                lbltrans.setText(v.getString(v.getColumnIndex("camioneta")));
+                lblorden.setText("N° "+Integer.toString(v.getInt(v.getColumnIndex("idopveh"))));
+                lblguia.setText("Guia: "+v.getString(v.getColumnIndex("guia")));
+                lbltrans.setText("Camioneta: "+v.getString(v.getColumnIndex("camioneta")));
+                lbloperador.setText("Operador: "+v.getString(v.getColumnIndex("operador")));
                 //v.getString(v.getColumnIndex("operador"));
             }
         }

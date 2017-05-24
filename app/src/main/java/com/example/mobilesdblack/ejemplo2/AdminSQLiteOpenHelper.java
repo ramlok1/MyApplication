@@ -30,7 +30,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
         db.execSQL("create table encuesta (idEncuesta integer primary key,idDetalleOpVehi integer, idCupon integer, comentario text, email text,fecha datetime)");
 
-        db.execSQL("create table cupones(idDetalleOpVehi integer, numCupon text, Huesped text, numAdultos integer, numNinos integer, numInfantes integer, Incentivos integer, Hotel text, Habitacion text, Idioma text, PickUpLobby text, nombreAgencia text, nombreRepresentante text, Observaciones text, Habilitado bit, status integer,tour_padre integer, ididioma integer )");
+        db.execSQL("create table cupones(idDetalleOpVehi integer, numCupon text, Huesped text, numAdultos integer, numNinos integer, numInfantes integer, Incentivos integer, Hotel text, Habitacion text, Idioma text, PickUpLobby text, nombreAgencia text, nombreRepresentante text, Observaciones text, Habilitado bit, status integer,tour_padre integer, ididioma integer, hentrada datetime,hsalida datetime )");
 
         db.execSQL("create table encuestaDetalle(idEncuestaDetalle integer primary key, idDetalleOpVehi integer,idCupon integer, idCuestionario integer, pregunta text, valor_respuesta integer,  fechaDetalle datetime, enviado bit,email text)");
 

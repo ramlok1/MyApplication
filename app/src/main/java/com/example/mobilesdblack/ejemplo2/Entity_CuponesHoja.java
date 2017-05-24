@@ -28,6 +28,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
     public int tour_padre;
     public int idIdioma;
 
+
     public Entity_CuponesHoja()
     {
         idDetalleOpVehi = 0;
@@ -47,6 +48,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
         status = 0;
         tour_padre = 0;
         idIdioma = 0;
+
     }
 
     public Entity_CuponesHoja(int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma)
@@ -68,6 +70,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
         this.status = status;
         this.tour_padre = tour_padre;
         this.idIdioma = idIdioma;
+
     }
 
     @Override
@@ -109,6 +112,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
             return tour_padre;
             case 16:
                 return idIdioma;
+
 
         }
 

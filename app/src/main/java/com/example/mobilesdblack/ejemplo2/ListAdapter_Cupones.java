@@ -1,14 +1,24 @@
 package com.example.mobilesdblack.ejemplo2;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,6 +26,8 @@ import java.util.List;
  * Created by MobileSD Black on 13/09/2016.
  */
 public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
+    Entity_CuponesHoja p;
+    View v;
 
     private List<Entity_CuponesHoja> lista;
 
@@ -36,7 +48,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View v = convertView;
+         v = convertView;
 
         if (v == null) {
             LayoutInflater vi;
@@ -44,9 +56,12 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             v = vi.inflate(R.layout.cupones, null);
         }
 
-        Entity_CuponesHoja p = getItem(position);
+         p = getItem(position);
 
         if (p != null) {
+
+            Button btnhe = (Button) v.findViewById(R.id.btnhe);
+            Button btnhs = (Button) v.findViewById(R.id.btnhs);
 /*
             String color_background ;
             String color_text ;
@@ -73,7 +88,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
             TextView textdetov = (TextView)v.findViewById(R.id.lbl_id_detalleov);
             textdetov.setText(p.getProperty(0).toString());
-            TextView textView1 = (TextView)v.findViewById(R.id.lblnumCupon);
+             final TextView textView1 = (TextView)v.findViewById(R.id.lblnumCupon);
             //textView1.setBackgroundColor(Color.parseColor(color_background));
             //textView1.setTextColor(Color.parseColor(color_text));
             textView1.setText(p.getProperty(1).toString());
@@ -130,6 +145,13 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             TextView textView12 = (TextView)v.findViewById(R.id.lbl_Representante);
             textView12.setText(p.getProperty(12).toString());
 
+            TextView textView13 = (TextView)v.findViewById(R.id.lblobsgral);
+            textView13.setText(p.getProperty(13).toString());
+
+            TextView lblhe = (TextView) v.findViewById(R.id.lblhe);
+            TextView lblhs = (TextView) v.findViewById(R.id.lblhs);
+
+
             //TextView  textView13 = (TextView)v.findViewById(R.id.lbl_Observaciones);
             //textView13.setBackgroundColor(Color.parseColor(color_background));
 
@@ -155,8 +177,73 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
                     textView14.setImageResource(R.drawable.regresarstatus);
                     break;
             }
+
+            btnhe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
+
+                            "cuestionarios", null, variables_publicas.version_local_database);
+
+                    SQLiteDatabase bd = admin.getWritableDatabase();
+
+                    DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
+                    Date date = new Date();
+
+                    ContentValues vu = new ContentValues();
+                    vu.put("hentrada", dateFormat.format(date));
+                    bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
+                    bd.close();
+                    ListAdapter_Cupones.this.notifyDataSetChanged();
+                }
+            });
+
+
+            btnhs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
+
+                            "cuestionarios", null, variables_publicas.version_local_database);
+
+                    SQLiteDatabase bd = admin.getWritableDatabase();
+
+                    DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
+                    Date date = new Date();
+
+                    ContentValues vu = new ContentValues();
+                    vu.put("hsalida", dateFormat.format(date));
+                    bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
+                    bd.close();
+                    ListAdapter_Cupones.this.notifyDataSetChanged();
+                }
+            });
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
+
+                    "cuestionarios", null, variables_publicas.version_local_database);
+
+            SQLiteDatabase bd = admin.getWritableDatabase();
+
+            Cursor h = bd.rawQuery("select hentrada,hsalida from cupones where numCupon="+p.getProperty(1).toString(), null);
+;
+
+
+
+            if (h != null ) {
+                if (h.moveToFirst()) {
+
+
+                lblhe.setText(h.getString(h.getColumnIndex("hentrada")));
+                    lblhs.setText(h.getString(h.getColumnIndex("hsalida")));
+
+                }
+            }
         }
 
         return v;
+
+
     }
 }
