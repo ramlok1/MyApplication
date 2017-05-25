@@ -651,7 +651,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
             try{
 
-            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,hentrada from cupones where Habilitado = 1 order by (status = 13) desc,  status", null);
+            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,hentrada from cupones  order by (status = 13) desc,  status", null);
 
 
 

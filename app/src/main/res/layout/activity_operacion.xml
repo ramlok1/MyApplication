@@ -315,7 +315,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/lblguia"
+
             android:layout_marginTop="70dp" />
 
         <TextView
@@ -454,14 +454,25 @@
             android:id="@+id/txtsearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/lblguia"
-            android:layout_alignLeft="@+id/lblguia"
-            android:layout_alignStart="@+id/lblguia"
+
             android:ems="10"
             android:hint="Buscar por hotel"
             android:imeOptions="actionDone"
             android:inputType="textPersonName" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_obs_veh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/relativeLayout2"
+        android:layout_alignStart="@+id/relativeLayout2"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_marginLeft="270dp"
+        android:layout_marginStart="270dp"
+        android:textAlignment="center"
+        android:textColor="#6E6E6E"
+        android:textSize="20sp" />
 
 </RelativeLayout>
