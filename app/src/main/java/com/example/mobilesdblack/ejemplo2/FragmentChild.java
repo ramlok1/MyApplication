@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +20,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -40,6 +42,12 @@ public class FragmentChild extends Fragment {
     String childname;
     int tipo, posicion;
     TextView textViewChildName;
+    ViewPager viewPager;
+    Boolean pager=false;
+    View view_parent;
+    int c1=0;
+    int c2=0;
+
 
     @Nullable
     @Override
@@ -49,13 +57,28 @@ public class FragmentChild extends Fragment {
         childname = bundle.getString("data");
         tipo = bundle.getInt("tipo");
         posicion = bundle.getInt("posicion");
+
         View view ;
+        view_parent = inflater.inflate(R.layout.fragment_parent, container, false);
         View view_preguntas = inflater.inflate(R.layout.fragment_child, container, false);
+        viewPager = (ViewPager) getActivity().findViewById(R.id.my_viewpager);
 
 
         if (tipo == 0){
+            pager=false;
             view = inflater.inflate(R.layout.fragment_inicio, container, false);
+
             final EditText txt_email = (EditText) view.findViewById(R.id.txt_email);
+            final Button btn_next = (Button) view.findViewById(R.id.btn_next);
+
+            btn_next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+                    pager=true;
+
+                }
+            });
             txt_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
@@ -70,7 +93,12 @@ public class FragmentChild extends Fragment {
                 }
             });
             view.setTag("inicio" + posicion);
-            return view;
+
+            if(pager) {
+                return view_parent;
+            }else{
+                return view;
+            }
         }
         else if (tipo == -1){
             view = inflater.inflate(R.layout.fragment_finalizar, container, false);
@@ -78,6 +106,8 @@ public class FragmentChild extends Fragment {
             return view;
         }
         else {
+            pager=false;
+
             getIDs(view_preguntas);
             view_preguntas.setTag("medio" + posicion);
             LinearLayout layout_principal = (LinearLayout) view_preguntas.findViewById(R.id.lay_v_child);
@@ -93,6 +123,7 @@ public class FragmentChild extends Fragment {
                     if (c.moveToFirst()) {
 
                         do {
+                            c1++;
                             contenedor = new LinearLayout(getActivity());
                             contenedor.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100));
                             contenedor.setOrientation((LinearLayout.HORIZONTAL));
@@ -121,6 +152,7 @@ public class FragmentChild extends Fragment {
                                 if (d.moveToFirst()) {
                                     do {
                                         rbar.setRating(d.getInt(d.getColumnIndex("valor_respuesta")));
+                                        c2++;
 
                                     } while (d.moveToNext());
                                 }
@@ -146,7 +178,7 @@ public class FragmentChild extends Fragment {
                                             } while (d.moveToNext());
                                         } else {
 
-
+                                            c2++;
                                             ContentValues cv = new ContentValues();
                                             cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
                                             cv.put("idCupon", variables_publicas.idcupon);
@@ -177,12 +209,28 @@ public class FragmentChild extends Fragment {
                 String error = e.getMessage().toString();
 
             }
+            final Button btn_nextc = (Button) view_preguntas.findViewById(R.id.btn_nextc);
+            btn_nextc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(c1!=c2) {
+                    Toast.makeText(getActivity(),"Please answer all questions",Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                        pager = true;
+                    }
+
+                }
+            });
         }
 
 
-
-        //setEvents();
-        return view_preguntas;
+        if(pager) {
+            return view_parent;
+        }else{
+            return view_preguntas;
+        }
     }
 
     private void getIDs(View view) {

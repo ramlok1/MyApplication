@@ -1,11 +1,13 @@
 package com.example.mobilesdblack.ejemplo2;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +24,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.net.ConnectException;
 
 public class AbordarSinCupon extends AppCompatActivity {
-
+    ProgressDialog progressDialog ;
     int NumAdultos = 0, NumNinos = 0, NumInfantes = 0, idDetalleOpVehi = 0;
     String cupon = "", sinCuponAutoriza = "", obs = "";
     Boolean pasajero_abordo = false;
@@ -42,7 +44,7 @@ public class AbordarSinCupon extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abordar_sin_cupon);
-
+        progressDialog = new ProgressDialog(AbordarSinCupon.this);
         ETNumAdultos = (TextView)findViewById(R.id.txtNumAdultos);
         ETNumNinos = (TextView)findViewById(R.id.txtNumNinos);
         ETNumInfantes = (TextView)findViewById(R.id.txtNumInfantes);
@@ -74,9 +76,30 @@ public class AbordarSinCupon extends AppCompatActivity {
 
                 sinCuponAutoriza = AutorizaSinCupon.getText() + "";
                 obs = Obs.getText() + "";
+                if (!variables_publicas.offline) {
+                    final TareaWSAbordarSinCupon tareaWSAbordarSinCupon = new TareaWSAbordarSinCupon();
+                    tareaWSAbordarSinCupon.execute();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (tareaWSAbordarSinCupon.getStatus() == AsyncTask.Status.RUNNING)
+                                tareaWSAbordarSinCupon.cancel(true);
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
+                            CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+                            InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
+                            variables_publicas.offline = true;
+                            SalirActividad();
 
-                TareaWSAbordarSinCupon tareaWSAbordarSinCupon = new TareaWSAbordarSinCupon();
-                tareaWSAbordarSinCupon.execute();
+                        }
+                    }, 5000);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
+                    CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+                    InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
+                    SalirActividad();
+                }
                 //Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://www..com"));
                 //Bundle b = new Bundle();
                 //intent.putExtras(b);
@@ -92,7 +115,14 @@ public class AbordarSinCupon extends AppCompatActivity {
     private class TareaWSAbordarSinCupon extends AsyncTask<String,Integer,Boolean> {
 
         String error = "";
+        protected void onPreExecute() {
+            super.onPreExecute();
 
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
         protected Boolean doInBackground(String... params) {
 
             boolean resul = true;
@@ -155,7 +185,7 @@ public class AbordarSinCupon extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-
+            progressDialog.dismiss();
             if (result)
             {
                 AfterAbordado();
@@ -183,6 +213,7 @@ public class AbordarSinCupon extends AppCompatActivity {
                 builder.setMessage("¡Pasajero sin cupón a bordo! - Modo Offline");
                 CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
                 InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true );
+                variables_publicas.offline = true;
 
             }
             else{

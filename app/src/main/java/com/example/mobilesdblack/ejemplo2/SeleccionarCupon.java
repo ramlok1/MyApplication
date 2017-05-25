@@ -59,6 +59,7 @@ public class SeleccionarCupon extends AppCompatActivity  {
             variables_publicas.tour_padre = Integer.parseInt(((TextView) view.findViewById(R.id.lbl_tour_padre)).getText().toString());
             variables_publicas.idcupon=Integer.parseInt(cupon);
             variables_publicas.id_op_vehi=Integer.parseInt(idetopv);
+            variables_publicas.email="";
             Intent intent_cupon = new Intent(SeleccionarCupon.this,ContestarEncuesta.class);
             intent_cupon.putExtra("numCupon",cupon);
             startActivity(intent_cupon);
@@ -156,7 +157,7 @@ public class SeleccionarCupon extends AppCompatActivity  {
             //int[] views = {R.id.lblnumCupon,R.id.lblHuesped,R.id.lblAdultos, R.id.lblNinos,R.id.lblI,R.id.lblIncentivos,R.id.lbl_Hotel,R.id.lbl_Habitacion,R.id.lbl_Idioma,R.id.lbl_Pickuplobby,R.id.lbl_Agencia,R.id.lbl_Representante,R.id.lbl_Observaciones}; //modelo para las lineas del adaptador - Adapter
             //simpleAdapter = new SimpleAdapter(this, data, R.layout.cupones, from, views);
 
-            ListAdapter_Cupones customAdapter = new ListAdapter_Cupones(this, R.layout.cupones, data);
+            ListAdapter_Cupones_encuesta customAdapter = new ListAdapter_Cupones_encuesta(this, R.layout.cupones_encuesta, data);
             Lista.setAdapter(customAdapter);
             Lista.setOnItemClickListener(onListClick);
 

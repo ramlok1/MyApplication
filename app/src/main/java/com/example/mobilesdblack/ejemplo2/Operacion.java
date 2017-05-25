@@ -1376,10 +1376,10 @@ public class Operacion extends AppCompatActivity {
 
         if (v != null ) {
             if (v.moveToFirst()) {
-                lblorden.setText("N° "+Integer.toString(v.getInt(v.getColumnIndex("idopveh"))));
-                lblguia.setText("Guia: "+v.getString(v.getColumnIndex("guia")));
-                lbltrans.setText("Camioneta: "+v.getString(v.getColumnIndex("camioneta")));
-                lbloperador.setText("Operador: "+v.getString(v.getColumnIndex("operador")));
+                lblorden.setText(Integer.toString(v.getInt(v.getColumnIndex("idopveh"))));
+                lblguia.setText(v.getString(v.getColumnIndex("guia")));
+                lbltrans.setText(v.getString(v.getColumnIndex("camioneta")));
+                lbloperador.setText(v.getString(v.getColumnIndex("operador")));
                 //v.getString(v.getColumnIndex("operador"));
             }
         }

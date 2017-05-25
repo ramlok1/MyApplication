@@ -8,15 +8,133 @@
     android:background="#eeeeee"
     tools:context="com.example.mobilesdblack.ejemplo2.Operacion">
 
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#ee7d00"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lblorden"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/relativeLayout2"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/lblOrdenServicio"
+            android:layout_toRightOf="@+id/lblOrdenServicio"
+            android:drawableLeft="@drawable/order"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/lblguia"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtEncuestasRestantes"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/textView6"
+            android:layout_toRightOf="@+id/textView6"
+            android:drawableLeft="@drawable/guia"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/lblcamioneta"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtsearch"
+            android:layout_alignBottom="@+id/txtsearch"
+            android:layout_alignLeft="@+id/lblorden"
+            android:layout_alignStart="@+id/lblorden"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/car"
+            android:paddingTop="-5dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/lbloperador"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/lblcamioneta"
+            android:layout_alignStart="@+id/lblcamioneta"
+            android:layout_below="@+id/imgCancelarFiltro"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/idcard"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtEncuestasRestantes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/marker"
+            android:gravity="center"
+            android:text="---"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imgSalir"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/relativeLayout2"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/relativeLayout2"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/eliminar"
+            android:onClick="RomperOperacion"
+            app:srcCompat="@drawable/edittextstyle" />
+
+        <ImageView
+            android:id="@+id/imgEncuesta"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/imageView5"
+            android:layout_toStartOf="@+id/imageView5"
+            android:onClick="AbrirEncuesta"
+            app:srcCompat="@drawable/encuesta" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignEnd="@+id/relativeLayout2"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/relativeLayout2"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="MasterActualizar"
+            app:srcCompat="@drawable/sincronizar" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="#ffffff"
-        android:layout_below="@+id/lblFecha"
         android:id="@+id/relativeLayout2"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/linearLayout4">
 
 
         <LinearLayout
@@ -25,10 +143,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/lblguia"
-            android:layout_marginTop="15dp"
             android:orientation="horizontal"
-            android:weightSum="12">
+            android:weightSum="12"
+            android:layout_below="@+id/txtsearch">
 
             <TextView
                 android:id="@+id/lblnumCuponTitle"
@@ -188,34 +305,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="---"
-            android:id="@+id/txtEncuestasRestantes"
-            android:textColor="#000000"
-            android:textSize="25dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Pick Up Restantes:"
-            android:id="@+id/lblEncuestasRestantes"
-            android:textColor="#6E6E6E"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_toLeftOf="@+id/txtEncuestasRestantes"
-            android:layout_toStartOf="@+id/txtEncuestasRestantes" />
-
 
         <ListView
             android:id="@+id/lstCupones"
@@ -227,7 +316,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lblguia"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="70dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -361,132 +450,18 @@
             android:layout_toRightOf="@+id/textView20"
             android:layout_toEndOf="@+id/textView20" />
 
-        <TextView
-            android:id="@+id/lblguia"
+        <EditText
+            android:id="@+id/txtsearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guia:"
-            android:textSize="20sp"
-            android:layout_below="@+id/txtEncuestasRestantes"
-            android:layout_toRightOf="@+id/textView6"
-            android:layout_toEndOf="@+id/textView6" />
+            android:layout_above="@+id/lblguia"
+            android:layout_alignLeft="@+id/lblguia"
+            android:layout_alignStart="@+id/lblguia"
+            android:ems="10"
+            android:hint="Buscar por hotel"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName" />
 
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/lblFecha"
-        android:background="#ee7d00"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:srcCompat="@drawable/sincronizar"
-        android:id="@+id/imageView5"
-        android:onClick="MasterActualizar"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/relativeLayout2"
-        android:layout_alignEnd="@+id/relativeLayout2" />
-
-    <ImageView
-        android:id="@+id/imgEncuesta"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="58dp"
-        android:layout_marginRight="58dp"
-        android:layout_toLeftOf="@+id/imageView5"
-        android:layout_toStartOf="@+id/imageView5"
-        android:onClick="AbrirEncuesta"
-        app:srcCompat="@drawable/encuesta" />
-
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:srcCompat="@drawable/edittextstyle"
-        android:id="@+id/imgSalir"
-        android:onClick="RomperOperacion"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/relativeLayout2"
-        android:layout_alignStart="@+id/relativeLayout2" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:id="@+id/txtsearch"
-        android:hint="Buscar por hotel"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_below="@+id/lblFecha"
-        android:layout_alignLeft="@+id/relativeLayout2"
-        android:layout_alignStart="@+id/relativeLayout2" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:id="@+id/imgCancelarFiltro"
-        android:onClick="BorrarFiltro"
-        android:layout_below="@+id/lblFecha"
-        android:layout_toRightOf="@+id/txtsearch"
-        android:layout_toEndOf="@+id/txtsearch" />
-
-    <TextView
-        android:id="@+id/lblorden"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/relativeLayout2"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
-        android:layout_toEndOf="@+id/lblOrdenServicio"
-        android:layout_toRightOf="@+id/lblOrdenServicio"
-        android:text="N°"
-        android:textColor="@color/white"
-        android:textSize="26sp" />
-
-    <TextView
-        android:id="@+id/lblcamioneta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="-5dp"
-        android:text="xxxxxxx"
-        android:textSize="20sp"
-        android:layout_alignBaseline="@+id/txtsearch"
-        android:layout_alignBottom="@+id/txtsearch"
-        android:layout_alignLeft="@+id/lblorden"
-        android:layout_alignStart="@+id/lblorden" />
-
-    <TextView
-        android:id="@+id/lblOrdenServicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="29dp"
-        android:layout_marginStart="29dp"
-        android:text="ÓRDEN DE SERVICIO"
-        android:textColor="@color/white"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:layout_above="@+id/relativeLayout2"
-        android:layout_toRightOf="@+id/imgSalir"
-        android:layout_toEndOf="@+id/imgSalir" />
-
-    <TextView
-        android:id="@+id/lbloperador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lblcamioneta"
-        android:layout_alignStart="@+id/lblcamioneta"
-        android:layout_below="@+id/imgCancelarFiltro"
-        android:text="TextView"
-        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -1,12 +1,14 @@
 package com.example.mobilesdblack.ejemplo2;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,9 +27,11 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.net.ConnectException;
 
 public class Abordar extends AppCompatActivity {
+    ProgressDialog progressDialog ;
 
     variables_publicas variables = new variables_publicas();
     private Integer versionBD = variables.version_local_database;
+    AlertDialog.Builder builder ;
 
     int NumAdultos = 0, NumNinos = 0, NumInfantes = 0, totalPasajeros = 0;
 
@@ -51,7 +55,8 @@ public class Abordar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abordar);
-
+        progressDialog = new ProgressDialog(Abordar.this);
+        builder = new AlertDialog.Builder(this);
         ETNumAdultos = (TextView)findViewById(R.id.txtNumAdultos);
         ETNumNinos = (TextView)findViewById(R.id.txtNumNinos);
         ETNumInfantes = (TextView)findViewById(R.id.txtNumInfantes);
@@ -85,18 +90,42 @@ public class Abordar extends AppCompatActivity {
     }
 
     public void Abordar(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         builder.setTitle("ATENCIÓN");
         builder.setMessage("¿Está completamente seguro de que el cupón que va a abordar es '" + cupon_numero + "'?");
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                TareaWSAbordar tareaWSCambiarCupon = new TareaWSAbordar();
-                tareaWSCambiarCupon.execute();
-                //Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://www..com"));
-                //Bundle b = new Bundle();
-                //intent.putExtras(b);
-                //startActivity(intent);
+                if (!variables_publicas.offline) {
+                    final TareaWSAbordar tareaWSAbordar = new TareaWSAbordar();
+                    tareaWSAbordar.execute();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (tareaWSAbordar.getStatus() == AsyncTask.Status.RUNNING)
+                                tareaWSAbordar.cancel(true);
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
+                            CambiarStatus(14, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+                            InsertarOffline(idDetalleOpVehi, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true);
+                            variables_publicas.offline = true;
+                            SalirActividad();
+
+                        }
+                    }, 5000);
+                    //Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://www..com"));
+                    //Bundle b = new Bundle();
+                    //intent.putExtras(b);
+                    //startActivity(intent);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
+                    CambiarStatus(14, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+                    InsertarOffline(idDetalleOpVehi, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true);
+
+                    SalirActividad();
+
+                }
             }
         });
         builder.setNegativeButton("No", null);
@@ -106,6 +135,15 @@ public class Abordar extends AppCompatActivity {
     private class TareaWSAbordar extends AsyncTask<String,Integer,Boolean> {
 
         String error = "";
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
 
         protected Boolean doInBackground(String... params) {
 
@@ -167,10 +205,12 @@ public class Abordar extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
+            progressDialog.dismiss();
 
             if (result)
             {
                 AfterAbordado();
+
             }
             else
             {
@@ -195,6 +235,7 @@ public class Abordar extends AppCompatActivity {
                 builder.setMessage("¡Pasajero(s) a bordo! - Modo Offline");
                         CambiarStatus(14, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
                 InsertarOffline(idDetalleOpVehi, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true );
+                variables_publicas.offline=true;
             }
             else{
                 builder.setTitle("Atención");
