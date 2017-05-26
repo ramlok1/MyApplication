@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -62,6 +63,15 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
             Button btnhe = (Button) v.findViewById(R.id.btnhe);
             Button btnhs = (Button) v.findViewById(R.id.btnhs);
+            LinearLayout lay_color =  (LinearLayout)v.findViewById(R.id.lay_top_cupones);
+
+            String color = p.getProperty(17).toString();
+
+            if(!color.equals("N")){
+                lay_color.setBackgroundColor(Color.parseColor(color));
+            }else{
+                lay_color.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
 /*
             String color_background ;
             String color_text ;
@@ -148,8 +158,8 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             TextView textView13 = (TextView)v.findViewById(R.id.lblobsgral);
             textView13.setText(p.getProperty(13).toString());
 
-            TextView lblhe = (TextView) v.findViewById(R.id.lblhe);
-            TextView lblhs = (TextView) v.findViewById(R.id.lblhs);
+            final TextView lblhe = (TextView) v.findViewById(R.id.lblhe);
+            final TextView lblhs = (TextView) v.findViewById(R.id.lblhs);
 
 
             //TextView  textView13 = (TextView)v.findViewById(R.id.lbl_Observaciones);
@@ -182,20 +192,23 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
                 @Override
                 public void onClick(View view) {
 
-                    AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
+                    if (lblhe.getText()=="") {
 
-                            "cuestionarios", null, variables_publicas.version_local_database);
+                        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
 
-                    SQLiteDatabase bd = admin.getWritableDatabase();
+                                "cuestionarios", null, variables_publicas.version_local_database);
 
-                    DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
-                    Date date = new Date();
+                        SQLiteDatabase bd = admin.getWritableDatabase();
 
-                    ContentValues vu = new ContentValues();
-                    vu.put("hentrada", dateFormat.format(date));
-                    bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
-                    bd.close();
-                    ListAdapter_Cupones.this.notifyDataSetChanged();
+                        DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
+                        Date date = new Date();
+
+                        ContentValues vu = new ContentValues();
+                        vu.put("hentrada", dateFormat.format(date));
+                        bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
+                        bd.close();
+                        ListAdapter_Cupones.this.notifyDataSetChanged();
+                    }
                 }
             });
 
@@ -204,20 +217,22 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
                 @Override
                 public void onClick(View view) {
 
-                    AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
+                    if (lblhs.getText() == "") {
+                        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
 
-                            "cuestionarios", null, variables_publicas.version_local_database);
+                                "cuestionarios", null, variables_publicas.version_local_database);
 
-                    SQLiteDatabase bd = admin.getWritableDatabase();
+                        SQLiteDatabase bd = admin.getWritableDatabase();
 
-                    DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
-                    Date date = new Date();
+                        DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
+                        Date date = new Date();
 
-                    ContentValues vu = new ContentValues();
-                    vu.put("hsalida", dateFormat.format(date));
-                    bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
-                    bd.close();
-                    ListAdapter_Cupones.this.notifyDataSetChanged();
+                        ContentValues vu = new ContentValues();
+                        vu.put("hsalida", dateFormat.format(date));
+                        bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
+                        bd.close();
+                        ListAdapter_Cupones.this.notifyDataSetChanged();
+                    }
                 }
             });
             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),

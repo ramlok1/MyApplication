@@ -34,7 +34,7 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
     String folioString;
     Long folioLong;
 
-    String Folio_OrdenServicio;
+    String Folio_OrdenServicio,chofer,obs;
     Boolean OrdenServicioValida;
 
     int idGuia;
@@ -106,6 +106,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
                     intent_cupon.putExtra("idOpVehi",folioString);
                     intent_cupon.putExtra("guia",txtGuia.getText());
                     intent_cupon.putExtra("trans",txtTransporte.getText());
+                    intent_cupon.putExtra("chofer",chofer);
+                    intent_cupon.putExtra("obs",obs);
                     startActivity(intent_cupon);
                 }
                 else{
@@ -128,7 +130,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
         cv.put("idopveh", idOpVehi);
         cv.put("guia", txtGuia.getText().toString());
         cv.put("camioneta", txtTransporte.getText().toString());
-        cv.put("operador", txtGuia.getText().toString());
+        cv.put("operador", chofer);
+        cv.put("obs", obs);
 
 
         bd.insert("vehiculo", null, cv);
@@ -203,6 +206,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
                     cli.guia = ic.getProperty(0).toString();
                     cli.vehiculo = ic.getProperty(1).toString();
                     cli.transportadora = ic.getProperty(2).toString();
+                    cli.chofer=ic.getProperty(4).toString();
+                    cli.obs=ic.getProperty(5).toString();
                     idGuia = cli.idGuia = Integer.parseInt((ic.getProperty(3).toString()));
 
                     OrdenServicio[i] = cli;
@@ -247,7 +252,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
                     txtGuia.setText(OrdenServicio[i].guia);
                     txtVehiculo.setText(OrdenServicio[i].vehiculo);
                     txtTransporte.setText(OrdenServicio[i].transportadora);
-
+                    chofer= OrdenServicio[i].chofer;
+                    obs= OrdenServicio[i].obs;
                     Folio_OrdenServicio = "" + txtFolio.getText();
                     txtOtro.setText(Folio_OrdenServicio);
                 }

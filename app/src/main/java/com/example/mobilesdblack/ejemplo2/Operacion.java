@@ -52,13 +52,13 @@ public class Operacion extends AppCompatActivity {
     EditText txtSearch;
     List<Entity_CuponesHoja> data;
     ListView Lista;
-    TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans,lbloperador;
+    TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans,lbloperador,lblobs;
 
     ImageView imgEncuesta;
 
     String numero_cupon = "";
 
-    String idOpVehi,guia,trans;
+    String idOpVehi,guia,trans,chofer,obs;
 
     variables_publicas variables = new variables_publicas();
     private Integer versionBD = variables.version_local_database;
@@ -76,6 +76,8 @@ public class Operacion extends AppCompatActivity {
         idOpVehi = b.getString("idOpVehi");
         guia = b.getString("guia");
         trans = b.getString("trans");
+        chofer = b.getString("chofer");
+        obs = b.getString("obs");
 
         Inicializar();
         lblguia.setText(lblguia.getText()+" "+guia);
@@ -182,7 +184,7 @@ public class Operacion extends AppCompatActivity {
     }
 
     // Damos de alta los usuarios en nuestra aplicación
-    public void alta_cupones(long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma ) {
+    public void alta_cupones(long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma,String color ) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -210,6 +212,7 @@ public class Operacion extends AppCompatActivity {
         registro.put("status", status);
         registro.put("tour_padre", tour_padre);
         registro.put("ididioma", ididioma);
+        registro.put("color", color);
 
         // los inserto en la base de datos
         bd.insert("cupones",null, registro);
@@ -225,6 +228,7 @@ public class Operacion extends AppCompatActivity {
         lblorden = (TextView)findViewById(R.id.lblorden);
         lbltrans = (TextView)findViewById(R.id.lblcamioneta);
         lbloperador = (TextView)findViewById(R.id.lbloperador);
+        lblobs = (TextView)findViewById(R.id.txt_obs_veh);
         imgEncuesta = (ImageView)findViewById(R.id.imgEncuesta);
         Lista = (ListView) findViewById(R.id.lstCupones);
         this.registerForContextMenu(Lista);
@@ -453,6 +457,7 @@ public class Operacion extends AppCompatActivity {
             bd.delete("cupones", null , null);
             bd.delete("encuestaDetalle", null , null);
             bd.delete("offline", null , null);
+            bd.delete("vehiculo", null , null);
 
         }
         catch (Exception e){
@@ -651,7 +656,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
             try{
 
-            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,hentrada from cupones  order by (status = 13) desc,  status", null);
+            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,color from cupones  order by (color='N') desc,color,  status", null);
 
 
 
@@ -680,6 +685,7 @@ public class Operacion extends AppCompatActivity {
                         datanum.nombreRepresentante = c.getString(c.getColumnIndex("nombreRepresentante"));
                         datanum.Observaciones = c.getString(c.getColumnIndex("Observaciones"));
                         datanum.status = c.getInt(c.getColumnIndex("status"));
+                        datanum.color = c.getString(c.getColumnIndex("color"));
 
                         datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
 
@@ -769,6 +775,7 @@ public class Operacion extends AppCompatActivity {
                     cuponesHoja.status = Integer.parseInt((ic.getProperty(14).toString()));
                     cuponesHoja.tour_padre = Integer.parseInt((ic.getProperty(15).toString()));
                     cuponesHoja.idIdioma = Integer.parseInt((ic.getProperty(16).toString()));
+                    cuponesHoja.color = ic.getProperty(17).toString();
 
                     CuponesHoja[i] = cuponesHoja;
                 }
@@ -783,7 +790,7 @@ public class Operacion extends AppCompatActivity {
                         l_touridi.add(ti_data);
                         actualizar_preguntas(CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma);
                     }
-                    alta_cupones(CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma);
+                    alta_cupones(CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color);
 
                 }
                 CargaCuponesLocales();
@@ -1369,7 +1376,7 @@ public class Operacion extends AppCompatActivity {
 
         SQLiteDatabase bd = admin.getWritableDatabase();
 
-        Cursor v = bd.rawQuery("select idopveh, guia, camioneta, operador from vehiculo", null);
+        Cursor v = bd.rawQuery("select idopveh, guia, camioneta, operador,obs from vehiculo", null);
 
 
 
@@ -1380,6 +1387,7 @@ public class Operacion extends AppCompatActivity {
                 lblguia.setText(v.getString(v.getColumnIndex("guia")));
                 lbltrans.setText(v.getString(v.getColumnIndex("camioneta")));
                 lbloperador.setText(v.getString(v.getColumnIndex("operador")));
+                lblobs.setText(v.getString(v.getColumnIndex("obs")));
                 //v.getString(v.getColumnIndex("operador"));
             }
         }

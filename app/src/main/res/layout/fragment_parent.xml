@@ -27,7 +27,7 @@
                 android:foregroundGravity="center"
                 app:tabGravity="fill"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="#3871e9"
+                app:tabSelectedTextColor="#9d9a9a"
                 app:tabTextColor="#9d9a9a" />
 
         </LinearLayout>

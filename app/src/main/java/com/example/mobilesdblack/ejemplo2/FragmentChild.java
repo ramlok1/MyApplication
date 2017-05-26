@@ -67,6 +67,12 @@ public class FragmentChild extends Fragment {
         if (tipo == 0){
             pager=false;
             view = inflater.inflate(R.layout.fragment_inicio, container, false);
+            TextView name = (TextView) view.findViewById(R.id.txtNombreE);
+            TextView hotel = (TextView) view.findViewById(R.id.txtHotelE);
+
+            name.setText(variables_publicas.nombre);
+            hotel.setText(variables_publicas.hotel);
+
 
             final EditText txt_email = (EditText) view.findViewById(R.id.txt_email);
             final Button btn_next = (Button) view.findViewById(R.id.btn_next);
@@ -74,8 +80,12 @@ public class FragmentChild extends Fragment {
             btn_next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
-                    pager=true;
+                    if(ValidaEmail(txt_email.getText())) {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                        pager = true;
+                    }else{
+                        Toast.makeText(getActivity(),"Invalid Email...",Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             });
@@ -214,7 +224,7 @@ public class FragmentChild extends Fragment {
                 @Override
                 public void onClick(View view) {
                     if(c1!=c2) {
-                    Toast.makeText(getActivity(),"Please answer all questions",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Please answer all questions",Toast.LENGTH_SHORT).show();
                     }
                     else {
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);

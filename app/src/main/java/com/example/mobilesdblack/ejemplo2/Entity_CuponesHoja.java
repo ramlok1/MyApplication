@@ -27,6 +27,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
     public int status;
     public int tour_padre;
     public int idIdioma;
+    public String color;
 
 
     public Entity_CuponesHoja()
@@ -48,10 +49,11 @@ public class Entity_CuponesHoja implements KvmSerializable {
         status = 0;
         tour_padre = 0;
         idIdioma = 0;
+        color = "";
 
     }
 
-    public Entity_CuponesHoja(int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma)
+    public Entity_CuponesHoja(int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma, String color)
     {
         this.idDetalleOpVehi = iddetalleopvehi;
         this.numCupon = numcupon;
@@ -70,6 +72,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
         this.status = status;
         this.tour_padre = tour_padre;
         this.idIdioma = idIdioma;
+        this.color = color;
 
     }
 
@@ -112,6 +115,8 @@ public class Entity_CuponesHoja implements KvmSerializable {
             return tour_padre;
             case 16:
                 return idIdioma;
+            case 17:
+                return color;
 
 
         }
@@ -197,6 +202,10 @@ public class Entity_CuponesHoja implements KvmSerializable {
                 info.type = PropertyInfo.INTEGER_CLASS;
                 info.name = "idIdioma";
                 break;
+            case 17:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "color";
+                break;
 
             default:break;
         }
@@ -256,6 +265,9 @@ public class Entity_CuponesHoja implements KvmSerializable {
                 break;
             case 16:
                 idIdioma = Integer.parseInt(val.toString());
+                break;
+            case 17:
+                color = val.toString();
                 break;
 
             default:break;

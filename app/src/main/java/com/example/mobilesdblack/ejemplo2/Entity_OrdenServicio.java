@@ -13,6 +13,9 @@ public class Entity_OrdenServicio implements KvmSerializable {
     public String vehiculo;
     public String transportadora;
     public int idGuia;
+    public String chofer;
+    public String obs;
+
     //public int telefono;
 
     public Entity_OrdenServicio()
@@ -21,15 +24,19 @@ public class Entity_OrdenServicio implements KvmSerializable {
         vehiculo = "";
         transportadora = "";
         idGuia = 0;
+        chofer = "";
+        obs = "";
         //telefono = 0;
     }
 
-    public Entity_OrdenServicio(String guia, String vehiculo, String transportadora, int idGuia)
+    public Entity_OrdenServicio(String guia, String vehiculo, String transportadora, int idGuia, String chofer, String obs)
     {
         this.guia = guia;
         this.vehiculo = vehiculo;
         this.transportadora = transportadora;
         this.idGuia = idGuia;
+        this.chofer = chofer;
+        this.obs = obs;
         //this.telefono = telefono;
     }
 
@@ -45,7 +52,11 @@ public class Entity_OrdenServicio implements KvmSerializable {
             case 2:
                 return transportadora;
             case 3:
-                return idGuia;
+            return idGuia;
+            case 4:
+                return chofer;
+            case 5:
+                return obs;
             default:
                 break;
         }
@@ -78,6 +89,14 @@ public class Entity_OrdenServicio implements KvmSerializable {
                 info.type = PropertyInfo.INTEGER_CLASS;
                 info.name = "idGuia";
                 break;
+            case 4:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "chofer";
+                break;
+            case 5:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "obs";
+                break;
             /*
             case 2:
                 info.type = PropertyInfo.INTEGER_CLASS;
@@ -103,6 +122,12 @@ public class Entity_OrdenServicio implements KvmSerializable {
                 break;
             case 3:
                 idGuia = Integer.parseInt(val.toString());
+                break;
+            case 4:
+                chofer = val.toString();
+                break;
+            case 5:
+                obs = val.toString();
                 break;
             /*
             case 2:
