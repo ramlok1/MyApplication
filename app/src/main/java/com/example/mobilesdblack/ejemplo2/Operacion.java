@@ -1272,7 +1272,7 @@ public class Operacion extends AppCompatActivity {
         try {
             //Sincroniza encuestas
             Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
-            Cursor cd = bd.rawQuery("select idDetalleOpVehi,idCupon,comentario,email,fecha from encuesta", null);
+            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha,b.hentrada,b.hsalida  from encuesta a,cupones b where b.idDetalleOpVehi=a.idDetalleOpVehi and b.numCupon=a.idCupon ", null);
 
             if (c != null) {
                 if (c.moveToFirst()) {
@@ -1300,17 +1300,23 @@ public class Operacion extends AppCompatActivity {
                     //Sincroniza encabezado encuesta
                    if( cd.moveToFirst()) {
                        do {
+
                            int opVehi = cd.getInt(cd.getColumnIndex("idDetalleOpVehi"));
                            int cupon = cd.getInt(cd.getColumnIndex("idCupon"));
+                           String hora_entrada=cd.getString(cd.getColumnIndex("hentrada"));
+                           String hora_salida=cd.getString(cd.getColumnIndex("hsalida"));
                            String comentario = cd.getString(cd.getColumnIndex("comentario"));
                            String email = cd.getString(cd.getColumnIndex("email"));
                            String fecha = cd.getString(cd.getColumnIndex("fecha"));
 
+                           String upd_time_es = "update detalleOpVehi set pickUpIn="+hora_entrada+", pickUpOut="+hora_salida+
+                                   " where  idDetalleOpVehi="+opVehi+" and idOpVehi="+variables_publicas.id_op_vehi;
 
-                           String sql_inserta_encabezado = ("insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha) " +
-                                   "values  (" + opVehi + "," + cupon + ",'" + comentario + "','" + email + "','" + fecha + "')");
+                           String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha) " +
+                                   "values  (" + opVehi + "," + cupon + ",'" + comentario + "','" + email + "','" + fecha + "')";
                            Statement statement = connection.createStatement();
                            statement.executeUpdate(sql_inserta_encabezado);
+                           statement.executeUpdate(upd_time_es);
 
                        } while (cd.moveToNext());
                    }
