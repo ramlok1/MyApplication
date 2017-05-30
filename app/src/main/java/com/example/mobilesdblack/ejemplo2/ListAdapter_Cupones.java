@@ -67,6 +67,8 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
             String color = p.getProperty(17).toString();
 
+            if(color.equals("")){color="#ffffff";}
+
             if(!color.equals("N")){
                 lay_color.setBackgroundColor(Color.parseColor(color));
             }else{
