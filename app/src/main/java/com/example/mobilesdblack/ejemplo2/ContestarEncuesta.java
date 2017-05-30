@@ -46,6 +46,7 @@ public class ContestarEncuesta extends AppCompatActivity {
         setContentView(R.layout.activity_contestar_encuesta);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
+
         Bundle b = getIntent().getExtras();
         numCupon = b.getString("numCupon");
 

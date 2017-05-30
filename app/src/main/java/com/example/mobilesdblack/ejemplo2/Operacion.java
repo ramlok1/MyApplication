@@ -484,7 +484,10 @@ public class Operacion extends AppCompatActivity {
 
 
     public void MasterActualizar(View view){
-        Toast.makeText(getApplicationContext(),"Sincronizando...",Toast.LENGTH_SHORT).show();
+
+
+
+
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
 
         SQLiteDatabase bd = admin.getWritableDatabase();
@@ -589,6 +592,7 @@ public class Operacion extends AppCompatActivity {
         }
             Toast.makeText(getApplicationContext(),"Sincronizando Encuestas",Toast.LENGTH_SHORT).show();
         sincroniza_encuesta();
+
     }
 
 
@@ -1309,8 +1313,8 @@ public class Operacion extends AppCompatActivity {
                            String email = cd.getString(cd.getColumnIndex("email"));
                            String fecha = cd.getString(cd.getColumnIndex("fecha"));
 
-                           String upd_time_es = "update detalleOpVehi set pickUpIn="+hora_entrada+", pickUpOut="+hora_salida+
-                                   " where  idDetalleOpVehi="+opVehi+" and idOpVehi="+variables_publicas.id_op_vehi;
+                           String upd_time_es = "update detalleOpVehi set pickUpIn='"+hora_entrada+"', pickUpOut='"+hora_salida+
+                                   "' where  idDetalleOpVehi="+opVehi;
 
                            String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha) " +
                                    "values  (" + opVehi + "," + cupon + ",'" + comentario + "','" + email + "','" + fecha + "')";
