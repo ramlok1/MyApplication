@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.FloatRange;
@@ -47,6 +48,9 @@ public class FragmentChild extends Fragment {
     View view_parent;
     int c1=0;
     int c2=0;
+    SQLiteDatabase bd;
+    AdminSQLiteOpenHelper admin;
+
 
 
     @Nullable
@@ -62,6 +66,8 @@ public class FragmentChild extends Fragment {
         view_parent = inflater.inflate(R.layout.fragment_parent, container, false);
         View view_preguntas = inflater.inflate(R.layout.fragment_child, container, false);
         viewPager = (ViewPager) getActivity().findViewById(R.id.my_viewpager);
+         admin = new AdminSQLiteOpenHelper(getActivity(), "cuestionarios", null, variables_publicas.version_local_database);
+         bd = admin.getWritableDatabase();
 
 
         if (tipo == 0){
@@ -124,11 +130,11 @@ public class FragmentChild extends Fragment {
             layout_principal.removeAllViews();
             LinearLayout contenedor = null;
 
-            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getActivity(), "cuestionarios", null, variables_publicas.version_local_database);
-           final SQLiteDatabase bd = admin.getWritableDatabase();
+
+
             try {
 
-                Cursor c = bd.rawQuery("select idCuestionarios,pregunta from cuestionarios where idCategoriaPregunta="+tipo+" order by orden_pregunta", null);
+                Cursor c = bd.rawQuery("select idCuestionarios,pregunta,tipo from cuestionarios where idCategoriaPregunta="+tipo+" order by orden_pregunta", null);
                 if (c != null) {
                     if (c.moveToFirst()) {
 
@@ -145,7 +151,18 @@ public class FragmentChild extends Fragment {
                             txt_pregunta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
                             txt_pregunta.setTextSize(36);
                             txt_pregunta.setPadding(30,0,0,0);
-                            final int id_pregunta = c.getInt(c.getColumnIndex("idCuestionarios"));
+                            final int id_pregunta =c.getInt(c.getColumnIndex("idCuestionarios"));;
+
+                            final int idtipo = c.getInt(c.getColumnIndex("tipo"));
+
+
+                            final EditText txt_resp = new EditText(getActivity());
+                            txt_resp.setTextSize(30);
+                            txt_resp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+                            txt_resp.setBackgroundColor(Color.parseColor("#f2f2f2"));
+                            txt_resp.setPadding(20,0,0,0);
+                            txt_resp.setHint("Type Here");
+
 
                             RatingBar rbar = new RatingBar(getActivity());
                             rbar.setNumStars(5);
@@ -161,52 +178,48 @@ public class FragmentChild extends Fragment {
                             if (d != null) {
                                 if (d.moveToFirst()) {
                                     do {
-                                        rbar.setRating(d.getInt(d.getColumnIndex("valor_respuesta")));
+                                        if(idtipo==1) {
+                                            rbar.setRating(Integer.parseInt(d.getString(d.getColumnIndex("valor_respuesta"))));
+                                        }else {
+                                        txt_resp.setText(d.getString(d.getColumnIndex("valor_respuesta")));
+                                        }
                                         c2++;
 
                                     } while (d.moveToNext());
                                 }
                             }
+                                // Triger pregunta abierta
+                            txt_resp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                                @Override
+                                public void onFocusChange(View view, boolean b) {
+                                    if(!b){
+                                        String resp= txt_resp.getText().toString();
+                                        if(resp.length()<2) {
+                                            Toast.makeText(getActivity(),"Please be more descriptive",Toast.LENGTH_SHORT).show();
+                                        }else
+                                        {
+                                            insert_upd(pregunta_desc,resp,0,id_pregunta);
+                                        }
+                                    }
+                                }
+                            });
 
-
+                            // Trigger estrellas
                             rbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                                 @Override
                                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                    Date date = new Date();
 
-
-                                    Cursor d = bd.rawQuery("select idEncuestaDetalle from encuestaDetalle where idDetalleOpVehi = "+variables_publicas.id_op_vehi+" and idCupon="+variables_publicas.idcupon+" and idCuestionario="+id_pregunta, null);
-                                    if (d != null) {
-                                        if (d.moveToFirst()) {
-                                            do {
-
-                                                ContentValues vu = new ContentValues();
-                                                vu.put("valor_respuesta", Math.round(ratingBar.getRating()));
-                                                bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + d.getInt(d.getColumnIndex("idEncuestaDetalle")), null);
-
-                                            } while (d.moveToNext());
-                                        } else {
-
-                                            c2++;
-                                            ContentValues cv = new ContentValues();
-                                            cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
-                                            cv.put("idCupon", variables_publicas.idcupon);
-                                            cv.put("idCuestionario", id_pregunta);
-                                            cv.put("pregunta", pregunta_desc);
-                                            cv.put("valor_respuesta", Math.round(ratingBar.getRating()));
-                                            cv.put("fechaDetalle", dateFormat.format(date));
-                                            cv.put("enviado", 0);
-
-                                            bd.insert("encuestaDetalle", null, cv);
-                                        }
-                                    }
+                                  insert_upd(pregunta_desc,"",Math.round(ratingBar.getRating()), id_pregunta);
 
                                 }
                             });
 
                             contenedor.addView(txt_pregunta);
-                            contenedor.addView(rbar);
+                            if(idtipo==1) {
+                                contenedor.addView(rbar);
+                            }else{
+                                contenedor.addView(txt_resp);
+                            }
                             layout_principal.addView(contenedor);
                         } while (c.moveToNext());
 
@@ -220,9 +233,12 @@ public class FragmentChild extends Fragment {
 
             }
             final Button btn_nextc = (Button) view_preguntas.findViewById(R.id.btn_nextc);
+            btn_nextc.setFocusable(true);
+            btn_nextc.setFocusableInTouchMode(true);///add this line
             btn_nextc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    btn_nextc.requestFocus();
                     if(c1!=c2) {
                     Toast.makeText(getActivity(),"Please answer all questions",Toast.LENGTH_SHORT).show();
                     }
@@ -249,6 +265,46 @@ public class FragmentChild extends Fragment {
     }
     public final static boolean ValidaEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public final  void insert_upd (String pregunta, String resp_abierta, int valor_star, int id_pregunta){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+
+
+        Cursor d = bd.rawQuery("select idEncuestaDetalle from encuestaDetalle where idDetalleOpVehi = "+variables_publicas.id_op_vehi+" and idCupon="+variables_publicas.idcupon+" and idCuestionario="+id_pregunta, null);
+        if (d != null) {
+            if (d.moveToFirst()) {
+                do {
+
+                    ContentValues vu = new ContentValues();
+                    if (valor_star==0) {
+                        vu.put("valor_respuesta", resp_abierta);
+                    }else{
+                        vu.put("valor_respuesta", Integer.toString(valor_star));
+                    }
+                    bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + d.getInt(d.getColumnIndex("idEncuestaDetalle")), null);
+
+                } while (d.moveToNext());
+            } else {
+
+                c2++;
+                ContentValues cv = new ContentValues();
+                cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
+                cv.put("idCupon", variables_publicas.idcupon);
+                cv.put("idCuestionario", id_pregunta);
+                cv.put("pregunta", pregunta);
+                if (valor_star==0) {
+                    cv.put("valor_respuesta", resp_abierta);
+                }else{
+                    cv.put("valor_respuesta", Integer.toString(valor_star));
+                }
+                cv.put("fechaDetalle", dateFormat.format(date));
+                cv.put("enviado", 0);
+
+                bd.insert("encuestaDetalle", null, cv);
+            }
+        }
     }
 
 }

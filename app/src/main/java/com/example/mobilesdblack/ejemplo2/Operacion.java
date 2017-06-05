@@ -1276,7 +1276,7 @@ public class Operacion extends AppCompatActivity {
         try {
             //Sincroniza encuestas
             Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
-            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha,b.hentrada,b.hsalida  from encuesta a,cupones b where b.idDetalleOpVehi=a.idDetalleOpVehi and b.numCupon=a.idCupon ", null);
+            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha,ifnull(b.hentrada,'00:00:00') hentrada,ifnull(b.hsalida,'00:00:00') hsalida  from encuesta a,cupones b where b.idDetalleOpVehi=a.idDetalleOpVehi and b.numCupon=a.idCupon ", null);
 
             if (c != null) {
                 if (c.moveToFirst()) {
@@ -1287,10 +1287,14 @@ public class Operacion extends AppCompatActivity {
                         String pregunta = c.getString(c.getColumnIndex("pregunta"));
                         String respuesta=c.getString(c.getColumnIndex("valor_respuesta"));
                         String fecha = c.getString( c.getColumnIndex("fechaDetalle"));
-
-
+                        int califica;
+                        if(respuesta.length()>1){
+                        califica=0;
+                        }else{
+                            califica=Integer.parseInt(respuesta);
+                        }
                         String sql_inserta_pregunta = ("insert into OpVehiEncuesta (idDetalleOpVehi,idCuestionario,pregunta,respuesta,calificacion,fecha,status) " +
-                                "values  ("+opVehi+","+cuestionario+",'"+pregunta+"','"+respuesta+"',"+Integer.parseInt(respuesta)+",'"+fecha+"',1)" );
+                                "values  ("+opVehi+","+cuestionario+",'"+pregunta+"','"+respuesta+"',"+califica+",'"+fecha+"',1)" );
                         Statement statement = connection.createStatement();
                         statement.executeUpdate(sql_inserta_pregunta);
 
