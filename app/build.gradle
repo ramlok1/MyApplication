@@ -27,6 +27,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.kyanogen.signatureview:signature-view:1.0'
     compile 'com.github.deano2390:MaterialShowcaseView:1.1.0'
 }
 

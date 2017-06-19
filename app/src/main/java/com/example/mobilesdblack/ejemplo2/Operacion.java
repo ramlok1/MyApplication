@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -34,9 +36,11 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.ByteArrayInputStream;
 import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -1217,6 +1221,12 @@ public class Operacion extends AppCompatActivity {
                 "where CP.idTourPadre = "+tour_padre+" and cP.idIdioma = "+idioma+" and C.status=1");
         ObtenerPreguntasOnline(SQL_Preguntas);
 
+        String sql_respuestas= "select idCuestionario,Respuesta,orden from cuestionarioRespuesta ";
+        inserta_respuesta(sql_respuestas);
+
+        String sql_mensaje= "select titulo,mensaje,idIdioma from encuestaMensaje ";
+        inserta_mensaje(sql_mensaje);
+
 
     }
 
@@ -1231,6 +1241,46 @@ public class Operacion extends AppCompatActivity {
             while(rs.next()) {
 
                 alta_preguntas(rs.getLong("idCuestionario"),rs.getInt("idCategoriaPregunta"),rs.getString("nombreCategoriaPregunta"), rs.getString("pregunta"),rs.getInt("idTipo"), rs.getInt("idIdioma"),rs.getInt("orden"),rs.getInt("orden_pregunta"),rs.getInt("idTourPadre"));
+            }
+
+            //Toast.makeText(this, "Datos cargados exitosamente", Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+
+        }
+    }
+
+    public void inserta_respuesta(String sql_respuesta){
+        ResultSet rs;
+        try{
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(sql_respuesta);
+
+            //alta(1,"hola",1,2);
+
+            while(rs.next()) {
+
+                alta_respuestas(rs.getInt("idCuestionario"),rs.getString("Respuesta"), rs.getInt("orden"));
+            }
+
+            //Toast.makeText(this, "Datos cargados exitosamente", Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+
+        }
+    }
+
+    public void inserta_mensaje(String sql_mensaje){
+        ResultSet rs;
+        try{
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(sql_mensaje);
+
+            //alta(1,"hola",1,2);
+
+            while(rs.next()) {
+
+                alta_mensaje(rs.getString("titulo"),rs.getString("mensaje"), rs.getInt("idIdioma"));
             }
 
             //Toast.makeText(this, "Datos cargados exitosamente", Toast.LENGTH_SHORT).show();
@@ -1269,6 +1319,50 @@ public class Operacion extends AppCompatActivity {
 
     }
 
+    public void alta_respuestas(long idpregunta,String respuesta, int orden ) {
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+
+                "cuestionarios", null, versionBD);
+
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+        ContentValues registro = new ContentValues();
+
+        registro.put("idCuestionario", idpregunta);
+        registro.put("respuesta", respuesta);
+        registro.put("orden", orden);
+
+
+        // los inserto en la base de datos
+        bd.insert("categoria_respuesta",null, registro);
+
+        bd.close();
+
+    }
+
+    public void alta_mensaje(String titulo,String mensaje, int idioma ) {
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+
+                "cuestionarios", null, versionBD);
+
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+        ContentValues registro = new ContentValues();
+
+        registro.put("titulo", titulo);
+        registro.put("mensaje", mensaje);
+        registro.put("idioma", idioma);
+
+
+        // los inserto en la base de datos
+        bd.insert("encuestaMensaje",null, registro);
+
+        bd.close();
+
+    }
+
     public void sincroniza_encuesta () {
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
 
@@ -1276,7 +1370,7 @@ public class Operacion extends AppCompatActivity {
         try {
             //Sincroniza encuestas
             Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
-            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha,ifnull(b.hentrada,'00:00:00') hentrada,ifnull(b.hsalida,'00:00:00') hsalida  from encuesta a,cupones b where b.idDetalleOpVehi=a.idDetalleOpVehi and b.numCupon=a.idCupon ", null);
+            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha,ifnull(b.hentrada,'00:00:00') hentrada,ifnull(b.hsalida,'00:00:00') hsalida, a.firma firma  from encuesta a,cupones b where b.idDetalleOpVehi=a.idDetalleOpVehi and b.numCupon=a.idCupon ", null);
 
             if (c != null) {
                 if (c.moveToFirst()) {
@@ -1316,14 +1410,25 @@ public class Operacion extends AppCompatActivity {
                            String comentario = cd.getString(cd.getColumnIndex("comentario"));
                            String email = cd.getString(cd.getColumnIndex("email"));
                            String fecha = cd.getString(cd.getColumnIndex("fecha"));
+                           byte[] imgByte = cd.getBlob(cd.getColumnIndex("firma"));
+
 
                            String upd_time_es = "update detalleOpVehi set pickUpIn='"+hora_entrada+"', pickUpOut='"+hora_salida+
                                    "' where  idDetalleOpVehi="+opVehi;
 
-                           String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha) " +
-                                   "values  (" + opVehi + "," + cupon + ",'" + comentario + "','" + email + "','" + fecha + "')";
+                           String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha,firma) " +
+                                   "values  (?,?,?,?,?,?)";
+                           PreparedStatement stmt = connection.prepareStatement(sql_inserta_encabezado);
+                           stmt.setInt(1, opVehi);
+                           stmt.setInt(2, cupon);
+                           stmt.setString(3, comentario);
+                           stmt.setString(4, email);
+                           stmt.setString(5, fecha);
+                           stmt.setBytes(6, imgByte);
+                           stmt.executeUpdate();
+                           stmt.close();
                            Statement statement = connection.createStatement();
-                           statement.executeUpdate(sql_inserta_encabezado);
+
                            statement.executeUpdate(upd_time_es);
 
                        } while (cd.moveToNext());

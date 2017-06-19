@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sign="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,17 +15,17 @@
 
         <Button
             android:id="@+id/btnFinalizarEncuesta"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
-            android:layout_below="@+id/editText6"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:background="#808080"
+            android:layout_width="130dp"
+            android:layout_height="80dp"
+            android:background="@drawable/right"
             android:gravity="center"
             android:onClick="EventoFinalizarEncuesta"
-            android:text="Finalizar"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="49dp" />
 
         <TextView
             android:id="@+id/textView13"
@@ -33,23 +34,25 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="146dp"
-            android:text="Comments:"
+            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
+            android:text="Signature:"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="25dp" />
+            android:textSize="30dp" />
 
-        <EditText
-            android:id="@+id/editText6"
+        <com.kyanogen.signatureview.SignatureView
+            android:id="@+id/signature_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/textView13"
-            android:layout_marginLeft="28dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="46dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="300dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="300dp"
+            android:layout_marginRight="300dp"
+            android:layout_marginTop="100dp"
+            android:layout_weight="1"
+            sign:backgroundColor="#ffffff"
+            sign:enableSignature="true"
+            sign:penColor="#000000"
+            sign:penSize="5dp" />
 
     </RelativeLayout>
 

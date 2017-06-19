@@ -28,7 +28,11 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
         db.execSQL("create table vehiculo (idopveh integer,guia text, camioneta text, operador text,entrada datetime, salida datetime, obs text)");
 
-        db.execSQL("create table encuesta (idEncuesta integer primary key,idDetalleOpVehi integer, idCupon integer, comentario text, email text,fecha datetime)");
+        db.execSQL("create table categoria_respuesta (idCuestionario integer, respuesta text, orden integer)");
+
+        db.execSQL("create table encuestaMensaje (titulo text, mensaje text, idioma integer)");
+
+        db.execSQL("create table encuesta (idEncuesta integer primary key,idDetalleOpVehi integer, idCupon integer, comentario text, email text, fecha datetime, firma blob)");
 
         db.execSQL("create table cupones(idDetalleOpVehi integer, numCupon text, Huesped text, numAdultos integer, numNinos integer, numInfantes integer, Incentivos integer, Hotel text, Habitacion text, Idioma text, PickUpLobby text, nombreAgencia text, nombreRepresentante text, Observaciones text, Habilitado bit, status integer,tour_padre integer, ididioma integer, hentrada datetime,hsalida datetime,color text )");
 
@@ -44,6 +48,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
         db.execSQL("drop table if exists vehiculo");
         db.execSQL("drop table if exists cuestionarios");
+        db.execSQL("drop table if exists categoria_respuesta");
         db.execSQL("drop table if exists encuesta");
         db.execSQL("drop table if exists cupones");
         db.execSQL("drop table if exists encuestaDetalle");

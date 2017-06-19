@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kyanogen.signatureview.SignatureView;
+
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ public class ContestarEncuesta extends AppCompatActivity {
 
     String numCupon = "";
     ViewPager viewPager;
-
+    SignatureView signatureView;
     TextView txtView;
     Button btnFinalizaEncuesta;
 
@@ -65,21 +69,24 @@ public class ContestarEncuesta extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         View viex = fragmentParent.ObtenerVistaActual(fragmentParent.posicion);
         btnFinalizaEncuesta = (Button)viex.findViewById(R.id.btnFinalizarEncuesta);
-        String txt_comentario = ((EditText) viex.findViewById(R.id.editText6)).getText().toString();
+        signatureView =  (SignatureView) viex.findViewById(R.id.signature_view);
+
         if(variables_publicas.email.isEmpty())
         {
           Toast.makeText(getApplicationContext(),"Invalid email, Please type a valid email",Toast.LENGTH_LONG).show();
         }else{
             try {
+                byte[] firma_imp =revisa_firma();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 ContentValues cv = new ContentValues();
                 cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
                 cv.put("idCupon", variables_publicas.idcupon);
-                cv.put("comentario", txt_comentario);
+                cv.put("comentario", "");
                 cv.put("email", variables_publicas.email);
                 cv.put("fecha", dateFormat.format(date));
-
+                cv.put("firma",firma_imp);
+                signatureView.clearCanvas();
                 bd.insert("encuesta", null, cv);
             }catch (Exception e){
                 String test =e.getMessage();
@@ -196,6 +203,18 @@ public class ContestarEncuesta extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private byte[] revisa_firma(){
+
+        Bitmap bmp= signatureView.getSignatureBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+
+        return byteArray;
     }
 
 

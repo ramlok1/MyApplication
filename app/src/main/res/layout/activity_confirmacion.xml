@@ -14,7 +14,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
-        android:background="#61a6dd"
+        android:background="#9d9a9a"
         android:layout_below="@+id/lblFecha"
         android:id="@+id/linearLayout2">
 

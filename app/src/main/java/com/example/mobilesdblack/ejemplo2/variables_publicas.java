@@ -8,4 +8,5 @@ public class variables_publicas {
     public static String nombre="";
     public static String hotel="";
 
+
 }

@@ -2,17 +2,19 @@ package com.example.mobilesdblack.ejemplo2;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Confirmacion extends AppCompatActivity {
 
     variables_publicas variables=new variables_publicas();
     private Integer versionBD = variables.version_local_database;
-
+    TextView txt_enc,txt_detalle;
     String numCupon = "";
 
     @Override
@@ -23,6 +25,24 @@ public class Confirmacion extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         numCupon = b.getString("numCupon");
+
+        txt_detalle = (TextView) findViewById(R.id.lblMensajeFinal);
+        txt_enc = (TextView) findViewById(R.id.lblGracias);
+
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "cuestionarios", null, variables_publicas.version_local_database);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        Cursor d = bd.rawQuery("select titulo,mensaje from encuestaMensaje where idioma = "+variables_publicas.idioma,null);
+        if (d != null) {
+            if (d.moveToFirst()) {
+                do {
+                   txt_enc.setText(d.getString(d.getColumnIndex("titulo")));
+                    txt_detalle.setText(d.getString(d.getColumnIndex("mensaje")));
+
+                } while (d.moveToNext());
+            }
+        }
+        d.close();
     }
 
     public void FinalizarEncuesta(View view){

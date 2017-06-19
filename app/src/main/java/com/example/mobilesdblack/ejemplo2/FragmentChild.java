@@ -21,10 +21,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +43,7 @@ import java.util.Date;
 public class FragmentChild extends Fragment {
 
 
-    String childname;
+    String childname, desc_spin;
     int tipo, posicion;
     TextView textViewChildName;
     ViewPager viewPager;
@@ -48,8 +51,10 @@ public class FragmentChild extends Fragment {
     View view_parent;
     int c1=0;
     int c2=0;
+    int idtipo, id_spin_p;
     SQLiteDatabase bd;
     AdminSQLiteOpenHelper admin;
+    Spinner spin;
 
 
 
@@ -132,6 +137,7 @@ public class FragmentChild extends Fragment {
 
 
 
+
             try {
 
                 Cursor c = bd.rawQuery("select idCuestionarios,pregunta,tipo from cuestionarios where idCategoriaPregunta="+tipo+" order by orden_pregunta", null);
@@ -146,14 +152,14 @@ public class FragmentChild extends Fragment {
 
 
                             TextView txt_pregunta = new TextView(getActivity());
-                            final String pregunta_desc = c.getString(c.getColumnIndex("pregunta"));
+                           final String pregunta_desc = c.getString(c.getColumnIndex("pregunta"));
                             txt_pregunta.setText(pregunta_desc);
                             txt_pregunta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
                             txt_pregunta.setTextSize(36);
                             txt_pregunta.setPadding(30,0,0,0);
-                            final int id_pregunta =c.getInt(c.getColumnIndex("idCuestionarios"));;
+                            final int id_pregunta =c.getInt(c.getColumnIndex("idCuestionarios"));
 
-                            final int idtipo = c.getInt(c.getColumnIndex("tipo"));
+                            idtipo = c.getInt(c.getColumnIndex("tipo"));
 
 
                             final EditText txt_resp = new EditText(getActivity());
@@ -172,6 +178,30 @@ public class FragmentChild extends Fragment {
                                 DrawableCompat.setTint(progressDrawable, ContextCompat.getColor(getContext(), R.color.star));
                             }
 
+                             spin = new Spinner(getActivity(),Spinner.MODE_DIALOG);
+
+
+                            ArrayAdapter<String> spinnerArrayAdapter=null;
+                            if (idtipo==3){
+                                c2++;
+                                id_spin_p=id_pregunta;
+                                desc_spin=pregunta_desc;
+                                ArrayList<String> spinnerArray = new ArrayList<String>();
+
+                                Cursor d = bd.rawQuery("select respuesta from categoria_respuesta where idCuestionario = "+id_pregunta+" order by orden",null);
+                                if (d != null) {
+                                    if (d.moveToFirst()) {
+                                        do {
+                                            spinnerArray.add(d.getString(d.getColumnIndex("respuesta")));
+                                        } while (d.moveToNext());
+                                    }
+                                }
+                                d.close();
+                                spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.spinner_item_style, spinnerArray);
+                                spin.setAdapter(spinnerArrayAdapter);
+                            }
+
+
 
 
                             Cursor d = bd.rawQuery("select valor_respuesta from encuestaDetalle where idDetalleOpVehi = "+variables_publicas.id_op_vehi+" and idCupon="+variables_publicas.idcupon+" and idCuestionario="+id_pregunta, null);
@@ -180,15 +210,22 @@ public class FragmentChild extends Fragment {
                                     do {
                                         if(idtipo==1) {
                                             rbar.setRating(Integer.parseInt(d.getString(d.getColumnIndex("valor_respuesta"))));
-                                        }else {
+                                        }else if (idtipo==2) {
                                         txt_resp.setText(d.getString(d.getColumnIndex("valor_respuesta")));
+                                        }else if (idtipo==3){
+                                            c2--;
+                                            String resp = d.getString(d.getColumnIndex("valor_respuesta"));
+                                            int spinnerPosition = spinnerArrayAdapter.getPosition(resp);
+                                            spin.setSelection(spinnerPosition);
+
                                         }
+
                                         c2++;
 
                                     } while (d.moveToNext());
                                 }
                             }
-                                // Triger pregunta abierta
+                                // Trigger pregunta abierta
                             txt_resp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                                 @Override
                                 public void onFocusChange(View view, boolean b) {
@@ -204,6 +241,7 @@ public class FragmentChild extends Fragment {
                                 }
                             });
 
+
                             // Trigger estrellas
                             rbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                                 @Override
@@ -217,8 +255,10 @@ public class FragmentChild extends Fragment {
                             contenedor.addView(txt_pregunta);
                             if(idtipo==1) {
                                 contenedor.addView(rbar);
-                            }else{
+                            }else if (idtipo==2){
                                 contenedor.addView(txt_resp);
+                            }else if (idtipo==3){
+                                contenedor.addView(spin);
                             }
                             layout_principal.addView(contenedor);
                         } while (c.moveToNext());
@@ -234,7 +274,7 @@ public class FragmentChild extends Fragment {
             }
             final Button btn_nextc = (Button) view_preguntas.findViewById(R.id.btn_nextc);
             btn_nextc.setFocusable(true);
-            btn_nextc.setFocusableInTouchMode(true);///add this line
+            btn_nextc.setFocusableInTouchMode(true);
             btn_nextc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -243,6 +283,10 @@ public class FragmentChild extends Fragment {
                     Toast.makeText(getActivity(),"Please answer all questions",Toast.LENGTH_SHORT).show();
                     }
                     else {
+                        if (idtipo==3){
+                            String resp = spin.getSelectedItem().toString();
+                            insert_upd(desc_spin,resp,0,id_spin_p);
+                        }
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         pager = true;
                     }
