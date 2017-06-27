@@ -15,6 +15,9 @@ public class Entity_OrdenServicio implements KvmSerializable {
     public int idGuia;
     public String chofer;
     public String obs;
+    public String rfc;
+    public String razon;
+    public String dir;
 
     //public int telefono;
 
@@ -26,10 +29,13 @@ public class Entity_OrdenServicio implements KvmSerializable {
         idGuia = 0;
         chofer = "";
         obs = "";
+        rfc = "";
+        razon = "";
+        dir = "";
         //telefono = 0;
     }
 
-    public Entity_OrdenServicio(String guia, String vehiculo, String transportadora, int idGuia, String chofer, String obs)
+    public Entity_OrdenServicio(String guia, String vehiculo, String transportadora, int idGuia, String chofer, String obs, String rfc, String razon, String dir)
     {
         this.guia = guia;
         this.vehiculo = vehiculo;
@@ -37,6 +43,9 @@ public class Entity_OrdenServicio implements KvmSerializable {
         this.idGuia = idGuia;
         this.chofer = chofer;
         this.obs = obs;
+        this.rfc = rfc;
+        this.razon = razon;
+        this.dir = dir;
         //this.telefono = telefono;
     }
 
@@ -57,6 +66,12 @@ public class Entity_OrdenServicio implements KvmSerializable {
                 return chofer;
             case 5:
                 return obs;
+            case 6:
+                return rfc;
+            case 7:
+                return razon;
+            case 8:
+                return dir;
             default:
                 break;
         }
@@ -97,6 +112,18 @@ public class Entity_OrdenServicio implements KvmSerializable {
                 info.type = PropertyInfo.STRING_CLASS;
                 info.name = "obs";
                 break;
+            case 6:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "rfc";
+                break;
+            case 7:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "razon";
+                break;
+            case 8:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "dir";
+                break;
             /*
             case 2:
                 info.type = PropertyInfo.INTEGER_CLASS;
@@ -128,6 +155,15 @@ public class Entity_OrdenServicio implements KvmSerializable {
                 break;
             case 5:
                 obs = val.toString();
+                break;
+            case 6:
+                rfc = val.toString();
+                break;
+            case 7:
+                razon = val.toString();
+                break;
+            case 8:
+                dir = val.toString();
                 break;
             /*
             case 2:

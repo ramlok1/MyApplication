@@ -7,6 +7,9 @@ public class variables_publicas {
     public static Boolean offline=false;
     public static String nombre="";
     public static String hotel="";
+    public static String razon="";
+    public static String dir="";
+    public static String rfc="";
 
 
 }

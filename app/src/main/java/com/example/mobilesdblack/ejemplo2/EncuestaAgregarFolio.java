@@ -78,6 +78,9 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
             public void onClick(View view) {
 
                 folioString = "" + txtFolio.getText();
+                variables_publicas.rfc="";
+                variables_publicas.razon="";
+                variables_publicas.dir="";
 
                 folioLong = Long.valueOf(folioString);
 
@@ -208,6 +211,9 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
                     cli.transportadora = ic.getProperty(2).toString();
                     cli.chofer=ic.getProperty(4).toString();
                     cli.obs=ic.getProperty(5).toString();
+                    cli.rfc=ic.getProperty(6).toString();
+                    cli.razon=ic.getProperty(7).toString();
+                    cli.dir=ic.getProperty(8).toString();
                     idGuia = cli.idGuia = Integer.parseInt((ic.getProperty(3).toString()));
 
                     OrdenServicio[i] = cli;
@@ -254,6 +260,9 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
                     txtTransporte.setText(OrdenServicio[i].transportadora);
                     chofer= OrdenServicio[i].chofer;
                     obs= OrdenServicio[i].obs;
+                    variables_publicas.rfc= OrdenServicio[i].rfc;
+                    variables_publicas.razon= OrdenServicio[i].razon;
+                    variables_publicas.dir= OrdenServicio[i].dir;
                     Folio_OrdenServicio = "" + txtFolio.getText();
                     txtOtro.setText(Folio_OrdenServicio);
                 }

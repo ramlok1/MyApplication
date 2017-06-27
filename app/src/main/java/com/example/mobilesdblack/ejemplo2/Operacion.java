@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,16 +18,23 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kyanogen.signatureview.SignatureView;
 
 import net.sourceforge.jtds.jdbc.DateTime;
 
@@ -37,6 +45,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -57,7 +66,7 @@ public class Operacion extends AppCompatActivity {
     List<Entity_CuponesHoja> data;
     ListView Lista;
     TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans,lbloperador,lblobs;
-
+    View layout_popup;
     ImageView imgEncuesta;
 
     String numero_cupon = "";
@@ -1510,6 +1519,45 @@ public class Operacion extends AppCompatActivity {
                 //v.getString(v.getColumnIndex("operador"));
             }
         }
+    }
+
+    public void popup_window(View view){
+        final PopupWindow pwindo;
+
+
+        LayoutInflater inflat = (LayoutInflater) Operacion.this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layout_popup = inflat.inflate(R.layout.popup_datos_transportadora,
+                (ViewGroup) findViewById(R.id.layout_principal_pop));
+
+
+
+
+        pwindo = new PopupWindow(layout_popup, 800, 700, true);
+
+
+        Button btn_aceptar = (Button) layout_popup.findViewById(R.id.btn_info_aceptar);
+        TextView txt_razon = (TextView)  layout_popup.findViewById(R.id.txt_razon);
+        TextView txt_dir    = (TextView)  layout_popup.findViewById(R.id.txt_dir);
+        TextView txt_rfc    = (TextView)  layout_popup.findViewById(R.id.txt_rfc);
+
+        txt_razon.setText(variables_publicas.razon);
+        txt_dir.setText(variables_publicas.dir);
+        txt_rfc.setText(variables_publicas.rfc);
+
+
+
+        // Triggers de Popup
+        btn_aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pwindo.dismiss();
+
+            }
+        });
+
+        pwindo.showAtLocation(layout_popup, Gravity.CENTER, 0, -20);
+
     }
 
 }
