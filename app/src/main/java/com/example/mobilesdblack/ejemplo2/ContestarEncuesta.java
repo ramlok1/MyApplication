@@ -40,7 +40,7 @@ public class ContestarEncuesta extends AppCompatActivity {
     SignatureView signatureView;
     TextView txtView;
     Button btnFinalizaEncuesta;
-
+    View viex;
 
 
 
@@ -67,9 +67,10 @@ public class ContestarEncuesta extends AppCompatActivity {
     public void EventoFinalizarEncuesta(View view){
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, variables_publicas.version_local_database);
         SQLiteDatabase bd = admin.getWritableDatabase();
-        View viex = fragmentParent.ObtenerVistaActual(fragmentParent.posicion);
-        btnFinalizaEncuesta = (Button)viex.findViewById(R.id.btnFinalizarEncuesta);
+        viex = fragmentParent.ObtenerVistaActual(fragmentParent.posicion);
         signatureView =  (SignatureView) viex.findViewById(R.id.signature_view);
+        btnFinalizaEncuesta = (Button)viex.findViewById(R.id.btnFinalizarEncuesta);
+
 
         if(variables_publicas.email.isEmpty())
         {
@@ -77,26 +78,39 @@ public class ContestarEncuesta extends AppCompatActivity {
         }else{
             try {
                 byte[] firma_imp =revisa_firma();
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date date = new Date();
-                ContentValues cv = new ContentValues();
-                cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
-                cv.put("idCupon", variables_publicas.idcupon);
-                cv.put("comentario", "");
-                cv.put("email", variables_publicas.email);
-                cv.put("fecha", dateFormat.format(date));
-                cv.put("firma",firma_imp);
-                signatureView.clearCanvas();
-                bd.insert("encuesta", null, cv);
+                if(firma_imp.length>2000) {
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = new Date();
+                    ContentValues cv = new ContentValues();
+                    cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
+                    cv.put("idCupon", variables_publicas.idcupon);
+                    cv.put("comentario", "");
+                    cv.put("email", variables_publicas.email);
+                    cv.put("fecha", dateFormat.format(date));
+                    cv.put("firma", firma_imp);
+                    signatureView.clearCanvas();
+                    bd.insert("encuesta", null, cv);
+
+                    Intent intent = new Intent(ContestarEncuesta.this, Confirmacion.class);
+                    intent.putExtra("numCupon", numCupon);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Signature empty.",Toast.LENGTH_SHORT).show();
+                }
             }catch (Exception e){
                 String test =e.getMessage();
 
             }
-        Intent intent = new Intent(ContestarEncuesta.this,Confirmacion.class);
-        intent.putExtra("numCupon",numCupon);
-        startActivity(intent);
+
         }
 
+    }
+
+    public void limpia_firma(View view){
+        viex = fragmentParent.ObtenerVistaActual(fragmentParent.posicion);
+        signatureView =  (SignatureView) viex.findViewById(R.id.signature_view);
+        signatureView.clearCanvas();
     }
 
     public void ObtenerID(View view){

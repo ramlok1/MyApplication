@@ -406,13 +406,13 @@ public class Operacion extends AppCompatActivity {
                         builder.show();
                     break;
 
-                case R.id.mniVerObservaciones:
+              /*  case R.id.mniVerObservaciones:
                     builder = new AlertDialog.Builder(Operacion.this);
                     builder.setTitle("OBSERVACIONES");
                     builder.setMessage(data.get(info.position).Observaciones);
                     builder.setPositiveButton("Aceptar", null);
                     builder.show();
-                    break;
+                    break;*/
 
             }
         }

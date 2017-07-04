@@ -160,6 +160,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             TextView textView13 = (TextView)v.findViewById(R.id.lblobsgral);
             textView13.setText(p.getProperty(13).toString());
 
+
             final TextView lblhe = (TextView) v.findViewById(R.id.lblhe);
             final TextView lblhs = (TextView) v.findViewById(R.id.lblhs);
 
