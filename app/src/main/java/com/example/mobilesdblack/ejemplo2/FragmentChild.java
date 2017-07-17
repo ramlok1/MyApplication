@@ -307,6 +307,7 @@ public class FragmentChild extends Fragment {
         textViewChildName = (TextView) view.findViewById(R.id.textViewChild);
         textViewChildName.setText(childname);
     }
+
     public final static boolean ValidaEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }

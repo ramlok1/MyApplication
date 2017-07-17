@@ -774,6 +774,7 @@ public class Operacion extends AppCompatActivity {
                 {
                     SoapObject ic = (SoapObject)resSoap.getProperty(i);
 
+
                     Entity_CuponesHoja cuponesHoja = new Entity_CuponesHoja();
                     cuponesHoja.idDetalleOpVehi = Integer.parseInt((ic.getProperty(0).toString()));
                     cuponesHoja.numCupon = ic.getProperty(1).toString();

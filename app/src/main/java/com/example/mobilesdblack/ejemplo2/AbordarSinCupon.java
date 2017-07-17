@@ -68,46 +68,52 @@ public class AbordarSinCupon extends AppCompatActivity {
     }
 
     public void AbordarSinCupon(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ATENCIÓN");
-        builder.setMessage("¿Está completamente seguro de que los datos son correctos?");
-        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
 
-                sinCuponAutoriza = AutorizaSinCupon.getText() + "";
-                obs = Obs.getText() + "";
-                if (!variables_publicas.offline) {
-                    final TareaWSAbordarSinCupon tareaWSAbordarSinCupon = new TareaWSAbordarSinCupon();
-                    tareaWSAbordarSinCupon.execute();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (tareaWSAbordarSinCupon.getStatus() == AsyncTask.Status.RUNNING)
-                                tareaWSAbordarSinCupon.cancel(true);
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
-                            CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                            InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
-                            variables_publicas.offline = true;
-                            SalirActividad();
+        if (AutorizaSinCupon.length()>5 && Obs.length()>5) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("ATENCIÓN");
+            builder.setMessage("¿Está completamente seguro de que los datos son correctos?");
+            builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
 
-                        }
-                    }, 5000);
-                }else{
-                    Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
-                    CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                    InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
-                    SalirActividad();
+                    sinCuponAutoriza = AutorizaSinCupon.getText() + "";
+                    obs = Obs.getText() + "";
+                    if (!variables_publicas.offline) {
+                        final TareaWSAbordarSinCupon tareaWSAbordarSinCupon = new TareaWSAbordarSinCupon();
+                        tareaWSAbordarSinCupon.execute();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (tareaWSAbordarSinCupon.getStatus() == AsyncTask.Status.RUNNING)
+                                    tareaWSAbordarSinCupon.cancel(true);
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
+                                CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+                                InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
+                                variables_publicas.offline = true;
+                                SalirActividad();
+
+                            }
+                        }, 5000);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
+                        CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+                        InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
+                        SalirActividad();
+                    }
+                    //Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://www..com"));
+                    //Bundle b = new Bundle();
+                    //intent.putExtras(b);
+                    //startActivity(intent);
                 }
-                //Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://www..com"));
-                //Bundle b = new Bundle();
-                //intent.putExtras(b);
-                //startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("No", null);
-        builder.show();
+            });
+
+            builder.setNegativeButton("No", null);
+            builder.show();
+        }else{
+            Toast.makeText(getApplicationContext(),"Favor de llenar todos los campos.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     int TipoErrorWS = 0;

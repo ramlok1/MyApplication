@@ -55,6 +55,10 @@ public class Confirmacion extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
 
     public int modificar_Contestado(int Habilitado, String cupon) {
 

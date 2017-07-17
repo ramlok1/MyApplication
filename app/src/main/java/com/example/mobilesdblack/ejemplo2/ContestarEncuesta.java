@@ -106,6 +106,10 @@ public class ContestarEncuesta extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
 
     public void limpia_firma(View view){
         viex = fragmentParent.ObtenerVistaActual(fragmentParent.posicion);

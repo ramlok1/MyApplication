@@ -100,6 +100,15 @@ public class SeleccionarCupon extends AppCompatActivity  {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        Intent intent_cupon = new Intent(SeleccionarCupon.this,Operacion.class);
+        intent_cupon.putExtra("idOpVehi",Integer.toString(variables_publicas.id_op_vehi));
+        startActivity(intent_cupon);
+        moveTaskToBack(true);
+    }
+
     public void AbrirConfiguraciones(View view){
         Intent intent_cupon = new Intent(SeleccionarCupon.this, Actualizar_Preguntas.class);
 

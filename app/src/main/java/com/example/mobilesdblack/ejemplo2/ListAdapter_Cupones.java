@@ -120,7 +120,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             TextView textView5 = (TextView)v.findViewById(R.id.lblIncentivos);
             textView5.setText(p.getProperty(6).toString());
 
-            TextView textView7 = (TextView)v.findViewById(R.id.lbl_Hotel);
+            final TextView textView7 = (TextView)v.findViewById(R.id.lbl_Hotel);
             textView7.setText(p.getProperty(7).toString());
 
             TextView textView8 = (TextView)v.findViewById(R.id.lbl_Habitacion);
@@ -208,7 +208,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
                         ContentValues vu = new ContentValues();
                         vu.put("hentrada", dateFormat.format(date));
-                        bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
+                        bd.update("cupones", vu, "Hotel= '" + textView7.getText().toString()+"'", null);
                         bd.close();
                         ListAdapter_Cupones.this.notifyDataSetChanged();
                     }
@@ -232,7 +232,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
                         ContentValues vu = new ContentValues();
                         vu.put("hsalida", dateFormat.format(date));
-                        bd.update("cupones", vu, "numCupon=" + textView1.getText().toString(), null);
+                        bd.update("cupones", vu, "Hotel= '" + textView7.getText().toString()+"'", null);
                         bd.close();
                         ListAdapter_Cupones.this.notifyDataSetChanged();
                     }
