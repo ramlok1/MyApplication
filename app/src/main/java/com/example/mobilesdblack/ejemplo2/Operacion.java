@@ -466,6 +466,7 @@ public class Operacion extends AppCompatActivity {
         boolean deleted = true;
         try{
             bd.delete("cuestionarios", null , null);
+            bd.delete("categoria_respuesta", null , null);
             bd.delete("encuesta", null , null);
             bd.delete("cupones", null , null);
             bd.delete("encuestaDetalle", null , null);
