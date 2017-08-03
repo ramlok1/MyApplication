@@ -83,7 +83,7 @@ public class ContestarEncuesta extends AppCompatActivity {
                     Date date = new Date();
                     ContentValues cv = new ContentValues();
                     cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
-                    cv.put("idCupon", variables_publicas.idcupon);
+                    cv.put("idCupon", variables_publicas.numcupon);
                     cv.put("comentario", "");
                     cv.put("email", variables_publicas.email);
                     cv.put("fecha", dateFormat.format(date));

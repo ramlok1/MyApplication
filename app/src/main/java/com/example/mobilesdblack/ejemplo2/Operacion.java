@@ -39,6 +39,7 @@ import com.kyanogen.signatureview.SignatureView;
 import net.sourceforge.jtds.jdbc.DateTime;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.MarshalBase64;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -68,7 +69,7 @@ public class Operacion extends AppCompatActivity {
     TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans,lbloperador,lblobs;
     View layout_popup;
     ImageView imgEncuesta;
-
+    AlertDialog.Builder builder;
     String numero_cupon = "";
 
     String idOpVehi,guia,trans,chofer,obs;
@@ -485,11 +486,12 @@ public class Operacion extends AppCompatActivity {
 
     List<Entity_offline> Lista_Offline;
 
-    int WSidDetalleOpVehi;
-    String WSfolioNoShow;
+    int WSidDetalleOpVehi,WSopVehi,WScuestionario,WScalifica;
+    String WSfolioNoShow,WSpregunta,WSrespuesta,WSfecha,WScomentario,Wsemail,WSentrada,WSsalida;
     String WSrecibeNoShow;
     String WSsincuponAutoriza;
     String WSobservacion;
+    byte[] WSfirma;
     int WSa;
     int WSn;
     int WSi;
@@ -497,9 +499,25 @@ public class Operacion extends AppCompatActivity {
     int WOfflineID;
 
 
-    public void MasterActualizar(View view){
+
+    public void preMaster(View view){
 
 
+        builder = new AlertDialog.Builder(Operacion.this);
+        builder.setTitle("Sincronización");
+        builder.setMessage("Esta seguro que desea sincronizar? (La aplicacion se congeleara en el proceso de sicronizacion. Favor de esperar)");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                MasterActualizar();
+            }
+        });
+        builder.setNegativeButton("No", null);
+        builder.show();
+
+    }
+
+
+    public void MasterActualizar(){
 
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
@@ -604,8 +622,8 @@ public class Operacion extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
-            Toast.makeText(getApplicationContext(),"Sincronizando Encuestas",Toast.LENGTH_SHORT).show();
         sincroniza_encuesta();
+        //progressDialog.dismiss();
 
     }
 
@@ -730,6 +748,8 @@ public class Operacion extends AppCompatActivity {
         }
     }
 
+
+
     private class TareaWSObtenerCupones extends AsyncTask<String,Integer,Boolean> {
 
         private Entity_CuponesHoja[] CuponesHoja;
@@ -853,6 +873,17 @@ public class Operacion extends AppCompatActivity {
         Boolean OK = false;
         int pruebaDios = WOfflineID;
 
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
+
         protected Boolean doInBackground(String... params) {
 
             boolean resul = true;
@@ -893,7 +924,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-
+            progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -915,6 +946,16 @@ public class Operacion extends AppCompatActivity {
         String error = "";
         Boolean OK = false;
         int pruebaDios = WOfflineID;
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
 
         protected Boolean doInBackground(String... params) {
 
@@ -957,7 +998,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-
+        progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -979,7 +1020,16 @@ public class Operacion extends AppCompatActivity {
         String error = "";
         Boolean OK = false;
         int pruebaDios = WOfflineID;
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
 
         protected Boolean doInBackground(String... params) {
 
@@ -1021,7 +1071,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-
+        progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -1043,6 +1093,17 @@ public class Operacion extends AppCompatActivity {
         String error = "";
         Boolean OK = false;
         int pruebaDios = WOfflineID;
+
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
 
         protected Boolean doInBackground(String... params) {
 
@@ -1086,7 +1147,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-
+progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -1108,6 +1169,17 @@ public class Operacion extends AppCompatActivity {
         String error = "";
         Boolean OK = false;
         int pruebaDios = WOfflineID;
+
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
 
         protected Boolean doInBackground(String... params) {
 
@@ -1154,7 +1226,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-
+        progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -1165,6 +1237,221 @@ public class Operacion extends AppCompatActivity {
             }
             else
             {
+                Toast.makeText(getBaseContext(),error,Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+    private class TareaWSInsertaencuesta extends AsyncTask<String,Integer,Boolean> {
+
+        String error = "";
+        Boolean OK = false;
+        int pruebaDios = WOfflineID;
+
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
+        protected Boolean doInBackground(String... params) {
+
+            boolean resul = true;
+
+            final String NAMESPACE = "http://suarpe.com/";
+            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String METHOD_NAME = "InsertaEncuesta";
+            final String SOAP_ACTION = "http://suarpe.com/InsertaEncuesta";
+
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            request.addProperty("opVehi", WSopVehi);
+            request.addProperty("cuestionario", WScuestionario);
+            request.addProperty("pregunta",WSpregunta);
+            request.addProperty("respuesta",WSrespuesta);
+            request.addProperty("califica",WScalifica);
+            request.addProperty("fecha",WSfecha);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE transporte = new HttpTransportSE(URL);
+
+            try
+            {
+                transporte.call(SOAP_ACTION, envelope);
+
+                SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
+                OK = Boolean.parseBoolean(resultado_xml.toString());
+
+            }
+            catch (Exception e)
+            {
+                error = e.toString();
+                resul = false;
+            }
+
+            return resul;
+        }
+
+        protected void onPostExecute(Boolean result) {
+ progressDialog.dismiss();
+            if (!result)
+            {
+
+                Toast.makeText(getBaseContext(),error,Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+    private class TareaWSInsertaencuestaEnc extends AsyncTask<String,Integer,Boolean> {
+
+        String error = "";
+        Boolean OK = false;
+        int pruebaDios = WOfflineID;
+
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
+
+        protected Boolean doInBackground(String... params) {
+
+            boolean resul = true;
+
+
+            final String NAMESPACE = "http://suarpe.com/";
+            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String METHOD_NAME = "InsertaEncuestaEnc";
+            final String SOAP_ACTION = "http://suarpe.com/InsertaEncuestaEnc";
+
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            request.addProperty("opVehi", WSopVehi);
+            request.addProperty("cupon", WScuestionario);
+            request.addProperty("comentario",WScomentario);
+            request.addProperty("email",Wsemail);
+            request.addProperty("califica",WScalifica);
+            request.addProperty("fecha",WSfecha);
+            request.addProperty("firma",WSfirma);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                    SoapEnvelope.VER11);
+
+            new MarshalBase64().register(envelope); // serialization
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE transporte = new HttpTransportSE(URL);
+
+            try
+            {
+                transporte.call(SOAP_ACTION, envelope);
+
+                SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
+                OK = Boolean.parseBoolean(resultado_xml.toString());
+
+            }
+            catch (Exception e)
+            {
+                error = e.toString();
+                resul = false;
+            }
+
+            return resul;
+        }
+
+        protected void onPostExecute(Boolean result) {
+            progressDialog.dismiss();
+            if (!result)
+            {
+
+                Toast.makeText(getBaseContext(),error,Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+    private class TareaWSupdatepickups extends AsyncTask<String,Integer,Boolean> {
+
+        String error = "";
+        Boolean OK = false;
+        int pruebaDios = WOfflineID;
+
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
+
+        protected Boolean doInBackground(String... params) {
+
+            boolean resul = true;
+
+
+            final String NAMESPACE = "http://suarpe.com/";
+            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String METHOD_NAME = "Updatepickups";
+            final String SOAP_ACTION = "http://suarpe.com/Updatepickups";
+
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            request.addProperty("opVehi", WSopVehi);
+            request.addProperty("hentrada", WSentrada);
+            request.addProperty("hsalida",WSsalida);
+
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                    SoapEnvelope.VER11);
+
+            new MarshalBase64().register(envelope); // serialization
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE transporte = new HttpTransportSE(URL);
+
+            try
+            {
+                transporte.call(SOAP_ACTION, envelope);
+
+                SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
+                OK = Boolean.parseBoolean(resultado_xml.toString());
+
+            }
+            catch (Exception e)
+            {
+                error = e.toString();
+                resul = false;
+            }
+
+            return resul;
+        }
+
+        protected void onPostExecute(Boolean result) {
+            progressDialog.dismiss();
+            if (!result)
+            {
+
                 Toast.makeText(getBaseContext(),error,Toast.LENGTH_LONG).show();
             }
 
@@ -1385,28 +1672,28 @@ public class Operacion extends AppCompatActivity {
 
             if (c != null) {
                 if (c.moveToFirst()) {
-                    connection = conexion();
+
                     do {
-                        int opVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
-                        int cuestionario = c.getInt(c.getColumnIndex("idCuestionario"));
-                        String pregunta = c.getString(c.getColumnIndex("pregunta"));
-                        String respuesta=c.getString(c.getColumnIndex("valor_respuesta"));
-                        String fecha = c.getString( c.getColumnIndex("fechaDetalle"));
-                        int califica;
-                        if(respuesta.length()>1){
-                        califica=0;
+                        WSopVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
+                        WScuestionario = c.getInt(c.getColumnIndex("idCuestionario"));
+                        WSpregunta = c.getString(c.getColumnIndex("pregunta"));
+                        WSrespuesta=c.getString(c.getColumnIndex("valor_respuesta"));
+                        WSfecha = c.getString( c.getColumnIndex("fechaDetalle"));
+
+                        if(WSrespuesta.length()>1){
+                        WScalifica=0;
                         }else{
-                            califica=Integer.parseInt(respuesta);
+                            WScalifica=Integer.parseInt(WSrespuesta);
                         }
-                        String sql_inserta_pregunta = ("insert into OpVehiEncuesta (idDetalleOpVehi,idCuestionario,pregunta,respuesta,calificacion,fecha,status) " +
-                                "values  ("+opVehi+","+cuestionario+",'"+pregunta+"','"+respuesta+"',"+califica+",'"+fecha+"',1)" );
-                        Statement statement = connection.createStatement();
-                        statement.executeUpdate(sql_inserta_pregunta);
+                        TareaWSInsertaencuesta tareaWSInsertaencuesta = new TareaWSInsertaencuesta();
+                        boolean str_result= tareaWSInsertaencuesta.execute().get();
 
 
-                        ContentValues vu = new ContentValues();
-                        vu.put("enviado",1);
-                        bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + c.getInt(c.getColumnIndex("idEncuestaDetalle")), null);
+                       if(str_result) {
+                           ContentValues vu = new ContentValues();
+                           vu.put("enviado", 1);
+                           bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + c.getInt(c.getColumnIndex("idEncuestaDetalle")), null);
+                       }
 
                     } while (c.moveToNext());
 
@@ -1414,20 +1701,26 @@ public class Operacion extends AppCompatActivity {
                    if( cd.moveToFirst()) {
                        do {
 
-                           int opVehi = cd.getInt(cd.getColumnIndex("idDetalleOpVehi"));
-                           int cupon = cd.getInt(cd.getColumnIndex("idCupon"));
-                           String hora_entrada=cd.getString(cd.getColumnIndex("hentrada"));
-                           String hora_salida=cd.getString(cd.getColumnIndex("hsalida"));
-                           String comentario = cd.getString(cd.getColumnIndex("comentario"));
-                           String email = cd.getString(cd.getColumnIndex("email"));
-                           String fecha = cd.getString(cd.getColumnIndex("fecha"));
-                           byte[] imgByte = cd.getBlob(cd.getColumnIndex("firma"));
+                           WSopVehi = cd.getInt(cd.getColumnIndex("idDetalleOpVehi"));
+                           WScupon =cd.getString(cd.getColumnIndex("idCupon"));
+                           WSentrada=cd.getString(cd.getColumnIndex("hentrada"));
+                           WSsalida=cd.getString(cd.getColumnIndex("hsalida"));
+                           WScomentario = cd.getString(cd.getColumnIndex("comentario"));
+                           Wsemail = cd.getString(cd.getColumnIndex("email"));
+                           WSfecha = cd.getString(cd.getColumnIndex("fecha"));
+                           WSfirma = cd.getBlob(cd.getColumnIndex("firma"));
 
 
-                           String upd_time_es = "update detalleOpVehi set pickUpIn='"+hora_entrada+"', pickUpOut='"+hora_salida+
-                                   "' where  idDetalleOpVehi="+opVehi;
+                        /*   String upd_time_es = "update detalleOpVehi set pickUpIn='"+hora_entrada+"', pickUpOut='"+hora_salida+
+                                   "' where  idDetalleOpVehi="+WSopVehi;*/
 
-                           String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha,firma) " +
+                           TareaWSupdatepickups tareaWSupdatepickups = new TareaWSupdatepickups();
+                           boolean str_result= tareaWSupdatepickups.execute().get();
+
+                           TareaWSInsertaencuestaEnc tareaWSInsertaencuestaenc = new TareaWSInsertaencuestaEnc();
+                           boolean str_result1= tareaWSInsertaencuestaenc.execute().get();
+
+                          /* String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha,firma) " +
                                    "values  (?,?,?,?,?,?)";
                            PreparedStatement stmt = connection.prepareStatement(sql_inserta_encabezado);
                            stmt.setInt(1, opVehi);
@@ -1437,15 +1730,15 @@ public class Operacion extends AppCompatActivity {
                            stmt.setString(5, fecha);
                            stmt.setBytes(6, imgByte);
                            stmt.executeUpdate();
-                           stmt.close();
-                           Statement statement = connection.createStatement();
+                           stmt.close();*/
 
-                           statement.executeUpdate(upd_time_es);
+                         /*  Statement statement = connection.createStatement();
+                           statement.executeUpdate(upd_time_es);*/
 
                        } while (cd.moveToNext());
                    }
 
-                    connection.close();
+
                     Toast.makeText(getApplicationContext(),"Sincronizado...", Toast.LENGTH_LONG).show();
                     if (BorrarBDLocal()){
                         Intent intent_restart = new Intent(Operacion.this,EncuestaAgregarFolio.class);
@@ -1563,3 +1856,4 @@ public class Operacion extends AppCompatActivity {
     }
 
 }
+

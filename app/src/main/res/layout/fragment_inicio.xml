@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Gracias por proporcionarnos información acerca de su experiencia"
-            android:id="@+id/textView9"
+            android:id="@+id/txtmensaje"
             android:textSize="35dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"

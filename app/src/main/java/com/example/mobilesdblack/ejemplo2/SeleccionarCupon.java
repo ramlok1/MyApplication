@@ -59,7 +59,7 @@ public class SeleccionarCupon extends AppCompatActivity  {
             String hotel = ((TextView) view.findViewById(R.id.lbl_Hotel)).getText().toString();
             variables_publicas.idioma = Integer.parseInt(((TextView) view.findViewById(R.id.lbl_ididioma)).getText().toString());
             variables_publicas.tour_padre = Integer.parseInt(((TextView) view.findViewById(R.id.lbl_tour_padre)).getText().toString());
-            variables_publicas.idcupon=Integer.parseInt(cupon);
+            variables_publicas.numcupon=cupon;
             variables_publicas.id_op_vehi=Integer.parseInt(idetopv);
             variables_publicas.nombre=nombre;
             variables_publicas.hotel=hotel;

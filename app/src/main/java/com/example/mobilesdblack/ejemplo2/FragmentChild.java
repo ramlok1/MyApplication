@@ -204,7 +204,7 @@ public class FragmentChild extends Fragment {
 
 
 
-                            Cursor d = bd.rawQuery("select valor_respuesta from encuestaDetalle where idDetalleOpVehi = "+variables_publicas.id_op_vehi+" and idCupon="+variables_publicas.idcupon+" and idCuestionario="+id_pregunta, null);
+                            Cursor d = bd.rawQuery("select valor_respuesta from encuestaDetalle where idDetalleOpVehi = "+variables_publicas.id_op_vehi+" and idCupon='"+variables_publicas.numcupon+"' and idCuestionario="+id_pregunta, null);
                             if (d != null) {
                                 if (d.moveToFirst()) {
                                     do {
@@ -317,7 +317,7 @@ public class FragmentChild extends Fragment {
         Date date = new Date();
 
 
-        Cursor d = bd.rawQuery("select idEncuestaDetalle from encuestaDetalle where idDetalleOpVehi = "+variables_publicas.id_op_vehi+" and idCupon="+variables_publicas.idcupon+" and idCuestionario="+id_pregunta, null);
+        Cursor d = bd.rawQuery("select idEncuestaDetalle from encuestaDetalle where idDetalleOpVehi = "+variables_publicas.id_op_vehi+" and idCupon='"+variables_publicas.numcupon+"' and idCuestionario="+id_pregunta, null);
         if (d != null) {
             if (d.moveToFirst()) {
                 do {
@@ -336,7 +336,7 @@ public class FragmentChild extends Fragment {
                 c2++;
                 ContentValues cv = new ContentValues();
                 cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
-                cv.put("idCupon", variables_publicas.idcupon);
+                cv.put("idCupon", variables_publicas.numcupon);
                 cv.put("idCuestionario", id_pregunta);
                 cv.put("pregunta", pregunta);
                 if (valor_star==0) {
