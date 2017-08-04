@@ -32,7 +32,7 @@ public class Confirmacion extends AppCompatActivity {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "cuestionarios", null, variables_publicas.version_local_database);
         SQLiteDatabase bd = admin.getWritableDatabase();
-        Cursor d = bd.rawQuery("select titulo,mensaje from encuestaMensaje where idioma = "+variables_publicas.idioma,null);
+        Cursor d = bd.rawQuery("select titulo,mensaje from encuestaMensaje where idioma = "+variables_publicas.idioma+" and titulo!='bmensaje'",null);
         if (d != null) {
             if (d.moveToFirst()) {
                 do {

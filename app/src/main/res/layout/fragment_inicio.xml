@@ -65,7 +65,7 @@
             android:text="Harding Malcolm"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="35dp"
-            android:layout_below="@+id/textView9"
+            android:layout_below="@+id/txtmensaje"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -93,8 +93,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignBottom="@+id/textView12"
-            android:layout_alignEnd="@+id/textView9"
-            android:layout_alignRight="@+id/textView9"
+            android:layout_alignEnd="@+id/txtmensaje"
+            android:layout_alignRight="@+id/txtmensaje"
             android:layout_below="@+id/txtHotelE"
             android:layout_gravity="center"
             android:layout_toRightOf="@+id/textView12"

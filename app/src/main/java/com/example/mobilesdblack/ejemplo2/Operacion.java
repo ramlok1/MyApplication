@@ -1662,6 +1662,8 @@ progressDialog.dismiss();
     }
 
     public void sincroniza_encuesta () {
+
+        boolean err= false;
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
 
         SQLiteDatabase bd = admin.getWritableDatabase();
@@ -1693,7 +1695,7 @@ progressDialog.dismiss();
                            ContentValues vu = new ContentValues();
                            vu.put("enviado", 1);
                            bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + c.getInt(c.getColumnIndex("idEncuestaDetalle")), null);
-                       }
+                       }else{ err=true;}
 
                     } while (c.moveToNext());
 
@@ -1720,6 +1722,7 @@ progressDialog.dismiss();
                            TareaWSInsertaencuestaEnc tareaWSInsertaencuestaenc = new TareaWSInsertaencuestaEnc();
                            boolean str_result1= tareaWSInsertaencuestaenc.execute().get();
 
+                           if(!str_result||!str_result1){err=true;}
                           /* String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha,firma) " +
                                    "values  (?,?,?,?,?,?)";
                            PreparedStatement stmt = connection.prepareStatement(sql_inserta_encabezado);
@@ -1738,19 +1741,17 @@ progressDialog.dismiss();
                        } while (cd.moveToNext());
                    }
 
-
-                    Toast.makeText(getApplicationContext(),"Sincronizado...", Toast.LENGTH_LONG).show();
-                    if (BorrarBDLocal()){
-                        Intent intent_restart = new Intent(Operacion.this,EncuestaAgregarFolio.class);
-                        startActivity(intent_restart);
-                        SalirActividad();
-                    }
-                    else {
-                        Toast.makeText(Operacion.this, "HUBO UN ERROR AL ELIMINAR LA OPERACIÓN DE SU DISPOSITIVO", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(getApplicationContext(),"Nada que sincronizar...", Toast.LENGTH_LONG).show();
+            if(!err) {
+                Toast.makeText(getApplicationContext(), "Sincronizado...", Toast.LENGTH_LONG).show();
+                if (BorrarBDLocal()) {
+                    Intent intent_restart = new Intent(Operacion.this, EncuestaAgregarFolio.class);
+                    startActivity(intent_restart);
+                    SalirActividad();
+                } else {
+                    Toast.makeText(Operacion.this, "HUBO UN ERROR AL ELIMINAR LA OPERACIÓN DE SU DISPOSITIVO", Toast.LENGTH_SHORT).show();
                 }
+            }else{ Toast.makeText(Operacion.this, "Problema al sincronizar, revise conexion he intente", Toast.LENGTH_SHORT).show();}
+                        }
             }
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();

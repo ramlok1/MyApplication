@@ -80,6 +80,7 @@ public class FragmentChild extends Fragment {
             view = inflater.inflate(R.layout.fragment_inicio, container, false);
             TextView name = (TextView) view.findViewById(R.id.txtNombreE);
             TextView hotel = (TextView) view.findViewById(R.id.txtHotelE);
+            TextView bmensaje = (TextView) view.findViewById(R.id.txtmensaje);
 
             name.setText(variables_publicas.nombre);
             hotel.setText(variables_publicas.hotel);
@@ -87,6 +88,23 @@ public class FragmentChild extends Fragment {
 
             final EditText txt_email = (EditText) view.findViewById(R.id.txt_email);
             final Button btn_next = (Button) view.findViewById(R.id.btn_next);
+
+            // Obtener mensaje
+
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(), "cuestionarios", null, variables_publicas.version_local_database);
+            SQLiteDatabase bd = admin.getWritableDatabase();
+            Cursor d = bd.rawQuery("select titulo,mensaje from encuestaMensaje where idioma = "+variables_publicas.idioma+" and titulo='bmensaje'",null);
+            if (d != null) {
+                if (d.moveToFirst()) {
+                    do {
+
+
+                        bmensaje.setText(d.getString(d.getColumnIndex("mensaje")));
+
+                    } while (d.moveToNext());
+                }
+            }
+            d.close();
 
             btn_next.setOnClickListener(new View.OnClickListener() {
                 @Override
