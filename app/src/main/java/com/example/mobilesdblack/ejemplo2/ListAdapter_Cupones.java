@@ -244,8 +244,8 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
             SQLiteDatabase bd = admin.getWritableDatabase();
 
-            Cursor h = bd.rawQuery("select hentrada,hsalida from cupones where numCupon="+p.getProperty(1).toString(), null);
-;
+            Cursor h = bd.rawQuery("select hentrada,hsalida from cupones where numCupon='"+p.getProperty(1).toString()+"'", null);
+
 
 
 

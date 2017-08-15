@@ -17,16 +17,23 @@
             android:textAlignment="center"
             android:textSize="30sp" />
 
-        <LinearLayout
-            android:id="@+id/lay_v_child"
+        <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textViewChild"
-            android:orientation="vertical">
+            android:layout_height="350dp"
+            android:layout_below="@+id/textViewChild">
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lay_v_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/btn_nextc"
@@ -34,10 +41,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/lay_v_child"
+            android:layout_below="@+id/scroll"
             android:layout_marginEnd="59dp"
             android:layout_marginRight="59dp"
-            android:layout_marginTop="41dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/right" />
 
     </RelativeLayout>

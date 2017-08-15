@@ -563,6 +563,7 @@ public class Operacion extends AppCompatActivity {
             //Toast.makeText(this, Lista_Offline.size() + "", Toast.LENGTH_SHORT).show();
 
             for(int i = 0; i < Lista_Offline.size(); i++){
+                boolean str_result;
                 //Toast.makeText(this, Lista_Offline.get(i).idDetalleOpVehi + "" + Lista_Offline.get(i).tipoSolicitud, Toast.LENGTH_SHORT).show();
                 switch (Lista_Offline.get(i).tipoSolicitud){
                     case 1:
@@ -573,14 +574,14 @@ public class Operacion extends AppCompatActivity {
                         WOfflineID = Lista_Offline.get(i).offlineID;
 
                         TareaWSMarcarNoSwhow tareaWSMarcarNoSwhow = new TareaWSMarcarNoSwhow();
-                        tareaWSMarcarNoSwhow.execute();
+                        str_result= tareaWSMarcarNoSwhow.execute().get();
                         break;
                     case 2:
                         WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
                         WScupon = Lista_Offline.get(i).cupon;
 
                         TareaWSCambiarCupon tareaWSCambiarCupon = new TareaWSCambiarCupon();
-                        tareaWSCambiarCupon.execute();
+                         str_result= tareaWSCambiarCupon.execute().get();
                         break;
                     case 3:
 
@@ -590,7 +591,7 @@ public class Operacion extends AppCompatActivity {
                         WSi = Lista_Offline.get(i).i;
 
                         TareaWSCambiarPAX tareaWSCambiarPAX = new TareaWSCambiarPAX();
-                        tareaWSCambiarPAX.execute();
+                         str_result= tareaWSCambiarPAX.execute().get();
                         break;
                     case 4:
                         WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
@@ -601,7 +602,7 @@ public class Operacion extends AppCompatActivity {
                         WSobservacion = Lista_Offline.get(i).observacion;
 
                         TareaWSAbordarSinCupon tareaWSAbordarSinCupon = new TareaWSAbordarSinCupon();
-                        tareaWSAbordarSinCupon.execute();
+                        str_result= tareaWSAbordarSinCupon.execute().get();
                         break;
                     case 5:
 
@@ -612,7 +613,7 @@ public class Operacion extends AppCompatActivity {
                         WOfflineID = Lista_Offline.get(i).offlineID;
 
                         TareaWSAbordar tareaWSAbordar = new TareaWSAbordar();
-                        tareaWSAbordar.execute();
+                        str_result= tareaWSAbordar.execute().get();
                         break;
                     default: break;
                 }
@@ -804,7 +805,7 @@ public class Operacion extends AppCompatActivity {
                     cuponesHoja.numNinos = Integer.parseInt((ic.getProperty(4).toString()));
                     cuponesHoja.numInfantes = Integer.parseInt((ic.getProperty(5).toString()));
                     cuponesHoja.Incentivos = Integer.parseInt((ic.getProperty(6).toString()));
-                    cuponesHoja.Hotel = ic.getProperty(7).toString();
+                    cuponesHoja.Hotel = ic.getProperty(7).toString().trim();
                     cuponesHoja.Habitacion = ic.getProperty(8).toString();
                     cuponesHoja.Idioma = ic.getProperty(9).toString();
                     cuponesHoja.PickUpLobby = ic.getProperty(10).toString();
@@ -1670,7 +1671,8 @@ progressDialog.dismiss();
         try {
             //Sincroniza encuestas
             Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
-            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha,ifnull(b.hentrada,'00:00:00') hentrada,ifnull(b.hsalida,'00:00:00') hsalida, a.firma firma  from encuesta a,cupones b where b.idDetalleOpVehi=a.idDetalleOpVehi and b.numCupon=a.idCupon ", null);
+            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha, a.firma firma  from encuesta a ", null);
+            Cursor cdt = bd.rawQuery("select  idDetalleOpVehi,ifnull(hentrada,'00:00:00') hentrada,ifnull(hsalida,'00:00:00') hsalida  from cupones", null);
 
             if (c != null) {
                 if (c.moveToFirst()) {
@@ -1701,58 +1703,59 @@ progressDialog.dismiss();
 
                     //Sincroniza encabezado encuesta
                    if( cd.moveToFirst()) {
-                       do {
+                        do {
+                            WSopVehi = cd.getInt(cd.getColumnIndex("idDetalleOpVehi"));
+                            WScupon =cd.getString(cd.getColumnIndex("idCupon"));
 
-                           WSopVehi = cd.getInt(cd.getColumnIndex("idDetalleOpVehi"));
-                           WScupon =cd.getString(cd.getColumnIndex("idCupon"));
-                           WSentrada=cd.getString(cd.getColumnIndex("hentrada"));
-                           WSsalida=cd.getString(cd.getColumnIndex("hsalida"));
-                           WScomentario = cd.getString(cd.getColumnIndex("comentario"));
-                           Wsemail = cd.getString(cd.getColumnIndex("email"));
-                           WSfecha = cd.getString(cd.getColumnIndex("fecha"));
-                           WSfirma = cd.getBlob(cd.getColumnIndex("firma"));
+                            WScomentario = cd.getString(cd.getColumnIndex("comentario"));
+                            Wsemail = cd.getString(cd.getColumnIndex("email"));
+                            WSfecha = cd.getString(cd.getColumnIndex("fecha"));
+                            WSfirma = cd.getBlob(cd.getColumnIndex("firma"));
 
 
-                        /*   String upd_time_es = "update detalleOpVehi set pickUpIn='"+hora_entrada+"', pickUpOut='"+hora_salida+
-                                   "' where  idDetalleOpVehi="+WSopVehi;*/
 
-                           TareaWSupdatepickups tareaWSupdatepickups = new TareaWSupdatepickups();
-                           boolean str_result= tareaWSupdatepickups.execute().get();
 
-                           TareaWSInsertaencuestaEnc tareaWSInsertaencuestaenc = new TareaWSInsertaencuestaEnc();
-                           boolean str_result1= tareaWSInsertaencuestaenc.execute().get();
+                            TareaWSInsertaencuestaEnc tareaWSInsertaencuestaenc = new TareaWSInsertaencuestaEnc();
+                            boolean str_result1= tareaWSInsertaencuestaenc.execute().get();
 
-                           if(!str_result||!str_result1){err=true;}
-                          /* String sql_inserta_encabezado = "insert into OpVehiEncuestaEnc (idDetalleOpVehi,numCupon,comentario,email,fecha,firma) " +
-                                   "values  (?,?,?,?,?,?)";
-                           PreparedStatement stmt = connection.prepareStatement(sql_inserta_encabezado);
-                           stmt.setInt(1, opVehi);
-                           stmt.setInt(2, cupon);
-                           stmt.setString(3, comentario);
-                           stmt.setString(4, email);
-                           stmt.setString(5, fecha);
-                           stmt.setBytes(6, imgByte);
-                           stmt.executeUpdate();
-                           stmt.close();*/
+                            if(!str_result1){err=true;}
 
-                         /*  Statement statement = connection.createStatement();
-                           statement.executeUpdate(upd_time_es);*/
+                        } while (cd.moveToNext());
+                    }
 
-                       } while (cd.moveToNext());
-                   }
+
+                        }
+            }
+
+
+            // Sincroniza pickups
+            if( cdt.moveToFirst()) {
+                do {
+                    WSopVehi = cdt.getInt(cdt.getColumnIndex("idDetalleOpVehi"));
+                    WSentrada=cdt.getString(cdt.getColumnIndex("hentrada"));
+                    WSsalida=cdt.getString(cdt.getColumnIndex("hsalida"));
+
+
+                    TareaWSupdatepickups tareaWSupdatepickups = new TareaWSupdatepickups();
+                    boolean str_result=tareaWSupdatepickups.execute().get();
+
+
+
+                    if(!str_result){err=true;}
+
+                } while (cdt.moveToNext());
+            }
 
             if(!err) {
                 Toast.makeText(getApplicationContext(), "Sincronizado...", Toast.LENGTH_LONG).show();
-                if (BorrarBDLocal()) {
+               /* if (BorrarBDLocal()) {
                     Intent intent_restart = new Intent(Operacion.this, EncuestaAgregarFolio.class);
                     startActivity(intent_restart);
                     SalirActividad();
                 } else {
                     Toast.makeText(Operacion.this, "HUBO UN ERROR AL ELIMINAR LA OPERACIÓN DE SU DISPOSITIVO", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }else{ Toast.makeText(Operacion.this, "Problema al sincronizar, revise conexion he intente", Toast.LENGTH_SHORT).show();}
-                        }
-            }
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
