@@ -186,6 +186,7 @@ public class Operacion extends AppCompatActivity {
 
                 TareaWSObtenerCupones tareaWSObtenerCupones = new TareaWSObtenerCupones();
                 tareaWSObtenerCupones.execute();
+
             }else{
                 CargaCuponesLocales();
                 visualiza_cupones();
@@ -253,9 +254,13 @@ public class Operacion extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
 
         super.onCreateContextMenu(menu, v, menuInfo);
-
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
         if(v.getId() == R.id.lstCupones){
-            this.getMenuInflater().inflate(R.menu.menu_options_cupones, menu);
+
+            String st = data.get(info.position).apoyo.toString();
+           // if(st.equals("")) {
+                this.getMenuInflater().inflate(R.menu.menu_options_cupones, menu);
+           // }
         }
 
     }
@@ -392,19 +397,19 @@ public class Operacion extends AppCompatActivity {
 
                     builder.setTitle("ATENCIÓN");
                     builder.setMessage("El estatus actual del cupón se cambiará a Pendiente, ¿está de acuerdo?");
-                        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                    builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                                //TareaWSCambiarCupon tareaWSCambiarCupon = new TareaWSCambiarCupon();
-                                //tareaWSCambiarCupon.execute();
+                            //TareaWSCambiarCupon tareaWSCambiarCupon = new TareaWSCambiarCupon();
+                            //tareaWSCambiarCupon.execute();
 
-                                CambiarStatus(1, numero_cupon);
-                                CargaCuponesLocales();
-                                visualiza_cupones();
-                            }
-                        });
-                        builder.setNegativeButton("No", null);
-                        builder.show();
+                            CambiarStatus(1, numero_cupon);
+                            CargaCuponesLocales();
+                            visualiza_cupones();
+                        }
+                    });
+                    builder.setNegativeButton("No", null);
+                    builder.show();
                     break;
 
               /*  case R.id.mniVerObservaciones:
@@ -581,7 +586,7 @@ public class Operacion extends AppCompatActivity {
                         WScupon = Lista_Offline.get(i).cupon;
 
                         TareaWSCambiarCupon tareaWSCambiarCupon = new TareaWSCambiarCupon();
-                         str_result= tareaWSCambiarCupon.execute().get();
+                        str_result= tareaWSCambiarCupon.execute().get();
                         break;
                     case 3:
 
@@ -591,7 +596,7 @@ public class Operacion extends AppCompatActivity {
                         WSi = Lista_Offline.get(i).i;
 
                         TareaWSCambiarPAX tareaWSCambiarPAX = new TareaWSCambiarPAX();
-                         str_result= tareaWSCambiarPAX.execute().get();
+                        str_result= tareaWSCambiarPAX.execute().get();
                         break;
                     case 4:
                         WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
@@ -636,7 +641,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         try{
 
-            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status from cupones where Habilitado = 1 and Hotel like '%"+ cadena+"%' order by (status = 13) desc, status", null); //where Habilitado = 1
+            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,color from cupones where Habilitado = 1 and Hotel like '%"+ cadena+"%' order by (status = 13) desc, status", null); //where Habilitado = 1
 
             data = null;
             data = new ArrayList<Entity_CuponesHoja>();
@@ -660,7 +665,9 @@ public class Operacion extends AppCompatActivity {
                         datanum.nombreRepresentante = c.getString(c.getColumnIndex("nombreRepresentante"));
                         datanum.Observaciones = c.getString(c.getColumnIndex("Observaciones"));
                         datanum.status = c.getInt(c.getColumnIndex("status"));
-
+                        datanum.color = c.getString(c.getColumnIndex("color"));
+                        if(!datanum.color.equals("N")){datanum.apoyo="apoyo";}
+                        else{datanum.apoyo="";}
                         datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
 
 
@@ -691,7 +698,7 @@ public class Operacion extends AppCompatActivity {
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
 
         SQLiteDatabase bd = admin.getWritableDatabase();
-            try{
+        try{
 
             Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,color from cupones  order by (color='N') desc,color,  status", null);
 
@@ -724,6 +731,10 @@ public class Operacion extends AppCompatActivity {
                         datanum.status = c.getInt(c.getColumnIndex("status"));
                         datanum.color = c.getString(c.getColumnIndex("color"));
 
+                        if(!datanum.color.equals("N")){datanum.apoyo="apoyo";}
+                        else{datanum.apoyo="";}
+
+
                         datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
 
 
@@ -733,7 +744,7 @@ public class Operacion extends AppCompatActivity {
                     //Toast.makeText(this,"Cupones cargados localmente", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                   // Toast.makeText(this, "No existen más cupones pendientes", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "No existen más cupones pendientes", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -770,7 +781,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "ObtenerCupones";
             final String SOAP_ACTION = "http://suarpe.com/ObtenerCupones";
 
@@ -833,6 +844,7 @@ public class Operacion extends AppCompatActivity {
                     alta_cupones(CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color);
 
                 }
+                actualizar_datos_resp_mensaje();
                 CargaCuponesLocales();
 
 
@@ -848,11 +860,12 @@ public class Operacion extends AppCompatActivity {
             return resul;
 
         }
-        
+
         protected void onPostExecute(Boolean result) {
 
             if (result)
             {
+
                 visualiza_cupones();
                 progressDialog.dismiss();
 
@@ -890,7 +903,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL = "http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL = "http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "Abordar";
             final String SOAP_ACTION = "http://suarpe.com/Abordar";
 
@@ -963,7 +976,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "MarcarNoShow";
             final String SOAP_ACTION = "http://suarpe.com/MarcarNoShow";
 
@@ -999,7 +1012,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-        progressDialog.dismiss();
+            progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -1037,7 +1050,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "CambiarCupon";
             final String SOAP_ACTION = "http://suarpe.com/CambiarCupon";
 
@@ -1072,7 +1085,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-        progressDialog.dismiss();
+            progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -1111,7 +1124,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "CambiarPAX";
             final String SOAP_ACTION = "http://suarpe.com/CambiarPAX";
 
@@ -1148,7 +1161,7 @@ public class Operacion extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-progressDialog.dismiss();
+            progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -1187,7 +1200,7 @@ progressDialog.dismiss();
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "AbordarSinCupon";
             final String SOAP_ACTION = "http://suarpe.com/AbordarSinCupon";
 
@@ -1227,7 +1240,7 @@ progressDialog.dismiss();
         }
 
         protected void onPostExecute(Boolean result) {
-        progressDialog.dismiss();
+            progressDialog.dismiss();
             if (result)
             {
                 ExitoWS = OK;
@@ -1265,7 +1278,7 @@ progressDialog.dismiss();
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "InsertaEncuesta";
             final String SOAP_ACTION = "http://suarpe.com/InsertaEncuesta";
 
@@ -1302,7 +1315,7 @@ progressDialog.dismiss();
         }
 
         protected void onPostExecute(Boolean result) {
- progressDialog.dismiss();
+            progressDialog.dismiss();
             if (!result)
             {
 
@@ -1335,7 +1348,7 @@ progressDialog.dismiss();
 
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "InsertaEncuestaEnc";
             final String SOAP_ACTION = "http://suarpe.com/InsertaEncuestaEnc";
 
@@ -1410,7 +1423,7 @@ progressDialog.dismiss();
 
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "Updatepickups";
             final String SOAP_ACTION = "http://suarpe.com/Updatepickups";
 
@@ -1490,10 +1503,10 @@ progressDialog.dismiss();
         Connection conn = null;
         String ConnURL = null;
 
-        String url = "jdbc:jtds:sqlserver://mobilesdSQLIT.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
+        String url = "jdbc:jtds:sqlserver://sqlintep.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
         String driver = "net.sourceforge.jtds.jdbc.Driver";
-        String userName = "usercs";
-        String password = "";
+        String userName = "sa";
+        String password = "Tamalito2017";
 
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
@@ -1519,6 +1532,10 @@ progressDialog.dismiss();
                 "inner join categoriaPregunta cP on cP.idCategoriaPregunta = C.idCategoriaPregunta " +
                 "where CP.idTourPadre = "+tour_padre+" and cP.idIdioma = "+idioma+" and C.status=1");
         ObtenerPreguntasOnline(SQL_Preguntas);
+
+    }
+
+    public void actualizar_datos_resp_mensaje(){
 
         String sql_respuestas= "select idCuestionario,Respuesta,orden from cuestionarioRespuesta ";
         inserta_respuesta(sql_respuestas);
@@ -1549,7 +1566,8 @@ progressDialog.dismiss();
         }
     }
 
-    public void inserta_respuesta(String sql_respuesta){
+    public void
+    inserta_respuesta(String sql_respuesta){
         ResultSet rs;
         try{
             Statement statement = connection.createStatement();
@@ -1565,7 +1583,7 @@ progressDialog.dismiss();
             //Toast.makeText(this, "Datos cargados exitosamente", Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
-
+            String t = e.getMessage();
         }
     }
 
@@ -1684,8 +1702,9 @@ progressDialog.dismiss();
                         WSrespuesta=c.getString(c.getColumnIndex("valor_respuesta"));
                         WSfecha = c.getString( c.getColumnIndex("fechaDetalle"));
 
+                        if(WSrespuesta.equals("")){WSrespuesta = "xxx";}
                         if(WSrespuesta.length()>1){
-                        WScalifica=0;
+                            WScalifica=0;
                         }else{
                             WScalifica=Integer.parseInt(WSrespuesta);
                         }
@@ -1693,16 +1712,16 @@ progressDialog.dismiss();
                         boolean str_result= tareaWSInsertaencuesta.execute().get();
 
 
-                       if(str_result) {
-                           ContentValues vu = new ContentValues();
-                           vu.put("enviado", 1);
-                           bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + c.getInt(c.getColumnIndex("idEncuestaDetalle")), null);
-                       }else{ err=true;}
+                        if(str_result) {
+                            ContentValues vu = new ContentValues();
+                            vu.put("enviado", 1);
+                            bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + c.getInt(c.getColumnIndex("idEncuestaDetalle")), null);
+                        }else{ err=true;}
 
                     } while (c.moveToNext());
 
                     //Sincroniza encabezado encuesta
-                   if( cd.moveToFirst()) {
+                    if( cd.moveToFirst()) {
                         do {
                             WSopVehi = cd.getInt(cd.getColumnIndex("idDetalleOpVehi"));
                             WScupon =cd.getString(cd.getColumnIndex("idCupon"));
@@ -1724,7 +1743,7 @@ progressDialog.dismiss();
                     }
 
 
-                        }
+                }
             }
 
 

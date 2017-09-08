@@ -68,6 +68,10 @@ public class EncuestaCupones extends Activity {
 
     }
 
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
+
     public void ObtenerCuponesOnline(String comandosql){
         ResultSet rs;
         try{

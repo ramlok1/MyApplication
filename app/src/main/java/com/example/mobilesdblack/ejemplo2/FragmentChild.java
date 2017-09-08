@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -66,7 +67,7 @@ public class FragmentChild extends Fragment {
         childname = bundle.getString("data");
         tipo = bundle.getInt("tipo");
         posicion = bundle.getInt("posicion");
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View view ;
         view_parent = inflater.inflate(R.layout.fragment_parent, container, false);
         View view_preguntas = inflater.inflate(R.layout.fragment_child, container, false);
@@ -109,15 +110,11 @@ public class FragmentChild extends Fragment {
             btn_next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(ValidaEmail(txt_email.getText())) {
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         pager = true;
-                    }else{
-                        Toast.makeText(getActivity(),"Invalid Email...",Toast.LENGTH_SHORT).show();
-                    }
-
                 }
             });
+
             txt_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
@@ -249,12 +246,8 @@ public class FragmentChild extends Fragment {
                                 public void onFocusChange(View view, boolean b) {
                                     if(!b){
                                         String resp= txt_resp.getText().toString();
-                                        if(resp.length()<2) {
-                                            Toast.makeText(getActivity(),"Please be more descriptive",Toast.LENGTH_SHORT).show();
-                                        }else
-                                        {
-                                            insert_upd(pregunta_desc,resp,0,id_pregunta);
-                                        }
+                                        insert_upd(pregunta_desc,resp,0,id_pregunta);
+
                                     }
                                 }
                             });

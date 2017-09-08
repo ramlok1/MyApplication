@@ -35,7 +35,7 @@
         <activity
             android:name=".EncuestaActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity
             android:name=".Actualizar_Preguntas"
             android:screenOrientation="landscape" />
@@ -46,15 +46,18 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".EncuestaCupones"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Wizard_Main"
             android:screenOrientation="landscape" />
         <activity
             android:name=".SeleccionarCupon"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ContestarEncuesta"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Confirmacion"

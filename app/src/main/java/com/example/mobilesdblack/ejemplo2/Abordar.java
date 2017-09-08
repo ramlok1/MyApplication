@@ -151,7 +151,7 @@ public class Abordar extends AppCompatActivity {
             TipoErrorWS = 0;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "Abordar";
             final String SOAP_ACTION = "http://suarpe.com/Abordar";
 

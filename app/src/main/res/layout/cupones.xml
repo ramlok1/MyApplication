@@ -173,6 +173,17 @@
             android:textSize="20dp"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/lbl_apoyo"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="#6E6E6E"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/lbl_Observaciones"
             android:layout_width="0px"

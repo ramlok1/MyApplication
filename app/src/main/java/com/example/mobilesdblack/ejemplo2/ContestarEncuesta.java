@@ -72,10 +72,6 @@ public class ContestarEncuesta extends AppCompatActivity {
         btnFinalizaEncuesta = (Button)viex.findViewById(R.id.btnFinalizarEncuesta);
 
 
-        if(variables_publicas.email.isEmpty())
-        {
-          Toast.makeText(getApplicationContext(),"Invalid email, Please type a valid email",Toast.LENGTH_LONG).show();
-        }else{
             try {
                 byte[] firma_imp =revisa_firma();
                 if(firma_imp.length>2000) {
@@ -103,13 +99,10 @@ public class ContestarEncuesta extends AppCompatActivity {
 
             }
 
-        }
+
 
     }
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(false);
-    }
+
 
     public void limpia_firma(View view){
         viex = fragmentParent.ObtenerVistaActual(fragmentParent.posicion);

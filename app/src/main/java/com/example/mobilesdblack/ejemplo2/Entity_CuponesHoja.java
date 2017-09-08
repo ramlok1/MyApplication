@@ -28,6 +28,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
     public int tour_padre;
     public int idIdioma;
     public String color;
+    public String apoyo;
 
 
     public Entity_CuponesHoja()
@@ -50,10 +51,11 @@ public class Entity_CuponesHoja implements KvmSerializable {
         tour_padre = 0;
         idIdioma = 0;
         color = "";
+        apoyo = "";
 
     }
 
-    public Entity_CuponesHoja(int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma, String color)
+    public Entity_CuponesHoja(int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma, String color, String apoyo)
     {
         this.idDetalleOpVehi = iddetalleopvehi;
         this.numCupon = numcupon;
@@ -73,6 +75,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
         this.tour_padre = tour_padre;
         this.idIdioma = idIdioma;
         this.color = color;
+        this.apoyo = apoyo;
 
     }
 
@@ -116,7 +119,11 @@ public class Entity_CuponesHoja implements KvmSerializable {
             case 16:
                 return idIdioma;
             case 17:
-                return color;
+            return color;
+            case 18:
+                return apoyo;
+
+
 
 
         }
@@ -206,6 +213,10 @@ public class Entity_CuponesHoja implements KvmSerializable {
                 info.type = PropertyInfo.STRING_CLASS;
                 info.name = "color";
                 break;
+            case 18:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "apoyo";
+                break;
 
             default:break;
         }
@@ -268,6 +279,9 @@ public class Entity_CuponesHoja implements KvmSerializable {
                 break;
             case 17:
                 color = val.toString();
+                break;
+            case 18:
+                apoyo = val.toString();
                 break;
 
             default:break;

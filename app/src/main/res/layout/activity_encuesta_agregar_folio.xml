@@ -12,12 +12,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:background="#ffffff"
+        android:id="@+id/relativeLayout3"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/lblFecha">
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -207,6 +205,7 @@
             android:layout_alignRight="@+id/lblObservaciones"
             android:layout_alignEnd="@+id/lblObservaciones"
             android:layout_marginBottom="27dp" />
+
     </RelativeLayout>
 
     <TextView

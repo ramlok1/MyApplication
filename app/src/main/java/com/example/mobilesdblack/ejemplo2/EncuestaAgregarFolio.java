@@ -179,7 +179,7 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
             OrdenServicioValida = Boolean.FALSE;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://sql2mobilesd.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
             final String METHOD_NAME = "ObtenerOrdenServicio";
             final String SOAP_ACTION = "http://suarpe.com/ObtenerOrdenServicio";
 

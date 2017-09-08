@@ -63,13 +63,15 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
             Button btnhe = (Button) v.findViewById(R.id.btnhe);
             Button btnhs = (Button) v.findViewById(R.id.btnhs);
+            TextView txtapoyo = (TextView)v.findViewById(R.id.lbl_apoyo);
             LinearLayout lay_color =  (LinearLayout)v.findViewById(R.id.lay_top_cupones);
 
             String color = p.getProperty(17).toString();
 
-            if(color.equals("")){color="#ffffff";}
+            if(color.equals("")){color="#ffffff"; }
 
             if(!color.equals("N")){
+                txtapoyo.setText("apoyo");
                 lay_color.setBackgroundColor(Color.parseColor(color));
             }else{
                 lay_color.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -190,54 +192,55 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
                     textView14.setImageResource(R.drawable.regresarstatus);
                     break;
             }
+         //   if(color.equals("N")) {
+                btnhe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-            btnhe.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                        if (lblhe.getText() == "") {
 
-                    if (lblhe.getText()=="") {
+                            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
 
-                        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
+                                    "cuestionarios", null, variables_publicas.version_local_database);
 
-                                "cuestionarios", null, variables_publicas.version_local_database);
+                            SQLiteDatabase bd = admin.getWritableDatabase();
 
-                        SQLiteDatabase bd = admin.getWritableDatabase();
+                            DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
+                            Date date = new Date();
 
-                        DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
-                        Date date = new Date();
-
-                        ContentValues vu = new ContentValues();
-                        vu.put("hentrada", dateFormat.format(date));
-                        bd.update("cupones", vu, "Hotel= '" + textView7.getText().toString()+"'", null);
-                        bd.close();
-                        ListAdapter_Cupones.this.notifyDataSetChanged();
+                            ContentValues vu = new ContentValues();
+                            vu.put("hentrada", dateFormat.format(date));
+                            bd.update("cupones", vu, "Hotel= '" + textView7.getText().toString() + "'", null);
+                            bd.close();
+                            ListAdapter_Cupones.this.notifyDataSetChanged();
+                        }
                     }
-                }
-            });
+                });
 
 
-            btnhs.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                btnhs.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                    if (lblhs.getText() == "") {
-                        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
+                        if (lblhs.getText() == "") {
+                            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
 
-                                "cuestionarios", null, variables_publicas.version_local_database);
+                                    "cuestionarios", null, variables_publicas.version_local_database);
 
-                        SQLiteDatabase bd = admin.getWritableDatabase();
+                            SQLiteDatabase bd = admin.getWritableDatabase();
 
-                        DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
-                        Date date = new Date();
+                            DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
+                            Date date = new Date();
 
-                        ContentValues vu = new ContentValues();
-                        vu.put("hsalida", dateFormat.format(date));
-                        bd.update("cupones", vu, "Hotel= '" + textView7.getText().toString()+"'", null);
-                        bd.close();
-                        ListAdapter_Cupones.this.notifyDataSetChanged();
+                            ContentValues vu = new ContentValues();
+                            vu.put("hsalida", dateFormat.format(date));
+                            bd.update("cupones", vu, "Hotel= '" + textView7.getText().toString() + "'", null);
+                            bd.close();
+                            ListAdapter_Cupones.this.notifyDataSetChanged();
+                        }
                     }
-                }
-            });
+                });
+           // }
             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
 
                     "cuestionarios", null, variables_publicas.version_local_database);

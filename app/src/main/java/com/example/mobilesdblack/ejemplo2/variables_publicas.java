@@ -11,6 +11,7 @@ public class variables_publicas {
     public static String razon="";
     public static String dir="";
     public static String rfc="";
+    public int apoyo=0;
 
 
 }
