@@ -13,91 +13,153 @@
         android:layout_gravity="right|center_vertical">
 
         <TextView
+            android:id="@+id/txtmensaje"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Gracias por proporcionarnos información acerca de su experiencia"
-            android:id="@+id/txtmensaje"
-            android:textSize="35dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="155dp" />
+            android:layout_marginTop="155dp"
+            android:text="Gracias por proporcionarnos información acerca de su experiencia"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35dp" />
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView12"
-            android:layout_alignRight="@+id/textView12"
-            android:layout_alignTop="@+id/txtNombreE"
+            android:layout_alignLeft="@+id/textView11"
+            android:layout_alignStart="@+id/textView11"
+            android:layout_below="@+id/txtmensaje"
+            android:layout_marginTop="31dp"
             android:text="Nombre:"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="35dp" />
 
         <TextView
+            android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Hotel:"
-            android:id="@+id/textView11"
-            android:textSize="35dp"
+            android:layout_alignLeft="@+id/lblest"
+            android:layout_alignStart="@+id/lblest"
             android:layout_below="@+id/textView10"
-            android:layout_alignLeft="@+id/textView12"
-            android:layout_alignStart="@+id/textView12" />
+            android:text="Hotel:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35dp" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/lblest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35dp"
+            android:layout_below="@+id/txtpais"
+            android:layout_alignLeft="@+id/lblpais"
+            android:layout_alignStart="@+id/lblpais" />
+
+        <TextView
+            android:id="@+id/lbltel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/lblpais"
+            android:layout_alignStart="@+id/lblpais"
+            android:layout_alignTop="@+id/txttelefono"
+            android:text="Telefono:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35dp" />
+
+        <EditText
+            android:id="@+id/txtestado"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textSize="25dp"
+            android:layout_below="@+id/txtpais"
+            android:layout_alignLeft="@+id/txtpais"
+            android:layout_alignStart="@+id/txtpais" />
+
+        <TextView
+            android:id="@+id/lblpais"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView9"
+            android:layout_alignStart="@+id/textView9"
+            android:layout_below="@+id/textView9"
+            android:text="Pais:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35dp" />
+
+        <EditText
+            android:id="@+id/txttelefono"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/txtestado"
+            android:layout_alignStart="@+id/txtestado"
+            android:layout_below="@+id/txtestado"
+            android:layout_gravity="center"
+            android:inputType="textPersonName|phone"
+            android:maxLines="1"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView11"
-            android:layout_marginTop="40dp"
+            android:layout_marginEnd="88dp"
+            android:layout_marginRight="88dp"
             android:layout_toLeftOf="@+id/txtHotelE"
             android:layout_toStartOf="@+id/txtHotelE"
             android:text="E-mail:"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="35dp" />
 
+        <EditText
+            android:id="@+id/txtpais"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/txt_email"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@+id/textView9"
+            android:layout_toRightOf="@+id/textView9"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textSize="25dp" />
+
         <TextView
             android:id="@+id/txtNombreE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="97dp"
+            android:layout_alignBaseline="@+id/textView10"
+            android:layout_alignBottom="@+id/textView10"
+            android:layout_alignLeft="@+id/txtmensaje"
+            android:layout_alignStart="@+id/txtmensaje"
+            android:layout_marginLeft="343dp"
+            android:layout_marginStart="343dp"
             android:text="Harding Malcolm"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="35dp"
-            android:layout_below="@+id/txtmensaje"
-            android:layout_centerHorizontal="true" />
+            android:textSize="35dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/textView14"
-            android:textSize="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="THE ROYAL"
             android:id="@+id/txtHotelE"
-            android:textSize="35dp"
-            android:layout_below="@+id/txtNombreE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/txtNombreE"
-            android:layout_alignStart="@+id/txtNombreE" />
+            android:layout_alignStart="@+id/txtNombreE"
+            android:layout_below="@+id/txtNombreE"
+            android:text="THE ROYAL"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35dp" />
 
         <EditText
             android:id="@+id/txt_email"
-            android:layout_width="match_parent"
+            android:layout_width="600dp"
             android:layout_height="50dp"
-            android:layout_alignBottom="@+id/textView12"
-            android:layout_alignEnd="@+id/txtmensaje"
-            android:layout_alignRight="@+id/txtmensaje"
-            android:layout_below="@+id/txtHotelE"
+            android:layout_alignBottom="@+id/textView9"
             android:layout_gravity="center"
-            android:layout_toRightOf="@+id/textView12"
+            android:layout_toRightOf="@+id/textView9"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:textSize="25dp" />
@@ -107,11 +169,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/right"
-            android:layout_below="@+id/txt_email"
-            android:layout_alignRight="@+id/txt_email"
-            android:layout_alignEnd="@+id/txt_email"
-            android:layout_marginRight="23dp"
-            android:layout_marginEnd="23dp" />
+            android:layout_below="@+id/lblest"
+            android:layout_alignRight="@+id/txtmensaje"
+            android:layout_alignEnd="@+id/txtmensaje"
+            android:layout_marginRight="62dp"
+            android:layout_marginEnd="62dp" />
 
     </RelativeLayout>
 

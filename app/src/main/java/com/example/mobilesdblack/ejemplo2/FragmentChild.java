@@ -2,6 +2,7 @@ package com.example.mobilesdblack.ejemplo2;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.SQLException;
@@ -46,7 +47,7 @@ public class FragmentChild extends Fragment {
 
     String childname, desc_spin;
     int tipo, posicion;
-    TextView textViewChildName;
+    TextView textViewChildName,lblpais,lblestado,lblnumber;
     ViewPager viewPager;
     Boolean pager=false;
     View view_parent;
@@ -83,11 +84,18 @@ public class FragmentChild extends Fragment {
             TextView hotel = (TextView) view.findViewById(R.id.txtHotelE);
             TextView bmensaje = (TextView) view.findViewById(R.id.txtmensaje);
 
+             lblpais = (TextView) view.findViewById(R.id.lblpais);
+             lblestado = (TextView) view.findViewById(R.id.lblest);
+             lblnumber = (TextView) view.findViewById(R.id.lbltel);
+
             name.setText(variables_publicas.nombre);
             hotel.setText(variables_publicas.hotel);
 
 
             final EditText txt_email = (EditText) view.findViewById(R.id.txt_email);
+            final EditText txt_pais = (EditText) view.findViewById(R.id.txtpais);
+            final EditText txt_estado = (EditText) view.findViewById(R.id.txtestado);
+            final EditText txt_tel = (EditText) view.findViewById(R.id.txttelefono);
             final Button btn_next = (Button) view.findViewById(R.id.btn_next);
 
             // Obtener mensaje
@@ -107,6 +115,14 @@ public class FragmentChild extends Fragment {
             }
             d.close();
 
+            /// Seccion de cambio idioma campos
+            if(variables_publicas.idioma==3){
+                lblpais.setText("Country:");
+                lblestado.setText("State:");
+                lblnumber.setText("Phone:");
+            }
+
+
             btn_next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -125,6 +141,33 @@ public class FragmentChild extends Fragment {
                         {
                             variables_publicas.email="";
                         }
+                    }
+                }
+            });
+
+            txt_pais.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if(!b){
+                            variables_publicas.pais="";
+                    }
+                }
+            });
+
+            txt_estado.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if(!b){
+                            variables_publicas.estado="";
+                    }
+                }
+            });
+
+            txt_tel.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if(!b){
+                            variables_publicas.tel="";
                     }
                 }
             });
@@ -324,6 +367,13 @@ public class FragmentChild extends Fragment {
     }
 
     public final  void insert_upd (String pregunta, String resp_abierta, int valor_star, int id_pregunta){
+   if (Integer.toString(variables_publicas.id_op_vehi).length()<2) {
+       Toast.makeText(getActivity(),"Numero de operacion invalido, seleccionar nuevamente el cupon",Toast.LENGTH_SHORT).show();
+       Intent intent = new Intent(getContext(), SeleccionarCupon.class);
+       intent.putExtra("numCupon", variables_publicas.numcupon);
+       startActivity(intent);
+   }
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 

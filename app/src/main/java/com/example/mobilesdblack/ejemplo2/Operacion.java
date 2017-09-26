@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -66,7 +67,7 @@ public class Operacion extends AppCompatActivity {
     EditText txtSearch;
     List<Entity_CuponesHoja> data;
     ListView Lista;
-    TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans,lbloperador,lblobs;
+    TextView txtEncuestasRestantes,lblguia,lblorden,lbltrans,lbloperador,lblobs,lblencuesta,lblcupones;
     View layout_popup;
     ImageView imgEncuesta;
     AlertDialog.Builder builder;
@@ -105,6 +106,7 @@ public class Operacion extends AppCompatActivity {
             visualiza_cupones();
         }
         cabecera();
+        verifica_sincro();
         txtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -243,6 +245,8 @@ public class Operacion extends AppCompatActivity {
         lblorden = (TextView)findViewById(R.id.lblorden);
         lbltrans = (TextView)findViewById(R.id.lblcamioneta);
         lbloperador = (TextView)findViewById(R.id.lbloperador);
+        lblcupones = (TextView)findViewById(R.id.labelcup);
+        lblencuesta = (TextView)findViewById(R.id.labelenc);
         lblobs = (TextView)findViewById(R.id.txt_obs_veh);
         imgEncuesta = (ImageView)findViewById(R.id.imgEncuesta);
         Lista = (ListView) findViewById(R.id.lstCupones);
@@ -492,7 +496,7 @@ public class Operacion extends AppCompatActivity {
     List<Entity_offline> Lista_Offline;
 
     int WSidDetalleOpVehi,WSopVehi,WScuestionario,WScalifica;
-    String WSfolioNoShow,WSpregunta,WSrespuesta,WSfecha,WScomentario,Wsemail,WSentrada,WSsalida;
+    String WSfolioNoShow,WSpregunta,WSrespuesta,WSfecha,WScomentario,Wsemail,WSentrada,WSsalida,WSpais,WSestado,WStel;
     String WSrecibeNoShow;
     String WSsincuponAutoriza;
     String WSobservacion;
@@ -629,6 +633,7 @@ public class Operacion extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
         sincroniza_encuesta();
+        verifica_sincro();
         //progressDialog.dismiss();
 
     }
@@ -1361,6 +1366,9 @@ public class Operacion extends AppCompatActivity {
             request.addProperty("califica",WScalifica);
             request.addProperty("fecha",WSfecha);
             request.addProperty("firma",WSfirma);
+            request.addProperty("pais",Wsemail);
+            request.addProperty("estado",Wsemail);
+            request.addProperty("tel",Wsemail);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);
@@ -1689,7 +1697,7 @@ public class Operacion extends AppCompatActivity {
         try {
             //Sincroniza encuestas
             Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
-            Cursor cd = bd.rawQuery("select a.idDetalleOpVehi,a.idCupon,a.comentario,a.email,a.fecha, a.firma firma  from encuesta a ", null);
+            Cursor cd = bd.rawQuery("select idDetalleOpVehi,idCupon,comentario,email,fecha, firma,pais,estado,tel  from encuesta a ", null);
             Cursor cdt = bd.rawQuery("select  idDetalleOpVehi,ifnull(hentrada,'00:00:00') hentrada,ifnull(hsalida,'00:00:00') hsalida  from cupones", null);
 
             if (c != null) {
@@ -1729,6 +1737,9 @@ public class Operacion extends AppCompatActivity {
                             WScomentario = cd.getString(cd.getColumnIndex("comentario"));
                             Wsemail = cd.getString(cd.getColumnIndex("email"));
                             WSfecha = cd.getString(cd.getColumnIndex("fecha"));
+                            WSpais = cd.getString(cd.getColumnIndex("pais"));
+                            WSestado = cd.getString(cd.getColumnIndex("estado"));
+                            WStel = cd.getString(cd.getColumnIndex("tel"));
                             WSfirma = cd.getBlob(cd.getColumnIndex("firma"));
 
 
@@ -1778,6 +1789,75 @@ public class Operacion extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public boolean verifica_sinc_encuesta () {
+
+        boolean ban= false;
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
+
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        try {
+            //Sincroniza encuestas
+            Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
+
+
+
+            if (c.getCount()>0 ) {
+                    ban=true;
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+
+        return ban;
+    }
+    public boolean verifica_sinc_cupones(){
+
+        boolean ban = false;
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cuestionarios", null, versionBD);
+
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        try{
+
+            Cursor c = bd.rawQuery("select offlineID, idDetalleOpVehi, tipoSolicitud, status, folioNoShow, recibeNoShow, sincuponAutoriza, observacion, a, n, i, cupon from offline where habilitado = 1", null); //where Habilitado = 1
+            Lista_Offline = null;
+            Lista_Offline = new ArrayList<Entity_offline>();
+
+            if (c.getCount()>0 ) {
+                    ban=true;
+            }
+
+            c.close();
+
+            bd.close();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+        sincroniza_encuesta();
+        //progressDialog.dismiss();
+        return ban;
+    }
+    public void verifica_sincro(){
+
+        if(verifica_sinc_cupones()){
+            lblcupones.setText("Cupones por sincronizar");
+            lblcupones.setTextColor(Color.RED);
+        }else{
+            lblcupones.setText("No hay cupones por sincronizar");
+            lblcupones.setTextColor(Color.GREEN);
+        }
+
+        if(verifica_sinc_encuesta()){
+            lblencuesta.setText("Encuestas por sincronizar");
+            lblencuesta.setTextColor(Color.RED);
+        }else{
+            lblencuesta.setText("No hay encuestas por sincronizar");
+            lblencuesta.setTextColor(Color.GREEN);
+        }
+
     }
     private void visualiza_cupones(){
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "cuestionarios", null, versionBD);

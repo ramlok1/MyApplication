@@ -82,6 +82,9 @@ public class ContestarEncuesta extends AppCompatActivity {
                     cv.put("idCupon", variables_publicas.numcupon);
                     cv.put("comentario", "");
                     cv.put("email", variables_publicas.email);
+                    cv.put("pais", variables_publicas.pais);
+                    cv.put("estado", variables_publicas.estado);
+                    cv.put("tel", variables_publicas.tel);
                     cv.put("fecha", dateFormat.format(date));
                     cv.put("firma", firma_imp);
                     signatureView.clearCanvas();

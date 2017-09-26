@@ -48,11 +48,14 @@ public class Confirmacion extends AppCompatActivity {
     public void FinalizarEncuesta(View view){
 
         if (modificar_Contestado(0, numCupon) != 0){
-            Intent intent = new Intent(Confirmacion.this, SeleccionarCupon.class);
-            intent.putExtra("idOpVehi","");
-            startActivity(intent);
-            this.finish();
+         Toast.makeText(this,"Cupon Encuestado...",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this,"Error al generar encuesta de cupon...",Toast.LENGTH_SHORT).show();
         }
+        Intent intent = new Intent(Confirmacion.this, SeleccionarCupon.class);
+        intent.putExtra("idOpVehi","");
+        startActivity(intent);
+        this.finish();
 
     }
     @Override
@@ -77,7 +80,7 @@ public class Confirmacion extends AppCompatActivity {
 
         try {
 
-            cant = bd.update("cupones", registro, "numCupon=" + cupon, null);
+            cant = bd.update("cupones", registro, "numCupon='" + cupon+"'", null);
         }
         catch (Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
