@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,7 +95,25 @@ public class SeleccionarCupon extends AppCompatActivity  {
         idOpVehi = b.getString("idOpVehi");
 
         Inicializar();
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("dfgdf");
 
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_cupon = new Intent(SeleccionarCupon.this,Operacion.class);
+                intent_cupon.putExtra("idOpVehi",Integer.toString(variables_publicas.id_op_vehi));
+                startActivity(intent_cupon);
+            }
+        });
         CargaCuponesLocales();
         Lista.setOnItemClickListener(onListClick);
 
@@ -102,11 +121,7 @@ public class SeleccionarCupon extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
-
-        Intent intent_cupon = new Intent(SeleccionarCupon.this,Operacion.class);
-        intent_cupon.putExtra("idOpVehi",Integer.toString(variables_publicas.id_op_vehi));
-        startActivity(intent_cupon);
-        moveTaskToBack(true);
+        moveTaskToBack(false);
     }
 
     public void AbrirConfiguraciones(View view){

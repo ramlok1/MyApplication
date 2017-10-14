@@ -89,6 +89,7 @@ public class Operacion extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         idOpVehi = b.getString("idOpVehi");
+
         guia = b.getString("guia");
         trans = b.getString("trans");
         chofer = b.getString("chofer");
@@ -142,6 +143,12 @@ public class Operacion extends AppCompatActivity {
 
         InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(txtSearch.getWindowToken(), 0);
+
+        // Canceka boton encuesta en caso de ser apoyo
+        if (variables_publicas.apoyo)
+        {
+            imgEncuesta.setEnabled(false);
+        }
 
     }
 
@@ -201,7 +208,7 @@ public class Operacion extends AppCompatActivity {
     }
 
     // Damos de alta los usuarios en nuestra aplicación
-    public void alta_cupones(long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma,String color ) {
+    public void alta_cupones(long idReservaDetalle,long idOpVehi,long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma,String color ) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -211,6 +218,8 @@ public class Operacion extends AppCompatActivity {
 
         ContentValues registro = new ContentValues();
 
+        registro.put("idReservaDetalle", idReservaDetalle);
+        registro.put("idOpVehi", idOpVehi);
         registro.put("idDetalleOpVehi", idDetalleOpVehi);
         registro.put("numCupon", numCupon);
         registro.put("Huesped", Huesped);
@@ -274,7 +283,7 @@ public class Operacion extends AppCompatActivity {
 
         int selectedItemId = item.getItemId();
 
-        int idDetalleOpVehi = 0;
+        int idReservaDetalle = 0;
 
         int NumAdultos = 0, NumNinos = 0, NumInfantes = 0;
 
@@ -296,7 +305,8 @@ public class Operacion extends AppCompatActivity {
                     NumAdultos = data.get(info.position).numAdultos;
                     NumNinos = data.get(info.position).numNinos;
                     NumInfantes = data.get(info.position).numInfantes;
-                    idDetalleOpVehi = data.get(info.position).idDetalleOpVehi;
+                    idReservaDetalle = data.get(info.position).idReservaDetalle;
+
 
                     Intent intent_cupon = new Intent(Operacion.this,Abordar.class);
                     //intent_cupon.putExtra("cupon4",numero_cupon.substring(numero_cupon.length() - 4,numero_cupon.length()));
@@ -307,7 +317,8 @@ public class Operacion extends AppCompatActivity {
                     intent_cupon.putExtra("numInfantes",NumInfantes);
                     intent_cupon.putExtra("cupon4",numero_cupon.substring(numero_cupon.length() - 4,numero_cupon.length()));
                     intent_cupon.putExtra("cupon",numero_cupon);
-                    intent_cupon.putExtra("idDetalleOpVehi",idDetalleOpVehi);
+                    intent_cupon.putExtra("idReservaDetalle",idReservaDetalle);
+
 
 
                     startActivity(intent_cupon);
@@ -317,12 +328,11 @@ public class Operacion extends AppCompatActivity {
                 case R.id.mniCambiarCupon:
 
                     numero_cupon = data.get(info.position).numCupon.toString();
-                    idDetalleOpVehi = data.get(info.position).idDetalleOpVehi;
+                    idReservaDetalle = data.get(info.position).idReservaDetalle;
 
                     Intent intent = new Intent(Operacion.this,CambioCupon.class);
                     intent.putExtra("cupon",numero_cupon);
-                    intent.putExtra("idDetalleOpVehi",idDetalleOpVehi);
-                    intent.putExtra("vieneDeOperacion", true);
+                    intent.putExtra("idReservaDetalle",idReservaDetalle);
 
                     startActivity(intent);
                     this.finish();
@@ -331,12 +341,12 @@ public class Operacion extends AppCompatActivity {
                 case R.id.mniNoShow:
 
                     numero_cupon = data.get(info.position).numCupon.toString();
-                    idDetalleOpVehi = data.get(info.position).idDetalleOpVehi;
+                    idReservaDetalle = data.get(info.position).idReservaDetalle;
 
                     Intent intentv = new Intent(Operacion.this,NoShow.class);
 
                     intentv.putExtra("cupon",numero_cupon);
-                    intentv.putExtra("idDetalleOpVehi",idDetalleOpVehi);
+                    intentv.putExtra("idReservaDetalle",idReservaDetalle);
                     startActivity(intentv);
                     this.finish();
 
@@ -353,7 +363,7 @@ public class Operacion extends AppCompatActivity {
                     NumAdultos = data.get(info.position).numAdultos;
                     NumNinos = data.get(info.position).numNinos;
                     NumInfantes = data.get(info.position).numInfantes;
-                    idDetalleOpVehi = data.get(info.position).idDetalleOpVehi;
+                    idReservaDetalle = data.get(info.position).idReservaDetalle;
 
                     Intent intentPAX = new Intent(Operacion.this,CambiarPAX.class);
                     //intent_cupon.putExtra("cupon4",numero_cupon.substring(numero_cupon.length() - 4,numero_cupon.length()));
@@ -363,7 +373,7 @@ public class Operacion extends AppCompatActivity {
                     intentPAX.putExtra("numNinos",NumNinos);
                     intentPAX.putExtra("numInfantes",NumInfantes);
                     intentPAX.putExtra("numCupon",numero_cupon);
-                    intentPAX.putExtra("idDetalleOpVehi",idDetalleOpVehi);
+                    intentPAX.putExtra("idReservaDetalle",idReservaDetalle);
 
                     startActivity(intentPAX);
                     this.finish();
@@ -379,7 +389,7 @@ public class Operacion extends AppCompatActivity {
                     NumAdultos = data.get(info.position).numAdultos;
                     NumNinos = data.get(info.position).numNinos;
                     NumInfantes = data.get(info.position).numInfantes;
-                    idDetalleOpVehi = data.get(info.position).idDetalleOpVehi;
+                    idReservaDetalle = data.get(info.position).idReservaDetalle;
 
                     Intent intent4 = new Intent(Operacion.this,AbordarSinCupon.class);
                     //intent4.putExtra("cupon4",numero_cupon.substring(numero_cupon.length() - 4,numero_cupon.length()));
@@ -388,7 +398,7 @@ public class Operacion extends AppCompatActivity {
                     intent4.putExtra("numNinos",NumNinos);
                     intent4.putExtra("numInfantes",NumInfantes);
                     intent4.putExtra("numCupon",numero_cupon);
-                    intent4.putExtra("idDetalleOpVehi",idDetalleOpVehi);
+                    intent4.putExtra("idReservaDetalle",idReservaDetalle);
 
                     startActivity(intent4);
                     this.finish();
@@ -495,7 +505,7 @@ public class Operacion extends AppCompatActivity {
 
     List<Entity_offline> Lista_Offline;
 
-    int WSidDetalleOpVehi,WSopVehi,WScuestionario,WScalifica;
+    int WSidReservaDetalle,WScuestionario,WScalifica;
     String WSfolioNoShow,WSpregunta,WSrespuesta,WSfecha,WScomentario,Wsemail,WSentrada,WSsalida,WSpais,WSestado,WStel;
     String WSrecibeNoShow;
     String WSsincuponAutoriza;
@@ -534,7 +544,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         try{
 
-            Cursor c = bd.rawQuery("select offlineID, idDetalleOpVehi, tipoSolicitud, status, folioNoShow, recibeNoShow, sincuponAutoriza, observacion, a, n, i, cupon from offline where habilitado = 1", null); //where Habilitado = 1
+            Cursor c = bd.rawQuery("select offlineID, idReservaDetalle, tipoSolicitud, status, folioNoShow, recibeNoShow, sincuponAutoriza, observacion, a, n, i, cupon from offline where habilitado = 1", null); //where Habilitado = 1
             Lista_Offline = null;
             Lista_Offline = new ArrayList<Entity_offline>();
 
@@ -543,7 +553,7 @@ public class Operacion extends AppCompatActivity {
 
                     do {
                         Entity_offline data_off = new Entity_offline();
-                        data_off.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
+                        data_off.idReservaDetalle = c.getInt(c.getColumnIndex("idReservaDetalle"));
                         data_off.tipoSolicitud = c.getInt(c.getColumnIndex("tipoSolicitud"));
                         data_off.status = c.getInt(c.getColumnIndex("status"));
                         data_off.folioNoShow = c.getString(c.getColumnIndex("folioNoShow"));
@@ -576,7 +586,7 @@ public class Operacion extends AppCompatActivity {
                 //Toast.makeText(this, Lista_Offline.get(i).idDetalleOpVehi + "" + Lista_Offline.get(i).tipoSolicitud, Toast.LENGTH_SHORT).show();
                 switch (Lista_Offline.get(i).tipoSolicitud){
                     case 1:
-                        WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
+                        WSidReservaDetalle = Lista_Offline.get(i).idReservaDetalle;
                         WSfolioNoShow = Lista_Offline.get(i).folioNoShow;
                         WSrecibeNoShow = Lista_Offline.get(i).recibeNoShow;
                         WSobservacion = Lista_Offline.get(i).observacion;
@@ -586,7 +596,7 @@ public class Operacion extends AppCompatActivity {
                         str_result= tareaWSMarcarNoSwhow.execute().get();
                         break;
                     case 2:
-                        WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
+                        WSidReservaDetalle = Lista_Offline.get(i).idReservaDetalle;
                         WScupon = Lista_Offline.get(i).cupon;
 
                         TareaWSCambiarCupon tareaWSCambiarCupon = new TareaWSCambiarCupon();
@@ -594,7 +604,7 @@ public class Operacion extends AppCompatActivity {
                         break;
                     case 3:
 
-                        WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
+                        WSidReservaDetalle = Lista_Offline.get(i).idReservaDetalle;
                         WSa = Lista_Offline.get(i).a;
                         WSn = Lista_Offline.get(i).n;
                         WSi = Lista_Offline.get(i).i;
@@ -603,7 +613,7 @@ public class Operacion extends AppCompatActivity {
                         str_result= tareaWSCambiarPAX.execute().get();
                         break;
                     case 4:
-                        WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
+                        WSidReservaDetalle = Lista_Offline.get(i).idReservaDetalle;
                         WSa = Lista_Offline.get(i).a;
                         WSn = Lista_Offline.get(i).n;
                         WSi = Lista_Offline.get(i).i;
@@ -615,7 +625,7 @@ public class Operacion extends AppCompatActivity {
                         break;
                     case 5:
 
-                        WSidDetalleOpVehi = Lista_Offline.get(i).idDetalleOpVehi;
+                        WSidReservaDetalle = Lista_Offline.get(i).idReservaDetalle;
                         WSa = Lista_Offline.get(i).a;
                         WSn = Lista_Offline.get(i).n;
                         WSi = Lista_Offline.get(i).i;
@@ -705,7 +715,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         try{
 
-            Cursor c = bd.rawQuery("select idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,color from cupones  order by (color='N') desc,color,  status", null);
+            Cursor c = bd.rawQuery("select idReservaDetalle, idOpVehi, idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,color from cupones  order by (color='N') desc,color,  status", null);
 
 
 
@@ -720,6 +730,8 @@ public class Operacion extends AppCompatActivity {
 
                     do {
                         Entity_CuponesHoja datanum = new Entity_CuponesHoja();
+                        datanum.idReservaDetalle=c.getInt(c.getColumnIndex("idReservaDetalle"));
+                        datanum.idOpVehi=c.getInt(c.getColumnIndex("idOpVehi"));
                         datanum.numCupon = c.getString(c.getColumnIndex("numCupon"));
                         datanum.Huesped = c.getString(c.getColumnIndex("Huesped"));
                         datanum.numAdultos = c.getInt(c.getColumnIndex("numAdultos"));
@@ -742,7 +754,7 @@ public class Operacion extends AppCompatActivity {
 
                         datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
 
-
+                        variables_publicas.id_op_vehi=datanum.idOpVehi;
                         data.add(datanum);
 
                     }while (c.moveToNext());
@@ -786,13 +798,14 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "ObtenerCupones";
             final String SOAP_ACTION = "http://suarpe.com/ObtenerCupones";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("idOpVehi", Long.parseLong(idOpVehi));
+            request.addProperty("apoyo", variables.apoyo);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -814,24 +827,26 @@ public class Operacion extends AppCompatActivity {
 
 
                     Entity_CuponesHoja cuponesHoja = new Entity_CuponesHoja();
-                    cuponesHoja.idDetalleOpVehi = Integer.parseInt((ic.getProperty(0).toString()));
-                    cuponesHoja.numCupon = ic.getProperty(1).toString();
-                    cuponesHoja.Huesped = ic.getProperty(2).toString();
-                    cuponesHoja.numAdultos = Integer.parseInt((ic.getProperty(3).toString()));
-                    cuponesHoja.numNinos = Integer.parseInt((ic.getProperty(4).toString()));
-                    cuponesHoja.numInfantes = Integer.parseInt((ic.getProperty(5).toString()));
-                    cuponesHoja.Incentivos = Integer.parseInt((ic.getProperty(6).toString()));
-                    cuponesHoja.Hotel = ic.getProperty(7).toString().trim();
-                    cuponesHoja.Habitacion = ic.getProperty(8).toString();
-                    cuponesHoja.Idioma = ic.getProperty(9).toString();
-                    cuponesHoja.PickUpLobby = ic.getProperty(10).toString();
-                    cuponesHoja.nombreAgencia = ic.getProperty(11).toString();
-                    cuponesHoja.nombreRepresentante = ic.getProperty(12).toString();
-                    cuponesHoja.Observaciones = ic.getProperty(13).toString();
-                    cuponesHoja.status = Integer.parseInt((ic.getProperty(14).toString()));
-                    cuponesHoja.tour_padre = Integer.parseInt((ic.getProperty(15).toString()));
-                    cuponesHoja.idIdioma = Integer.parseInt((ic.getProperty(16).toString()));
-                    cuponesHoja.color = ic.getProperty(17).toString();
+                    cuponesHoja.idReservaDetalle = Integer.parseInt((ic.getProperty(0).toString()));
+                    cuponesHoja.idOpVehi = Integer.parseInt((ic.getProperty(1).toString()));
+                    cuponesHoja.idDetalleOpVehi = Integer.parseInt((ic.getProperty(2).toString()));
+                    cuponesHoja.numCupon = ic.getProperty(3).toString();
+                    cuponesHoja.Huesped = ic.getProperty(4).toString();
+                    cuponesHoja.numAdultos = Integer.parseInt((ic.getProperty(5).toString()));
+                    cuponesHoja.numNinos = Integer.parseInt((ic.getProperty(6).toString()));
+                    cuponesHoja.numInfantes = Integer.parseInt((ic.getProperty(7).toString()));
+                    cuponesHoja.Incentivos = Integer.parseInt((ic.getProperty(8).toString()));
+                    cuponesHoja.Hotel = ic.getProperty(9).toString().trim();
+                    cuponesHoja.Habitacion = ic.getProperty(10).toString();
+                    cuponesHoja.Idioma = ic.getProperty(11).toString();
+                    cuponesHoja.PickUpLobby = ic.getProperty(12).toString();
+                    cuponesHoja.nombreAgencia = ic.getProperty(13).toString();
+                    cuponesHoja.nombreRepresentante = ic.getProperty(14).toString();
+                    cuponesHoja.Observaciones = ic.getProperty(15).toString();
+                    cuponesHoja.status = Integer.parseInt((ic.getProperty(16).toString()));
+                    cuponesHoja.tour_padre = Integer.parseInt((ic.getProperty(17).toString()));
+                    cuponesHoja.idIdioma = Integer.parseInt((ic.getProperty(18).toString()));
+                    cuponesHoja.color = ic.getProperty(19).toString();
 
                     CuponesHoja[i] = cuponesHoja;
                 }
@@ -846,7 +861,7 @@ public class Operacion extends AppCompatActivity {
                         l_touridi.add(ti_data);
                         actualizar_preguntas(CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma);
                     }
-                    alta_cupones(CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color);
+                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color);
 
                 }
                 actualizar_datos_resp_mensaje();
@@ -908,13 +923,14 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL = "http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL = "http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "Abordar";
             final String SOAP_ACTION = "http://suarpe.com/Abordar";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("idDetalleOpVehi", WSidDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
             request.addProperty("status", 14);
             request.addProperty("numAdulto", WSa);
             request.addProperty("numNino", WSn);
@@ -981,14 +997,15 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "MarcarNoShow";
             final String SOAP_ACTION = "http://suarpe.com/MarcarNoShow";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("status", 11);
-            request.addProperty("idDetalleOpVehi", WSidDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
             request.addProperty("NoFolio",WSfolioNoShow);
             request.addProperty("AQuienSeEntrega",WSrecibeNoShow);
             request.addProperty("Motivo",WSobservacion);
@@ -1055,14 +1072,15 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "CambiarCupon";
             final String SOAP_ACTION = "http://suarpe.com/CambiarCupon";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("numCupon", ""); //INUTIL
-            request.addProperty("idDetalleOpVehi", WSidDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
             request.addProperty("nuevoNumCupon", WScupon);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -1129,13 +1147,14 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "CambiarPAX";
             final String SOAP_ACTION = "http://suarpe.com/CambiarPAX";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("idDetalleOpVehi", WSidDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
             request.addProperty("numAdulto", WSa);
             request.addProperty("numNino", WSn);
             request.addProperty("numInfante", WSi);
@@ -1205,13 +1224,14 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "AbordarSinCupon";
             final String SOAP_ACTION = "http://suarpe.com/AbordarSinCupon";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("idDetalleOpVehi", WSidDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
             request.addProperty("status", 12);
             request.addProperty("numAdulto", WSa);
             request.addProperty("numNino", WSn);
@@ -1283,13 +1303,13 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "InsertaEncuesta";
             final String SOAP_ACTION = "http://suarpe.com/InsertaEncuesta";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("opVehi", WSopVehi);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
             request.addProperty("cuestionario", WScuestionario);
             request.addProperty("pregunta",WSpregunta);
             request.addProperty("respuesta",WSrespuesta);
@@ -1353,22 +1373,22 @@ public class Operacion extends AppCompatActivity {
 
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "InsertaEncuestaEnc";
             final String SOAP_ACTION = "http://suarpe.com/InsertaEncuestaEnc";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("opVehi", WSopVehi);
-            request.addProperty("cupon", WScuestionario);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
+            request.addProperty("cupon", WScupon);
             request.addProperty("comentario",WScomentario);
             request.addProperty("email",Wsemail);
             request.addProperty("califica",WScalifica);
             request.addProperty("fecha",WSfecha);
             request.addProperty("firma",WSfirma);
-            request.addProperty("pais",Wsemail);
-            request.addProperty("estado",Wsemail);
-            request.addProperty("tel",Wsemail);
+            request.addProperty("pais",WSpais);
+            request.addProperty("estado",WSestado);
+            request.addProperty("tel",WStel);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);
@@ -1431,13 +1451,14 @@ public class Operacion extends AppCompatActivity {
 
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "Updatepickups";
             final String SOAP_ACTION = "http://suarpe.com/Updatepickups";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("opVehi", WSopVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", WSidReservaDetalle);
             request.addProperty("hentrada", WSentrada);
             request.addProperty("hsalida",WSsalida);
 
@@ -1574,8 +1595,7 @@ public class Operacion extends AppCompatActivity {
         }
     }
 
-    public void
-    inserta_respuesta(String sql_respuesta){
+    public void inserta_respuesta(String sql_respuesta){
         ResultSet rs;
         try{
             Statement statement = connection.createStatement();
@@ -1696,21 +1716,21 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         try {
             //Sincroniza encuestas
-            Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
-            Cursor cd = bd.rawQuery("select idDetalleOpVehi,idCupon,comentario,email,fecha, firma,pais,estado,tel  from encuesta a ", null);
-            Cursor cdt = bd.rawQuery("select  idDetalleOpVehi,ifnull(hentrada,'00:00:00') hentrada,ifnull(hsalida,'00:00:00') hsalida  from cupones", null);
+            Cursor c = bd.rawQuery("select idEncuestaDetalle,idReservaDetalle,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
+            Cursor cd = bd.rawQuery("select idReservaDetalle,idCupon,comentario,email,fecha, firma,pais,estado,tel  from encuesta a ", null);
+            Cursor cdt = bd.rawQuery("select  idReservaDetalle,ifnull(hentrada,'00:00:00') hentrada,ifnull(hsalida,'00:00:00') hsalida  from cupones", null);
 
             if (c != null) {
                 if (c.moveToFirst()) {
 
                     do {
-                        WSopVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
+                        WSidReservaDetalle = c.getInt(c.getColumnIndex("idReservaDetalle"));
                         WScuestionario = c.getInt(c.getColumnIndex("idCuestionario"));
                         WSpregunta = c.getString(c.getColumnIndex("pregunta"));
                         WSrespuesta=c.getString(c.getColumnIndex("valor_respuesta"));
                         WSfecha = c.getString( c.getColumnIndex("fechaDetalle"));
 
-                        if(WSrespuesta.equals("")){WSrespuesta = "xxx";}
+                        if(WSrespuesta.equals("")){WSrespuesta = "na";}
                         if(WSrespuesta.length()>1){
                             WScalifica=0;
                         }else{
@@ -1731,7 +1751,7 @@ public class Operacion extends AppCompatActivity {
                     //Sincroniza encabezado encuesta
                     if( cd.moveToFirst()) {
                         do {
-                            WSopVehi = cd.getInt(cd.getColumnIndex("idDetalleOpVehi"));
+                            WSidReservaDetalle = cd.getInt(cd.getColumnIndex("idReservaDetalle"));
                             WScupon =cd.getString(cd.getColumnIndex("idCupon"));
 
                             WScomentario = cd.getString(cd.getColumnIndex("comentario"));
@@ -1761,7 +1781,7 @@ public class Operacion extends AppCompatActivity {
             // Sincroniza pickups
             if( cdt.moveToFirst()) {
                 do {
-                    WSopVehi = cdt.getInt(cdt.getColumnIndex("idDetalleOpVehi"));
+                    WSidReservaDetalle = cdt.getInt(cdt.getColumnIndex("idReservaDetalle"));
                     WSentrada=cdt.getString(cdt.getColumnIndex("hentrada"));
                     WSsalida=cdt.getString(cdt.getColumnIndex("hsalida"));
 
@@ -1799,7 +1819,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         try {
             //Sincroniza encuestas
-            Cursor c = bd.rawQuery("select idEncuestaDetalle,idDetalleOpVehi,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
+            Cursor c = bd.rawQuery("select idEncuestaDetalle,idReservaDetalle,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
 
 
 
@@ -1822,7 +1842,7 @@ public class Operacion extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         try{
 
-            Cursor c = bd.rawQuery("select offlineID, idDetalleOpVehi, tipoSolicitud, status, folioNoShow, recibeNoShow, sincuponAutoriza, observacion, a, n, i, cupon from offline where habilitado = 1", null); //where Habilitado = 1
+            Cursor c = bd.rawQuery("select offlineID, idReservaDetalle, tipoSolicitud, status, folioNoShow, recibeNoShow, sincuponAutoriza, observacion, a, n, i, cupon from offline where habilitado = 1", null); //where Habilitado = 1
             Lista_Offline = null;
             Lista_Offline = new ArrayList<Entity_offline>();
 
@@ -1836,7 +1856,7 @@ public class Operacion extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
-        sincroniza_encuesta();
+        verifica_sinc_encuesta();
         //progressDialog.dismiss();
         return ban;
     }
@@ -1891,18 +1911,17 @@ public class Operacion extends AppCompatActivity {
 
 
         txtEncuestasRestantes.setText("" + Pendientes);
-        imgEncuesta.setEnabled(true);
-        imgEncuesta.setVisibility(View.VISIBLE);
     }
 
     private void cabecera(){
+        int apoyob=0;
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
                 "cuestionarios", null, versionBD);
 
         SQLiteDatabase bd = admin.getWritableDatabase();
 
-        Cursor v = bd.rawQuery("select idopveh, guia, camioneta, operador,obs from vehiculo", null);
+        Cursor v = bd.rawQuery("select idopveh, guia, camioneta, operador,obs,apoyo from vehiculo", null);
 
 
 
@@ -1914,9 +1933,11 @@ public class Operacion extends AppCompatActivity {
                 lbltrans.setText(v.getString(v.getColumnIndex("camioneta")));
                 lbloperador.setText(v.getString(v.getColumnIndex("operador")));
                 lblobs.setText(v.getString(v.getColumnIndex("obs")));
-                //v.getString(v.getColumnIndex("operador"));
+                apoyob=v.getInt(v.getColumnIndex("apoyo"));
             }
         }
+
+        variables_publicas.apoyo= apoyob==1?true:false;
     }
 
     public void popup_window(View view){

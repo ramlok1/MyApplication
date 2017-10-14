@@ -95,8 +95,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
-            android:onClick="popup_window"
             android:background="@drawable/ver"
+            android:onClick="popup_window"
             app:srcCompat="@drawable/edittextstyle" />
 
         <ImageView

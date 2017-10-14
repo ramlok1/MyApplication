@@ -12,7 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +32,7 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
     String fecha;
     TextView txtGuia, txtVehiculo, txtTransporte;
     EditText txtFolio;
-
+    boolean apoyo = false;
     String folioString;
     Long folioLong;
 
@@ -40,7 +42,7 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
     int idGuia;
 
     variables_publicas variables=new variables_publicas();
-
+    private Entity_OrdenServicio[] OrdenServicio;
     private Integer versionBD = variables.version_local_database;
 /*
     @Override
@@ -71,7 +73,17 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
         Inicializar();
         //SetFecha();
 
+        Switch s = (Switch) findViewById(R.id.swapoyo);
 
+        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    apoyo=true;
+                } else {
+                   apoyo=false;
+                }
+            }
+        });
 
         btn_BuscarFolio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +107,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
             }
         });
 
+
+
         btn_CrearEncuesta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +125,7 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
                     intent_cupon.putExtra("trans",txtTransporte.getText());
                     intent_cupon.putExtra("chofer",chofer);
                     intent_cupon.putExtra("obs",obs);
+                    variables_publicas.apoyo=apoyo;
                     startActivity(intent_cupon);
                 }
                 else{
@@ -120,6 +135,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
         });
 
     }
+
+
 
     public void alta(Long idOpVehi, Boolean Habilitado, Boolean enviado, int idGuia ) {
 
@@ -135,6 +152,10 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
         cv.put("camioneta", txtTransporte.getText().toString());
         cv.put("operador", chofer);
         cv.put("obs", obs);
+        cv.put("rfc", OrdenServicio[0].rfc);
+        cv.put("razon", OrdenServicio[0].razon);
+        cv.put("dir", OrdenServicio[0].dir);
+        cv.put("apoyo",apoyo?1:0);
 
 
         bd.insert("vehiculo", null, cv);
@@ -161,7 +182,7 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
 
     private class TareaWSObtenerOrdenServicio extends AsyncTask<String,Integer,Boolean> {
 
-        private Entity_OrdenServicio[] OrdenServicio;
+
         ProgressDialog progressDialog = new ProgressDialog(EncuestaAgregarFolio.this);
         @Override
         protected void onPreExecute() {
@@ -179,13 +200,15 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
             OrdenServicioValida = Boolean.FALSE;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "ObtenerOrdenServicio";
             final String SOAP_ACTION = "http://suarpe.com/ObtenerOrdenServicio";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("idOpVehi", folioLong);
+            request.addProperty("apoyo", apoyo);
+
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -214,6 +237,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
                     cli.rfc=ic.getProperty(6).toString();
                     cli.razon=ic.getProperty(7).toString();
                     cli.dir=ic.getProperty(8).toString();
+                    cli.licencia=ic.getProperty(9).toString();
+                    cli.tour=ic.getProperty(10).toString();
                     idGuia = cli.idGuia = Integer.parseInt((ic.getProperty(3).toString()));
 
                     OrdenServicio[i] = cli;

@@ -206,6 +206,19 @@
             android:layout_alignEnd="@+id/lblObservaciones"
             android:layout_marginBottom="27dp" />
 
+        <Switch
+            android:id="@+id/swapoyo"
+            style="@style/SCBSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/btn_buscarFolio"
+            android:layout_alignRight="@+id/btn_buscarFolio"
+            android:layout_below="@+id/btn_buscarFolio"
+            android:layout_marginTop="39dp"
+            android:text="Activar en caso de ser Van de Apoyo: "
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp" />
+
     </RelativeLayout>
 
     <TextView
@@ -218,5 +231,18 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lblFecha"
+        android:layout_marginLeft="370dp"
+        android:layout_marginStart="370dp"
+        android:layout_marginTop="183dp"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
 </RelativeLayout>

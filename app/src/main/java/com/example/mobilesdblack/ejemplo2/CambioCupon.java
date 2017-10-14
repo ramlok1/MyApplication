@@ -42,12 +42,12 @@ public class CambioCupon extends AppCompatActivity {
 
     Boolean VieneDeOperacion = false;
 
-    int idDetalleOpVehi = 0;
+    int idReservaDetalle = 0;
 
     Boolean cupon_cambiado = false;
 
-    variables_publicas variables=new variables_publicas();
-    private Integer versionBD = variables.version_local_database;
+
+    private Integer versionBD = variables_publicas.version_local_database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,9 @@ public class CambioCupon extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         cupon_numero = b.getString("cupon");
-        idDetalleOpVehi = b.getInt("idDetalleOpVehi");
-        VieneDeOperacion = b.getBoolean("vieneDeOperacion");
+        idReservaDetalle = b.getInt("idReservaDetalle");
+        VieneDeOperacion = true;
+
 
         FolioACambiar = (EditText)findViewById(R.id.txtNuevoCupon);
         lblCupon = (TextView)findViewById(R.id.txtCupon);
@@ -104,14 +105,14 @@ public class CambioCupon extends AppCompatActivity {
         if (cupon_cambiado){
             builder.setTitle("OK");
             builder.setMessage("¡Cupón actualizado exitosamente!");
-            modificar_Cupon(idDetalleOpVehi, numCupon);
+            modificar_Cupon(idReservaDetalle, numCupon);
         }
         else{
             if (TipoErrorWS != 2){
                 builder.setTitle("OK - Offline");
                 builder.setMessage("¡Cupón actualizado exitosamente! - Modo Offline");
-                modificar_Cupon(idDetalleOpVehi, numCupon);
-                InsertarOffline(idDetalleOpVehi, 2, 0, "", "", "", "", 0, 0, 0, numCupon, true );
+                modificar_Cupon(idReservaDetalle, numCupon);
+                InsertarOffline(idReservaDetalle, 2, 0, "", "", "", "", 0, 0, 0, numCupon, true );
 
             }
             else{
@@ -208,7 +209,7 @@ public class CambioCupon extends AppCompatActivity {
         }
     }
 
-    public void InsertarOffline(int idDetalleOpVehi, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
+    public void InsertarOffline(int _idReservaDetalle, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -218,7 +219,8 @@ public class CambioCupon extends AppCompatActivity {
 
         ContentValues registro = new ContentValues();
 
-        registro.put("idDetalleOpVehi", idDetalleOpVehi);
+        registro.put("idOpVehi", variables_publicas.id_op_vehi);
+        registro.put("idReservaDetalle", _idReservaDetalle);
         registro.put("tipoSolicitud", tipoSolicitud);
         registro.put("status", status);
         registro.put("folioNoShow", folioNoShow);
@@ -289,14 +291,15 @@ public class CambioCupon extends AppCompatActivity {
             TipoErrorWS = 0;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "CambiarCupon";
             final String SOAP_ACTION = "http://suarpe.com/CambiarCupon";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("numCupon", cupon_numero); //INUTIL
-            request.addProperty("idDetalleOpVehi", idDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", idReservaDetalle);
             request.addProperty("nuevoNumCupon", numCupon);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -354,7 +357,7 @@ public class CambioCupon extends AppCompatActivity {
         }
     }
 
-    public int modificar_Cupon(int _idDetalleOpVehi, String nuevoCupon) {
+    public int modificar_Cupon(int _idReservaDetalle, String nuevoCupon) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -371,7 +374,7 @@ public class CambioCupon extends AppCompatActivity {
 
         try {
 
-            cant = bd.update("cupones", registro, "idDetalleOpVehi=" + _idDetalleOpVehi, null);
+            cant = bd.update("cupones", registro, "idReservaDetalle=" + _idReservaDetalle, null);
         }
         catch (Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)

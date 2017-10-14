@@ -43,7 +43,7 @@ public class Abordar extends AppCompatActivity {
 
     Button btnCambiarPAX;
 
-    int idDetalleOpVehi = 0;
+    int idReservaDetalle = 0;
     int TipoErrorWS = 0;
 
     Boolean pasajero_abordo = false;
@@ -70,7 +70,7 @@ public class Abordar extends AppCompatActivity {
         NumInfantes = b.getInt("numInfantes");
         cupon_numero = b.getString("cupon");
         cupon_numero4 = b.getString("cupon4");
-        idDetalleOpVehi = b.getInt("idDetalleOpVehi");
+        idReservaDetalle = b.getInt("idReservaDetalle");
 
 
         ETNumAdultos.setText(NumAdultos+"");
@@ -107,8 +107,8 @@ public class Abordar extends AppCompatActivity {
                                 tareaWSAbordar.cancel(true);
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
-                            CambiarStatus(14, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                            InsertarOffline(idDetalleOpVehi, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true);
+                            CambiarStatus(14, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
+                            InsertarOffline(idReservaDetalle, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true);
                             variables_publicas.offline = true;
                             SalirActividad();
 
@@ -120,8 +120,8 @@ public class Abordar extends AppCompatActivity {
                     //startActivity(intent);
                 }else {
                     Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
-                    CambiarStatus(14, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                    InsertarOffline(idDetalleOpVehi, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true);
+                    CambiarStatus(14, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
+                    InsertarOffline(idReservaDetalle, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true);
 
                     SalirActividad();
 
@@ -151,13 +151,14 @@ public class Abordar extends AppCompatActivity {
             TipoErrorWS = 0;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "Abordar";
             final String SOAP_ACTION = "http://suarpe.com/Abordar";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("idDetalleOpVehi", idDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", idReservaDetalle);
             request.addProperty("status", 14);
             request.addProperty("numAdulto", NumAdultos);
             request.addProperty("numNino", NumNinos);
@@ -227,14 +228,14 @@ public class Abordar extends AppCompatActivity {
         if (pasajero_abordo){
             builder.setTitle("OK");
             builder.setMessage("¡Pasajero(s) a bordo!");
-            CambiarStatus(14, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+            CambiarStatus(14, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
         }
         else{
             if (TipoErrorWS != 2){
                 builder.setTitle("OK - Offline");
                 builder.setMessage("¡Pasajero(s) a bordo! - Modo Offline");
-                        CambiarStatus(14, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                InsertarOffline(idDetalleOpVehi, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true );
+                        CambiarStatus(14, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
+                InsertarOffline(idReservaDetalle, 5, 14, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true );
                 variables_publicas.offline=true;
             }
             else{
@@ -254,7 +255,7 @@ public class Abordar extends AppCompatActivity {
 
     }
 
-    private int CambiarStatus(int status, int _idDetalleOpVehi, int A, int N, int I) {
+    private int CambiarStatus(int status, int _idReservaDetalle, int A, int N, int I) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -274,7 +275,7 @@ public class Abordar extends AppCompatActivity {
 
         try {
 
-            cant = bd.update("cupones", registro, "idDetalleOpVehi=" + _idDetalleOpVehi, null);
+            cant = bd.update("cupones", registro, "idReservaDetalle=" + _idReservaDetalle, null);
         }
         catch (Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
@@ -285,7 +286,7 @@ public class Abordar extends AppCompatActivity {
 
     }
 
-    public void InsertarOffline(int idDetalleOpVehi, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
+    public void InsertarOffline(int _idReservaDetalle, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -295,7 +296,8 @@ public class Abordar extends AppCompatActivity {
 
         ContentValues registro = new ContentValues();
 
-        registro.put("idDetalleOpVehi", idDetalleOpVehi);
+        registro.put("idReservaDetalle", _idReservaDetalle);
+        registro.put("idOpVehi", variables_publicas.id_op_vehi);
         registro.put("tipoSolicitud", tipoSolicitud);
         registro.put("status", status);
         registro.put("folioNoShow", folioNoShow);
@@ -345,7 +347,7 @@ public class Abordar extends AppCompatActivity {
     public void InstanciarCambioCupon(View view){
         Intent intent_cupon = new Intent(Abordar.this,CambioCupon.class);
         intent_cupon.putExtra("cupon",cupon_numero);
-        intent_cupon.putExtra("idDetalleOpVehi",idDetalleOpVehi);
+        intent_cupon.putExtra("idReservaDetalle",idReservaDetalle);
         intent_cupon.putExtra("vieneDeOperacion", false);
         startActivity(intent_cupon);
     }

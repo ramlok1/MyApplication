@@ -66,7 +66,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             TextView txtapoyo = (TextView)v.findViewById(R.id.lbl_apoyo);
             LinearLayout lay_color =  (LinearLayout)v.findViewById(R.id.lay_top_cupones);
 
-            String color = p.getProperty(17).toString();
+            String color = p.getProperty(19).toString();
 
             if(color.equals("")){color="#ffffff"; }
 
@@ -100,42 +100,44 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             }
 */
 
+            TextView textdetresv = (TextView)v.findViewById(R.id.lbl_id_reservadetalle);
+            textdetresv.setText(p.getProperty(0).toString());
             TextView textdetov = (TextView)v.findViewById(R.id.lbl_id_detalleov);
-            textdetov.setText(p.getProperty(0).toString());
+            textdetov.setText(p.getProperty(2).toString());
              final TextView textView1 = (TextView)v.findViewById(R.id.lblnumCupon);
             //textView1.setBackgroundColor(Color.parseColor(color_background));
             //textView1.setTextColor(Color.parseColor(color_text));
-            textView1.setText(p.getProperty(1).toString());
+            textView1.setText(p.getProperty(3).toString());
 
             TextView textView6 = (TextView)v.findViewById(R.id.lblHuesped);
-            textView6.setText(p.getProperty(2).toString());
+            textView6.setText(p.getProperty(4).toString());
 
             TextView textView2 = (TextView)v.findViewById(R.id.lblAdultos);
-            textView2.setText(p.getProperty(3).toString());
+            textView2.setText(p.getProperty(5).toString());
 
             TextView textView3 = (TextView)v.findViewById(R.id.lblNinos);
-            textView3.setText(p.getProperty(4).toString());
+            textView3.setText(p.getProperty(6).toString());
 
             TextView textView4 = (TextView)v.findViewById(R.id.lblI);
-            textView4.setText(p.getProperty(5).toString());
+            textView4.setText(p.getProperty(7).toString());
 
             TextView textView5 = (TextView)v.findViewById(R.id.lblIncentivos);
-            textView5.setText(p.getProperty(6).toString());
+            textView5.setText(p.getProperty(8).toString());
 
             final TextView textView7 = (TextView)v.findViewById(R.id.lbl_Hotel);
-            textView7.setText(p.getProperty(7).toString());
+            textView7.setText(p.getProperty(9).toString());
 
             TextView textView8 = (TextView)v.findViewById(R.id.lbl_Habitacion);
-            textView8.setText(p.getProperty(8).toString());
+            textView8.setText(p.getProperty(10).toString());
 
             TextView txt_ididioma = (TextView)v.findViewById(R.id.lbl_ididioma);
-            txt_ididioma.setText(p.getProperty(16).toString());
+            txt_ididioma.setText(p.getProperty(18).toString());
 
             TextView txt_tour_padre = (TextView)v.findViewById(R.id.lbl_tour_padre);
-            txt_tour_padre.setText(p.getProperty(15).toString());
+            txt_tour_padre.setText(p.getProperty(17).toString());
 
             ImageView textView9 = (ImageView)v.findViewById(R.id.lbl_Idioma);
-            switch (p.getProperty(9).toString().trim()) {
+            switch (p.getProperty(11).toString().trim()) {
                 case "INGLES":
                     textView9.setImageResource(R.drawable.english);
                     break;
@@ -151,16 +153,16 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             }
 
             TextView textView10 = (TextView)v.findViewById(R.id.lbl_Pickuplobby);
-            textView10.setText(p.getProperty(10).toString());
+            textView10.setText(p.getProperty(12).toString());
 
             TextView textView11 = (TextView)v.findViewById(R.id.lbl_Agencia);
-            textView11.setText(p.getProperty(11).toString());
+            textView11.setText(p.getProperty(13).toString());
 
             TextView textView12 = (TextView)v.findViewById(R.id.lbl_Representante);
-            textView12.setText(p.getProperty(12).toString());
+            textView12.setText(p.getProperty(14).toString());
 
             TextView textView13 = (TextView)v.findViewById(R.id.lblobsgral);
-            textView13.setText(p.getProperty(13).toString());
+            textView13.setText(p.getProperty(15).toString());
 
 
             final TextView lblhe = (TextView) v.findViewById(R.id.lblhe);
@@ -174,7 +176,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
             //textView13.setText(p.getProperty(13).toString());
 
             ImageView textView14 = (ImageView)v.findViewById(R.id.lbl_Observaciones);
-            switch (p.getProperty(14).toString().trim()) {
+            switch (p.getProperty(16).toString().trim()) {
                 case "10": //GoShow
                     textView14.setImageResource(R.drawable.cambiarpasajero);
                     break;
@@ -247,7 +249,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
 
             SQLiteDatabase bd = admin.getWritableDatabase();
 
-            Cursor h = bd.rawQuery("select hentrada,hsalida from cupones where numCupon='"+p.getProperty(1).toString()+"'", null);
+            Cursor h = bd.rawQuery("select hentrada,hsalida from cupones where numCupon='"+p.getProperty(3).toString()+"'", null);
 
 
 

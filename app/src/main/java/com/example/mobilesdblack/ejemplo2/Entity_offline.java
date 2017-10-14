@@ -11,6 +11,8 @@ import java.util.Hashtable;
 
 public class Entity_offline implements KvmSerializable {
 
+    public int idOpVehi;
+    public int idReservaDetalle;
     public int idDetalleOpVehi;
     public int tipoSolicitud;
     public int status;
@@ -27,6 +29,8 @@ public class Entity_offline implements KvmSerializable {
     public Entity_offline()
     {
 
+        idOpVehi = 0;
+        idReservaDetalle = 0;
         idDetalleOpVehi = 0;
         tipoSolicitud = 0;
         status = 0;
@@ -41,9 +45,11 @@ public class Entity_offline implements KvmSerializable {
         offlineID = 0;
     }
 
-    public Entity_offline(int idDetalleOpVehi, int tipoSolicitud, int status, String folioNoShow, String recibeNoShow, String sincuponAutoriza, String observacion, int a, int n, int i, String cupon, int offlineID )
+    public Entity_offline(int idOpVehi,int idReservaDetalle,int idDetalleOpVehi, int tipoSolicitud, int status, String folioNoShow, String recibeNoShow, String sincuponAutoriza, String observacion, int a, int n, int i, String cupon, int offlineID )
     {
 
+        this.idOpVehi = idOpVehi;
+        this.idReservaDetalle = idReservaDetalle;
         this.idDetalleOpVehi = idDetalleOpVehi;
         this.tipoSolicitud = tipoSolicitud;
         this.status = status;
@@ -87,6 +93,10 @@ public class Entity_offline implements KvmSerializable {
                 return cupon;
             case 11:
                 return offlineID;
+            case 12:
+                return idOpVehi;
+            case 13:
+                return idReservaDetalle;
         }
 
         return null;
@@ -195,9 +205,16 @@ public class Entity_offline implements KvmSerializable {
             case 11:
                 offlineID = Integer.parseInt(val.toString());
                 break;
+            case 12:
+                idOpVehi = Integer.parseInt(val.toString());
+                break;
+            case 13:
+                idReservaDetalle = Integer.parseInt(val.toString());
+                break;
 
             default:break;
         }
     }
 
 }
+

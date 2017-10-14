@@ -122,6 +122,12 @@ public class FragmentChild extends Fragment {
                 lblnumber.setText("Phone:");
             }
 
+            if(variables_publicas.idioma==4){
+                lblpais.setText("Pays:");
+                lblestado.setText("État:");
+                lblnumber.setText("Téléphone:");
+            }
+
 
             btn_next.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -139,7 +145,7 @@ public class FragmentChild extends Fragment {
                             variables_publicas.email = txt_email.getText().toString();
                         }else
                         {
-                            variables_publicas.email="";
+                            variables_publicas.email="na";
                         }
                     }
                 }
@@ -149,7 +155,7 @@ public class FragmentChild extends Fragment {
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if(!b){
-                            variables_publicas.pais="";
+                            variables_publicas.pais=txt_pais.getText().toString();
                     }
                 }
             });
@@ -158,7 +164,7 @@ public class FragmentChild extends Fragment {
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if(!b){
-                            variables_publicas.estado="";
+                            variables_publicas.estado=txt_estado.getText().toString();
                     }
                 }
             });
@@ -167,7 +173,7 @@ public class FragmentChild extends Fragment {
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if(!b){
-                            variables_publicas.tel="";
+                            variables_publicas.tel=txt_tel.getText().toString();
                     }
                 }
             });

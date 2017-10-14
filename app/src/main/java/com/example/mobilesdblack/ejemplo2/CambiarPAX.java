@@ -22,7 +22,7 @@ import java.net.ConnectException;
 
 public class CambiarPAX extends AppCompatActivity {
 
-    int NumAdultos = 0, NumNinos = 0, NumInfantes = 0, totalPasajeros = 0, idDetalleOpVehi;
+    int NumAdultos = 0, NumNinos = 0, NumInfantes = 0, totalPasajeros = 0, idReservaDetalle=0;
     String cupon = "";
     Boolean PAXcambiado = false;
 
@@ -31,8 +31,8 @@ public class CambiarPAX extends AppCompatActivity {
     TextView ETNumInfantes;
     TextView TVCupon;
 
-    variables_publicas variables = new variables_publicas();
-    private Integer versionBD = variables.version_local_database;
+
+    private Integer versionBD = variables_publicas.version_local_database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class CambiarPAX extends AppCompatActivity {
         NumNinos = b.getInt("numNinos");
         NumInfantes = b.getInt("numInfantes");
         cupon = b.getString("numCupon");
-        idDetalleOpVehi = b.getInt("idDetalleOpVehi");
+        idReservaDetalle = b.getInt("idReservaDetalle");
 
         ETNumAdultos.setText(NumAdultos+"");
         ETNumNinos.setText(NumNinos+"");
@@ -97,13 +97,14 @@ public class CambiarPAX extends AppCompatActivity {
             TipoErrorWS = 0;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "CambiarPAX";
             final String SOAP_ACTION = "http://suarpe.com/CambiarPAX";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("idDetalleOpVehi", idDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", idReservaDetalle);
             request.addProperty("numAdulto", NumAdultos);
             request.addProperty("numNino", NumNinos);
             request.addProperty("numInfante", NumInfantes);
@@ -170,14 +171,14 @@ public class CambiarPAX extends AppCompatActivity {
         if (PAXcambiado){
             builder.setTitle("OK");
             builder.setMessage("¡Número de pasajeros cambiados exitosamente!");
-            CambiarStatus(idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+            CambiarStatus(idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
         }
         else{
             if (TipoErrorWS != 2){
                 builder.setTitle("OK - Offline");
                 builder.setMessage("¡Número de pasajeros cambiados exitosamente! - Modo Offline");
-                CambiarStatus(idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                InsertarOffline(idDetalleOpVehi, 3, 0, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true );
+                CambiarStatus(idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
+                InsertarOffline(idReservaDetalle, 3, 0, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true );
 
             }
             else{
@@ -196,7 +197,7 @@ public class CambiarPAX extends AppCompatActivity {
 
     }
 
-    private int CambiarStatus(int _idDetalleOpVehi, int A, int N, int I) {
+    private int CambiarStatus(int _idReservaDetalle, int A, int N, int I) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -215,7 +216,7 @@ public class CambiarPAX extends AppCompatActivity {
 
         try {
 
-            cant = bd.update("cupones", registro, "idDetalleOpVehi=" + _idDetalleOpVehi, null);
+            cant = bd.update("cupones", registro, "idReservaDetalle=" + _idReservaDetalle, null);
         }
         catch (Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
@@ -226,7 +227,7 @@ public class CambiarPAX extends AppCompatActivity {
 
     }
 
-    public void InsertarOffline(int idDetalleOpVehi, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
+    public void InsertarOffline(int _idReservaDetalle, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -236,7 +237,8 @@ public class CambiarPAX extends AppCompatActivity {
 
         ContentValues registro = new ContentValues();
 
-        registro.put("idDetalleOpVehi", idDetalleOpVehi);
+        registro.put("idOpVehi", variables_publicas.id_op_vehi);
+        registro.put("idReservaDetalle", _idReservaDetalle);
         registro.put("tipoSolicitud", tipoSolicitud);
         registro.put("status", status);
         registro.put("folioNoShow", folioNoShow);

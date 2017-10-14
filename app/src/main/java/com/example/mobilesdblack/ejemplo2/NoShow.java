@@ -24,7 +24,7 @@ import java.net.ConnectException;
 public class NoShow extends AppCompatActivity {
 
     String Cupon = "";
-    int idDetalleOpVehi = 0;
+    int idReservaDetalle = 0;
 
     int TipoErrorWS = 0;
 
@@ -32,8 +32,8 @@ public class NoShow extends AppCompatActivity {
 
     Boolean GoShowMarcado = false;
 
-    variables_publicas variables = new variables_publicas();
-    private Integer versionBD = variables.version_local_database;
+
+    private Integer versionBD = variables_publicas.version_local_database;
 
     TextView txtNumCupon;
     EditText NoFolio;
@@ -52,7 +52,7 @@ public class NoShow extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         Cupon = b.getString("cupon");
-        idDetalleOpVehi = b.getInt("idDetalleOpVehi");
+        idReservaDetalle = b.getInt("idReservaDetalle");
 
         txtNumCupon.setText(Cupon);
 
@@ -104,14 +104,15 @@ public class NoShow extends AppCompatActivity {
             TipoErrorWS = 0;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/MyWebService/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/MyWebService/WS.asmx";
             final String METHOD_NAME = "MarcarNoShow";
             final String SOAP_ACTION = "http://suarpe.com/MarcarNoShow";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("status", 11);
-            request.addProperty("idDetalleOpVehi", idDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", idReservaDetalle);
             request.addProperty("NoFolio",StringNoFolio);
             request.addProperty("AQuienSeEntrega",StringAQuienSeEntrega);
             request.addProperty("Motivo",StringMotivo);
@@ -183,7 +184,7 @@ public class NoShow extends AppCompatActivity {
                 builder.setTitle("OK - Offline");
                 builder.setMessage("¡No show marcado! - Modo Offline");
                 CambiarStatus(11, Cupon);
-                InsertarOffline(idDetalleOpVehi, 1, 11, StringNoFolio, "", StringAQuienSeEntrega, StringMotivo, 0, 0, 0, "", true );
+                InsertarOffline(idReservaDetalle, 1, 11, StringNoFolio, "", StringAQuienSeEntrega, StringMotivo, 0, 0, 0, "", true );
 
             }
             else{
@@ -201,7 +202,7 @@ public class NoShow extends AppCompatActivity {
         builder.show();
     }
 
-    public void InsertarOffline(int idDetalleOpVehi, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
+    public void InsertarOffline(int _idReservaDetalle, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -211,7 +212,8 @@ public class NoShow extends AppCompatActivity {
 
         ContentValues registro = new ContentValues();
 
-        registro.put("idDetalleOpVehi", idDetalleOpVehi);
+        registro.put("idOpVehi", variables_publicas.id_op_vehi);
+        registro.put("idReservaDetalle", _idReservaDetalle);
         registro.put("tipoSolicitud", tipoSolicitud);
         registro.put("status", status);
         registro.put("folioNoShow", folioNoShow);

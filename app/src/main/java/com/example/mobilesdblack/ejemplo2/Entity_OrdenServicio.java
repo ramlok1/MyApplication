@@ -18,6 +18,8 @@ public class Entity_OrdenServicio implements KvmSerializable {
     public String rfc;
     public String razon;
     public String dir;
+    public String licencia;
+    public String tour;
 
     //public int telefono;
 
@@ -32,21 +34,9 @@ public class Entity_OrdenServicio implements KvmSerializable {
         rfc = "";
         razon = "";
         dir = "";
+        licencia = "";
+        tour = "";
         //telefono = 0;
-    }
-
-    public Entity_OrdenServicio(String guia, String vehiculo, String transportadora, int idGuia, String chofer, String obs, String rfc, String razon, String dir)
-    {
-        this.guia = guia;
-        this.vehiculo = vehiculo;
-        this.transportadora = transportadora;
-        this.idGuia = idGuia;
-        this.chofer = chofer;
-        this.obs = obs;
-        this.rfc = rfc;
-        this.razon = razon;
-        this.dir = dir;
-        //this.telefono = telefono;
     }
 
     @Override
@@ -72,6 +62,10 @@ public class Entity_OrdenServicio implements KvmSerializable {
                 return razon;
             case 8:
                 return dir;
+            case 9:
+                return licencia;
+            case 10:
+                return tour;
             default:
                 break;
         }
@@ -164,6 +158,12 @@ public class Entity_OrdenServicio implements KvmSerializable {
                 break;
             case 8:
                 dir = val.toString();
+                break;
+            case 9:
+                licencia = val.toString();
+                break;
+            case 10:
+                tour = val.toString();
                 break;
             /*
             case 2:

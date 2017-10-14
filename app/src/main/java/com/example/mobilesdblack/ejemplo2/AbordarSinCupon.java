@@ -25,12 +25,12 @@ import java.net.ConnectException;
 
 public class AbordarSinCupon extends AppCompatActivity {
     ProgressDialog progressDialog ;
-    int NumAdultos = 0, NumNinos = 0, NumInfantes = 0, idDetalleOpVehi = 0;
+    int NumAdultos = 0, NumNinos = 0, NumInfantes = 0, idReservaDetalle = 0;
     String cupon = "", sinCuponAutoriza = "", obs = "";
     Boolean pasajero_abordo = false;
 
-    variables_publicas variables = new variables_publicas();
-    private Integer versionBD = variables.version_local_database;
+
+    private Integer versionBD = variables_publicas.version_local_database;
 
     TextView ETNumAdultos;
     TextView ETNumNinos;
@@ -55,7 +55,7 @@ public class AbordarSinCupon extends AppCompatActivity {
         NumNinos = b.getInt("numNinos");
         NumInfantes = b.getInt("numInfantes");
         cupon = b.getString("numCupon");
-        idDetalleOpVehi = b.getInt("idDetalleOpVehi");
+        idReservaDetalle = b.getInt("idReservaDetalle");
 
 
         AutorizaSinCupon = (EditText)findViewById(R.id.txtAutorizaSinCupon);
@@ -89,8 +89,8 @@ public class AbordarSinCupon extends AppCompatActivity {
                                     tareaWSAbordarSinCupon.cancel(true);
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
-                                CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                                InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
+                                CambiarStatus(12, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
+                                InsertarOffline(idReservaDetalle, 4, 12, "", "", "", "", 0, 0, 0, "", true);
                                 variables_publicas.offline = true;
                                 SalirActividad();
 
@@ -98,8 +98,8 @@ public class AbordarSinCupon extends AppCompatActivity {
                         }, 5000);
                     } else {
                         Toast.makeText(getApplicationContext(), "Modo Offline, pasajero abordo", Toast.LENGTH_LONG).show();
-                        CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                        InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true);
+                        CambiarStatus(12, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
+                        InsertarOffline(idReservaDetalle, 4, 12, "", "", "", "", NumAdultos, NumNinos, NumInfantes, "", true);
                         SalirActividad();
                     }
                     //Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://www..com"));
@@ -135,13 +135,14 @@ public class AbordarSinCupon extends AppCompatActivity {
             TipoErrorWS = 0;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/ServicioClientes.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
             final String METHOD_NAME = "AbordarSinCupon";
             final String SOAP_ACTION = "http://suarpe.com/AbordarSinCupon";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("idDetalleOpVehi", idDetalleOpVehi);
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+            request.addProperty("idReservaDetalle", idReservaDetalle);
             request.addProperty("status", 12);
             request.addProperty("numAdulto", NumAdultos);
             request.addProperty("numNino", NumNinos);
@@ -211,14 +212,14 @@ public class AbordarSinCupon extends AppCompatActivity {
         if (pasajero_abordo){
             builder.setTitle("OK");
             builder.setMessage("¡Pasajero sin cupón a bordo!");
-            CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
+            CambiarStatus(12, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
         }
         else{
             if (TipoErrorWS != 2){
                 builder.setTitle("OK - Offline");
                 builder.setMessage("¡Pasajero sin cupón a bordo! - Modo Offline");
-                CambiarStatus(12, idDetalleOpVehi, NumAdultos, NumNinos, NumInfantes);
-                InsertarOffline(idDetalleOpVehi, 4, 12, "", "", "", "", 0, 0, 0, "", true );
+                CambiarStatus(12, idReservaDetalle, NumAdultos, NumNinos, NumInfantes);
+                InsertarOffline(idReservaDetalle, 4, 12, "", "", "", "", 0, 0, 0, "", true );
                 variables_publicas.offline = true;
 
             }
@@ -256,7 +257,7 @@ public class AbordarSinCupon extends AppCompatActivity {
         this.finish();
     }
 
-    private int CambiarStatus(int status, int _idDetalleOpVehi, int A, int N, int I) {
+    private int CambiarStatus(int status, int _idReservaDetalle, int A, int N, int I) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -276,7 +277,7 @@ public class AbordarSinCupon extends AppCompatActivity {
 
         try {
 
-            cant = bd.update("cupones", registro, "idDetalleOpVehi=" + _idDetalleOpVehi, null);
+            cant = bd.update("cupones", registro, "idReservaDetalle=" + _idReservaDetalle, null);
         }
         catch (Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
@@ -287,7 +288,7 @@ public class AbordarSinCupon extends AppCompatActivity {
 
     }
 
-    public void InsertarOffline(int idDetalleOpVehi, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
+    public void InsertarOffline(int _idReservaDetalle, int tipoSolicitud, int status, String folioNoShow, String sincuponAutoriza, String recibeNoShow, String observacion, int a, int n, int i, String cupon, Boolean habilitado ) {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -297,7 +298,8 @@ public class AbordarSinCupon extends AppCompatActivity {
 
         ContentValues registro = new ContentValues();
 
-        registro.put("idDetalleOpVehi", idDetalleOpVehi);
+        registro.put("idOpVehi", variables_publicas.id_op_vehi);
+        registro.put("idReservaDetalle", _idReservaDetalle);
         registro.put("tipoSolicitud", tipoSolicitud);
         registro.put("status", status);
         registro.put("folioNoShow", folioNoShow);

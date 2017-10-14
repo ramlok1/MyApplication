@@ -10,6 +10,8 @@ import org.ksoap2.serialization.PropertyInfo;
 
 public class Entity_CuponesHoja implements KvmSerializable {
 
+    public int idReservaDetalle;
+    public int idOpVehi;
     public int idDetalleOpVehi;
     public String numCupon;
     public String Huesped;
@@ -33,6 +35,8 @@ public class Entity_CuponesHoja implements KvmSerializable {
 
     public Entity_CuponesHoja()
     {
+        idReservaDetalle = 0;
+        idOpVehi = 0;
         idDetalleOpVehi = 0;
         numCupon = "";
         Huesped = "";
@@ -55,8 +59,10 @@ public class Entity_CuponesHoja implements KvmSerializable {
 
     }
 
-    public Entity_CuponesHoja(int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma, String color, String apoyo)
+    public Entity_CuponesHoja(int idReservaDetalle,int idOpVehi,int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma, String color, String apoyo)
     {
+        this.idReservaDetalle = idReservaDetalle;
+        this.idOpVehi = idOpVehi;
         this.idDetalleOpVehi = iddetalleopvehi;
         this.numCupon = numcupon;
         this.Huesped = huesped;
@@ -85,42 +91,46 @@ public class Entity_CuponesHoja implements KvmSerializable {
         switch(arg0)
         {
             case 0:
-                return idDetalleOpVehi;
+                return idReservaDetalle;
             case 1:
-                return numCupon;
+                return idOpVehi;
             case 2:
-                return Huesped;
+                return idDetalleOpVehi;
             case 3:
-                return numAdultos;
+                return numCupon;
             case 4:
-                return numNinos;
+                return Huesped;
             case 5:
-                return numInfantes;
+                return numAdultos;
             case 6:
-                return Incentivos;
+                return numNinos;
             case 7:
-                return Hotel;
+                return numInfantes;
             case 8:
-                return Habitacion;
+                return Incentivos;
             case 9:
-                return Idioma;
+                return Hotel;
             case 10:
-                return PickUpLobby;
+                return Habitacion;
             case 11:
-                return nombreAgencia;
+                return Idioma;
             case 12:
-                return nombreRepresentante;
+                return PickUpLobby;
             case 13:
-                return Observaciones;
+                return nombreAgencia;
             case 14:
-                return status;
+                return nombreRepresentante;
             case 15:
-            return tour_padre;
+                return Observaciones;
             case 16:
-                return idIdioma;
+                return status;
             case 17:
-            return color;
+            return tour_padre;
             case 18:
+                return idIdioma;
+            case 19:
+            return color;
+            case 20:
                 return apoyo;
 
 
@@ -133,7 +143,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
 
     @Override
     public int getPropertyCount() {
-        return 15;
+        return 20;
     }
 
 
@@ -227,60 +237,66 @@ public class Entity_CuponesHoja implements KvmSerializable {
         switch(ind)
         {
             case 0:
-                idDetalleOpVehi = Integer.parseInt(val.toString());
+                idReservaDetalle = Integer.parseInt(val.toString());
                 break;
             case 1:
-                numCupon = val.toString();
+                idOpVehi = Integer.parseInt(val.toString());
                 break;
             case 2:
-                Huesped = val.toString();
+                idDetalleOpVehi = Integer.parseInt(val.toString());
                 break;
             case 3:
-                numAdultos = Integer.parseInt(val.toString());
+                numCupon = val.toString();
                 break;
             case 4:
-                numNinos = Integer.parseInt(val.toString());
+                Huesped = val.toString();
                 break;
             case 5:
-                numInfantes = Integer.parseInt(val.toString());
+                numAdultos = Integer.parseInt(val.toString());
                 break;
             case 6:
-                Incentivos = Integer.parseInt(val.toString());
+                numNinos = Integer.parseInt(val.toString());
                 break;
             case 7:
-                Hotel = val.toString();
+                numInfantes = Integer.parseInt(val.toString());
                 break;
             case 8:
-                Habitacion = val.toString();
+                Incentivos = Integer.parseInt(val.toString());
                 break;
             case 9:
-                Idioma = val.toString();
+                Hotel = val.toString();
                 break;
             case 10:
-                PickUpLobby = val.toString();
+                Habitacion = val.toString();
                 break;
             case 11:
-                nombreAgencia = val.toString();
+                Idioma = val.toString();
                 break;
             case 12:
-                nombreRepresentante = val.toString();
+                PickUpLobby = val.toString();
                 break;
             case 13:
-                Observaciones = val.toString();
+                nombreAgencia = val.toString();
                 break;
             case 14:
-                status = Integer.parseInt(val.toString());
+                nombreRepresentante = val.toString();
                 break;
             case 15:
-                tour_padre = Integer.parseInt(val.toString());
+                Observaciones = val.toString();
                 break;
             case 16:
-                idIdioma = Integer.parseInt(val.toString());
+                status = Integer.parseInt(val.toString());
                 break;
             case 17:
-                color = val.toString();
+                tour_padre = Integer.parseInt(val.toString());
                 break;
             case 18:
+                idIdioma = Integer.parseInt(val.toString());
+                break;
+            case 19:
+                color = val.toString();
+                break;
+            case 20:
                 apoyo = val.toString();
                 break;
 

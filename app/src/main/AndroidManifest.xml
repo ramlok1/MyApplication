@@ -54,7 +54,7 @@
         <activity
             android:name=".SeleccionarCupon"
             android:windowSoftInputMode="adjustPan|adjustResize"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ContestarEncuesta"
             android:windowSoftInputMode="adjustPan|adjustResize"
