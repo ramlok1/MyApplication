@@ -752,8 +752,8 @@ public class Operacion extends AppCompatActivity {
                         else{datanum.apoyo="";}
 
 
-                        datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
 
+                        datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
                         variables_publicas.id_op_vehi=datanum.idOpVehi;
                         data.add(datanum);
 
@@ -1532,7 +1532,7 @@ public class Operacion extends AppCompatActivity {
         Connection conn = null;
         String ConnURL = null;
 
-        String url = "jdbc:jtds:sqlserver://sqlintep.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
+        String url = "jdbc:jtds:sqlserver://sqlintep.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalDev";
         String driver = "net.sourceforge.jtds.jdbc.Driver";
         String userName = "sa";
         String password = "Tamalito2017";
@@ -1717,7 +1717,7 @@ public class Operacion extends AppCompatActivity {
         try {
             //Sincroniza encuestas
             Cursor c = bd.rawQuery("select idEncuestaDetalle,idReservaDetalle,idCuestionario,pregunta,valor_respuesta,fechaDetalle from encuestaDetalle where enviado = 0", null); //where Habilitado = 1
-            Cursor cd = bd.rawQuery("select idReservaDetalle,idCupon,comentario,email,fecha, firma,pais,estado,tel  from encuesta a ", null);
+            Cursor cd = bd.rawQuery("select idReservaDetalle,idCupon,comentario,email,fecha, firma,pais,estado,tel  from encuesta a where enviado = 0 ", null);
             Cursor cdt = bd.rawQuery("select  idReservaDetalle,ifnull(hentrada,'00:00:00') hentrada,ifnull(hsalida,'00:00:00') hsalida  from cupones", null);
 
             if (c != null) {
@@ -1727,26 +1727,32 @@ public class Operacion extends AppCompatActivity {
                         WSidReservaDetalle = c.getInt(c.getColumnIndex("idReservaDetalle"));
                         WScuestionario = c.getInt(c.getColumnIndex("idCuestionario"));
                         WSpregunta = c.getString(c.getColumnIndex("pregunta"));
-                        WSrespuesta=c.getString(c.getColumnIndex("valor_respuesta"));
-                        WSfecha = c.getString( c.getColumnIndex("fechaDetalle"));
+                        WSrespuesta = c.getString(c.getColumnIndex("valor_respuesta"));
+                        WSfecha = c.getString(c.getColumnIndex("fechaDetalle"));
 
-                        if(WSrespuesta.equals("")){WSrespuesta = "na";}
-                        if(WSrespuesta.length()>1){
-                            WScalifica=0;
-                        }else{
-                            WScalifica=Integer.parseInt(WSrespuesta);
+                        if (WSrespuesta.equals("")) {
+                            WSrespuesta = "na";
+                        }
+                        if (WSrespuesta.length() > 1) {
+                            WScalifica = 0;
+                        } else {
+                            WScalifica = Integer.parseInt(WSrespuesta);
                         }
                         TareaWSInsertaencuesta tareaWSInsertaencuesta = new TareaWSInsertaencuesta();
-                        boolean str_result= tareaWSInsertaencuesta.execute().get();
+                        boolean str_result = tareaWSInsertaencuesta.execute().get();
 
 
-                        if(str_result) {
+                        if (str_result) {
                             ContentValues vu = new ContentValues();
                             vu.put("enviado", 1);
                             bd.update("encuestaDetalle", vu, "idEncuestaDetalle=" + c.getInt(c.getColumnIndex("idEncuestaDetalle")), null);
-                        }else{ err=true;}
+                        } else {
+                            err = true;
+                        }
 
                     } while (c.moveToNext());
+                }
+            }
 
                     //Sincroniza encabezado encuesta
                     if( cd.moveToFirst()) {
@@ -1768,14 +1774,16 @@ public class Operacion extends AppCompatActivity {
                             TareaWSInsertaencuestaEnc tareaWSInsertaencuestaenc = new TareaWSInsertaencuestaEnc();
                             boolean str_result1= tareaWSInsertaencuestaenc.execute().get();
 
-                            if(!str_result1){err=true;}
+                            if (str_result1) {
+                                ContentValues vu = new ContentValues();
+                                vu.put("enviado", 1);
+                                bd.update("encuesta", vu, "idReservaDetalle=" + WSidReservaDetalle , null);
+                            } else {
+                                err = true;
+                            }
 
                         } while (cd.moveToNext());
                     }
-
-
-                }
-            }
 
 
             // Sincroniza pickups
@@ -1921,7 +1929,7 @@ public class Operacion extends AppCompatActivity {
 
         SQLiteDatabase bd = admin.getWritableDatabase();
 
-        Cursor v = bd.rawQuery("select idopveh, guia, camioneta, operador,obs,apoyo from vehiculo", null);
+        Cursor v = bd.rawQuery("select idopveh, guia, camioneta, operador,obs,apoyo,licencia,tour,razon,dir,rfc from vehiculo", null);
 
 
 
@@ -1930,9 +1938,14 @@ public class Operacion extends AppCompatActivity {
             if (v.moveToFirst()) {
                 lblorden.setText(Integer.toString(v.getInt(v.getColumnIndex("idopveh"))));
                 lblguia.setText(v.getString(v.getColumnIndex("guia")));
-                lbltrans.setText(v.getString(v.getColumnIndex("camioneta")));
+                lbltrans.setText(v.getString(v.getColumnIndex("tour")));
                 lbloperador.setText(v.getString(v.getColumnIndex("operador")));
                 lblobs.setText(v.getString(v.getColumnIndex("obs")));
+                variables_publicas.licencia=v.getString(v.getColumnIndex("licencia"));
+                variables_publicas.trans=v.getString(v.getColumnIndex("camioneta"));
+                variables_publicas.razon=v.getString(v.getColumnIndex("razon"));
+                variables_publicas.dir=v.getString(v.getColumnIndex("dir"));
+                variables_publicas.rfc=v.getString(v.getColumnIndex("rfc"));
                 apoyob=v.getInt(v.getColumnIndex("apoyo"));
             }
         }
@@ -1959,10 +1972,14 @@ public class Operacion extends AppCompatActivity {
         TextView txt_razon = (TextView)  layout_popup.findViewById(R.id.txt_razon);
         TextView txt_dir    = (TextView)  layout_popup.findViewById(R.id.txt_dir);
         TextView txt_rfc    = (TextView)  layout_popup.findViewById(R.id.txt_rfc);
+        TextView txt_camioneta    = (TextView)  layout_popup.findViewById(R.id.txt_camioneta);
+        TextView txt_lic    = (TextView)  layout_popup.findViewById(R.id.txt_lic);
 
         txt_razon.setText(variables_publicas.razon);
         txt_dir.setText(variables_publicas.dir);
         txt_rfc.setText(variables_publicas.rfc);
+        txt_camioneta.setText(variables_publicas.trans);
+        txt_lic.setText(variables_publicas.licencia);
 
 
 

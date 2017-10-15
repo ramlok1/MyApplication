@@ -97,7 +97,7 @@ public class ContestarEncuesta extends AppCompatActivity {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Date date = new Date();
                     ContentValues cv = new ContentValues();
-                    cv.put("idDetalleOpVehi", variables_publicas.id_op_vehi);
+                    cv.put("idReservaDetalle", variables_publicas.idReservaDetalle);
                     cv.put("idCupon", variables_publicas.numcupon);
                     cv.put("comentario", "");
                     cv.put("email", variables_publicas.email);
@@ -106,6 +106,7 @@ public class ContestarEncuesta extends AppCompatActivity {
                     cv.put("tel", variables_publicas.tel);
                     cv.put("fecha", dateFormat.format(date));
                     cv.put("firma", firma_imp);
+                    cv.put("enviado", 0);
                     signatureView.clearCanvas();
                     bd.insert("encuesta", null, cv);
 

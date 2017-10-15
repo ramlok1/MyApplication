@@ -32,11 +32,11 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
         db.execSQL("create table encuestaMensaje (titulo text, mensaje text, idioma integer)");
 
-        db.execSQL("create table encuesta (idEncuesta integer primary key,idReservaDetalle integer, idCupon text, comentario text, email text, fecha datetime, firma blob, pais text,estado text, tel text)");
+        db.execSQL("create table encuesta (idEncuesta integer primary key,idReservaDetalle integer, idCupon text, comentario text, email text, fecha datetime, firma blob, pais text,estado text, tel text, enviado integer)");
 
         db.execSQL("create table cupones(idReservaDetalle integer,idOpVehi integer,idDetalleOpVehi integer, numCupon text, Huesped text, numAdultos integer, numNinos integer, numInfantes integer, Incentivos integer, Hotel text, Habitacion text, Idioma text, PickUpLobby text, nombreAgencia text, nombreRepresentante text, Observaciones text, Habilitado bit, status integer,tour_padre integer, ididioma integer, hentrada datetime,hsalida datetime,color text )");
 
-        db.execSQL("create table encuestaDetalle(idEncuestaDetalle integer primary key, idReservaDetalle integer,idCupon integer, idCuestionario integer, pregunta text, valor_respuesta text,  fechaDetalle datetime, enviado bit,email text)");
+        db.execSQL("create table encuestaDetalle(idEncuestaDetalle integer primary key, idReservaDetalle integer,idCupon integer, idCuestionario integer, pregunta text, valor_respuesta text,  fechaDetalle datetime, enviado integer,email text)");
 
         db.execSQL("create table offline(offlineID integer PRIMARY KEY, idOpVehi integer,idReservaDetalle integer, tipoSolicitud integer, status integer, folioNoShow text, recibeNoShow text, sincuponAutoriza text, observacion text , a integer, n integer, i integer, habilitado boolean, cupon text )");
 

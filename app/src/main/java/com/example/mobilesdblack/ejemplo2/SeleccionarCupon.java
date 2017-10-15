@@ -55,13 +55,13 @@ public class SeleccionarCupon extends AppCompatActivity  {
     private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener(){
         public void onItemClick(AdapterView<?> parent, View view, int position, long id){
             String cupon = ((TextView) view.findViewById(R.id.lblnumCupon)).getText().toString();
-            String idetopv = ((TextView) view.findViewById(R.id.lbl_id_detalleov)).getText().toString();
+            String idReservaDetalle = ((TextView) view.findViewById(R.id.lbl_id_detalleres)).getText().toString();
             String nombre = ((TextView) view.findViewById(R.id.lblHuesped)).getText().toString();
             String hotel = ((TextView) view.findViewById(R.id.lbl_Hotel)).getText().toString();
             variables_publicas.idioma = Integer.parseInt(((TextView) view.findViewById(R.id.lbl_ididioma)).getText().toString());
             variables_publicas.tour_padre = Integer.parseInt(((TextView) view.findViewById(R.id.lbl_tour_padre)).getText().toString());
             variables_publicas.numcupon=cupon;
-            variables_publicas.id_op_vehi=Integer.parseInt(idetopv);
+            variables_publicas.idReservaDetalle=Integer.parseInt(idReservaDetalle);
             variables_publicas.nombre=nombre;
             variables_publicas.hotel=hotel;
             variables_publicas.email="";
@@ -138,7 +138,7 @@ public class SeleccionarCupon extends AppCompatActivity  {
         SQLiteDatabase bd = admin.getWritableDatabase();
         try{
 
-            Cursor c = bd.rawQuery("select idDetalleOpVehi,numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status, tour_padre,ididioma from cupones where Habilitado = 1 and status in (12,14) ", null);
+            Cursor c = bd.rawQuery("select idReservaDetalle, idOpVehi, idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status, tour_padre,ididioma from cupones where Habilitado = 1 and status in (12,14) ", null);
             //Cursor c = bd.rawQuery("select pregunta, tipo from cuestionarios where idIdioma = 2 and tipo = 1 ", null);
 
             data = null;
@@ -149,6 +149,8 @@ public class SeleccionarCupon extends AppCompatActivity  {
 
                     do {
                         Entity_CuponesHoja datanum = new Entity_CuponesHoja();
+                        datanum.idOpVehi=c.getInt(c.getColumnIndex("idOpVehi"));
+                        datanum.idReservaDetalle = c.getInt(c.getColumnIndex("idReservaDetalle"));
                         datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
                         datanum.numCupon = c.getString(c.getColumnIndex("numCupon"));
                         datanum.Huesped = c.getString(c.getColumnIndex("Huesped"));

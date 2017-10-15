@@ -152,7 +152,7 @@
             android:layout_below="@+id/txtNombreE"
             android:text="THE ROYAL"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="35dp" />
+            android:textSize="26dp" />
 
         <EditText
             android:id="@+id/txt_email"

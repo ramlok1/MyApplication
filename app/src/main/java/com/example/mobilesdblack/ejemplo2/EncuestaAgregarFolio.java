@@ -156,6 +156,8 @@ public class EncuestaAgregarFolio extends AppCompatActivity {
         cv.put("razon", OrdenServicio[0].razon);
         cv.put("dir", OrdenServicio[0].dir);
         cv.put("apoyo",apoyo?1:0);
+        cv.put("licencia", OrdenServicio[0].licencia);
+        cv.put("tour", OrdenServicio[0].tour);
 
 
         bd.insert("vehiculo", null, cv);

@@ -160,7 +160,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/lbl_id_detalleov"
+            android:id="@+id/lbl_id_detalleres"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
