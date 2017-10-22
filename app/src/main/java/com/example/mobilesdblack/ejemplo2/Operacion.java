@@ -207,8 +207,10 @@ public class Operacion extends AppCompatActivity {
 
     }
 
+
     // Damos de alta los usuarios en nuestra aplicación
-    public void alta_cupones(long idReservaDetalle,long idOpVehi,long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma,String color ) {
+    public void alta_cupones(long idReservaDetalle,long idOpVehi,long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma,String color,int idapoyo )
+    {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
 
@@ -239,6 +241,7 @@ public class Operacion extends AppCompatActivity {
         registro.put("tour_padre", tour_padre);
         registro.put("ididioma", ididioma);
         registro.put("color", color);
+        registro.put("idapoyo", idapoyo);
 
         // los inserto en la base de datos
         bd.insert("cupones",null, registro);
@@ -270,7 +273,7 @@ public class Operacion extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
         if(v.getId() == R.id.lstCupones){
 
-            String st = data.get(info.position).apoyo.toString();
+           // String st = data.get(info.position).apoyo.toString();
            // if(st.equals("")) {
                 this.getMenuInflater().inflate(R.menu.menu_options_cupones, menu);
            // }
@@ -449,6 +452,13 @@ public class Operacion extends AppCompatActivity {
         startActivity(intent_cupon);
     }
 
+    public void DownApoyo(View view) {
+
+                TareaWSDownApoyo tareaWdownApoyo = new TareaWSDownApoyo();
+                tareaWdownApoyo.execute();
+
+    }
+
     public void RomperOperacion(View view){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Operacion.this);
@@ -478,9 +488,7 @@ public class Operacion extends AppCompatActivity {
 
     public boolean BorrarBDLocal(){
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
-
                 "cuestionarios", null, versionBD);
-
         SQLiteDatabase bd = admin.getWritableDatabase();
 
         boolean deleted = true;
@@ -493,6 +501,24 @@ public class Operacion extends AppCompatActivity {
             bd.delete("offline", null , null);
             bd.delete("vehiculo", null , null);
 
+        }
+        catch (Exception e){
+            deleted = false;
+        }
+
+        bd.close();
+
+        return deleted;
+    }
+
+    public boolean BorrarApoyo(){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+                "cuestionarios", null, versionBD);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+        boolean deleted = true;
+        try{
+            bd.delete("cupones", "idapoyo!="+0 , null);
         }
         catch (Exception e){
             deleted = false;
@@ -681,8 +707,6 @@ public class Operacion extends AppCompatActivity {
                         datanum.Observaciones = c.getString(c.getColumnIndex("Observaciones"));
                         datanum.status = c.getInt(c.getColumnIndex("status"));
                         datanum.color = c.getString(c.getColumnIndex("color"));
-                        if(!datanum.color.equals("N")){datanum.apoyo="apoyo";}
-                        else{datanum.apoyo="";}
                         datanum.idDetalleOpVehi = c.getInt(c.getColumnIndex("idDetalleOpVehi"));
 
 
@@ -717,12 +741,7 @@ public class Operacion extends AppCompatActivity {
 
             Cursor c = bd.rawQuery("select idReservaDetalle, idOpVehi, idDetalleOpVehi, numCupon, Huesped, numAdultos, numNinos , numInfantes, Incentivos, Hotel, Habitacion, Idioma, PickUpLobby, nombreAgencia, nombreRepresentante, Observaciones, status,color from cupones  order by (color='N') desc,color,  status", null);
 
-
-
-            data = null;
-            data = new ArrayList<Entity_CuponesHoja>();
-
-
+            data= new ArrayList<>();
 
 
             if (c != null ) {
@@ -748,8 +767,6 @@ public class Operacion extends AppCompatActivity {
                         datanum.status = c.getInt(c.getColumnIndex("status"));
                         datanum.color = c.getString(c.getColumnIndex("color"));
 
-                        if(!datanum.color.equals("N")){datanum.apoyo="apoyo";}
-                        else{datanum.apoyo="";}
 
 
 
@@ -847,6 +864,7 @@ public class Operacion extends AppCompatActivity {
                     cuponesHoja.tour_padre = Integer.parseInt((ic.getProperty(17).toString()));
                     cuponesHoja.idIdioma = Integer.parseInt((ic.getProperty(18).toString()));
                     cuponesHoja.color = ic.getProperty(19).toString();
+                    cuponesHoja.idapoyo = Integer.parseInt((ic.getProperty(20).toString()));
 
                     CuponesHoja[i] = cuponesHoja;
                 }
@@ -861,11 +879,125 @@ public class Operacion extends AppCompatActivity {
                         l_touridi.add(ti_data);
                         actualizar_preguntas(CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma);
                     }
-                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color);
+                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color,CuponesHoja[i].idapoyo);
 
                 }
                 actualizar_datos_resp_mensaje();
                 CargaCuponesLocales();
+
+
+
+            }
+            catch (Exception e)
+            {
+
+                resul = false;
+
+            }
+
+            return resul;
+
+        }
+
+        protected void onPostExecute(Boolean result) {
+
+            if (result)
+            {
+
+                visualiza_cupones();
+                progressDialog.dismiss();
+
+
+            }
+            else
+            {
+                progressDialog.dismiss();
+                Toast.makeText(getBaseContext(),"Ocurrió un error.. :(",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class TareaWSDownApoyo extends AsyncTask<String,Integer,Boolean> {
+
+
+        private Entity_CuponesHoja[] CuponesHoja;
+        ProgressDialog progressDialog = new ProgressDialog(Operacion.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Actualizando datos, por favor espere...");
+            progressDialog.show();
+        }
+
+        protected Boolean doInBackground(String... params) {
+            boolean resul = true;
+
+            final String NAMESPACE = "http://suarpe.com/";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String METHOD_NAME = "DownApoyo";
+            final String SOAP_ACTION = "http://suarpe.com/DownApoyo";
+
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            request.addProperty("idOpVehi", variables_publicas.id_op_vehi);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE transporte = new HttpTransportSE(URL);
+
+            try
+            {
+                transporte.call(SOAP_ACTION, envelope);
+
+                SoapObject resSoap =(SoapObject)envelope.getResponse();
+
+                CuponesHoja = new Entity_CuponesHoja[resSoap.getPropertyCount()];
+
+                for (int i = 0; i < CuponesHoja.length; i++)
+                {
+                    SoapObject ic = (SoapObject)resSoap.getProperty(i);
+
+
+                    Entity_CuponesHoja cuponesHoja = new Entity_CuponesHoja();
+                    cuponesHoja.idReservaDetalle = Integer.parseInt((ic.getProperty(0).toString()));
+                    cuponesHoja.idOpVehi = Integer.parseInt((ic.getProperty(1).toString()));
+                    cuponesHoja.idDetalleOpVehi = Integer.parseInt((ic.getProperty(2).toString()));
+                    cuponesHoja.numCupon = ic.getProperty(3).toString();
+                    cuponesHoja.Huesped = ic.getProperty(4).toString();
+                    cuponesHoja.numAdultos = Integer.parseInt((ic.getProperty(5).toString()));
+                    cuponesHoja.numNinos = Integer.parseInt((ic.getProperty(6).toString()));
+                    cuponesHoja.numInfantes = Integer.parseInt((ic.getProperty(7).toString()));
+                    cuponesHoja.Incentivos = Integer.parseInt((ic.getProperty(8).toString()));
+                    cuponesHoja.Hotel = ic.getProperty(9).toString().trim();
+                    cuponesHoja.Habitacion = ic.getProperty(10).toString();
+                    cuponesHoja.Idioma = ic.getProperty(11).toString();
+                    cuponesHoja.PickUpLobby = ic.getProperty(12).toString();
+                    cuponesHoja.nombreAgencia = ic.getProperty(13).toString();
+                    cuponesHoja.nombreRepresentante = ic.getProperty(14).toString();
+                    cuponesHoja.Observaciones = ic.getProperty(15).toString();
+                    cuponesHoja.status = Integer.parseInt((ic.getProperty(16).toString()));
+                    cuponesHoja.tour_padre = Integer.parseInt((ic.getProperty(17).toString()));
+                    cuponesHoja.idIdioma = Integer.parseInt((ic.getProperty(18).toString()));
+                    cuponesHoja.color = ic.getProperty(19).toString();
+                    cuponesHoja.idapoyo = Integer.parseInt((ic.getProperty(20).toString()));
+
+                    CuponesHoja[i] = cuponesHoja;
+                }
+
+
+
+                BorrarApoyo();
+
+                for(int i=0; i<CuponesHoja.length; i++){ //dar alta
+                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color,CuponesHoja[i].idapoyo);
+                }
+                CargaCuponesLocales();
+
 
 
 

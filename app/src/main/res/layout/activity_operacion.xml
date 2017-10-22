@@ -33,7 +33,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtEncuestasRestantes"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/textView6"
             android:layout_toRightOf="@+id/textView6"
@@ -86,6 +86,20 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/img_dapoyo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/relativeLayout2"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/relativeLayout2"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/download"
+            android:onClick="DownApoyo"
+            app:srcCompat="@drawable/edittextstyle" />
+
+        <ImageView
             android:id="@+id/img_ver"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -93,7 +107,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/relativeLayout2"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/ver"
             android:onClick="popup_window"

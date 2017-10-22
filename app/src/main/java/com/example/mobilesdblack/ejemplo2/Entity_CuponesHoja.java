@@ -30,7 +30,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
     public int tour_padre;
     public int idIdioma;
     public String color;
-    public String apoyo;
+    public int idapoyo;
 
 
     public Entity_CuponesHoja()
@@ -55,35 +55,10 @@ public class Entity_CuponesHoja implements KvmSerializable {
         tour_padre = 0;
         idIdioma = 0;
         color = "";
-        apoyo = "";
+        idapoyo = 0;
 
     }
 
-    public Entity_CuponesHoja(int idReservaDetalle,int idOpVehi,int iddetalleopvehi, String numcupon, String huesped, int numadultos, int numniños, int numinfantes, int incentivos, String hotel, String habitacion, String idioma, String pickuplobby, String nombreagencia, String nombrerepresentante, String observaciones, int status,int tour_padre, int idIdioma, String color, String apoyo)
-    {
-        this.idReservaDetalle = idReservaDetalle;
-        this.idOpVehi = idOpVehi;
-        this.idDetalleOpVehi = iddetalleopvehi;
-        this.numCupon = numcupon;
-        this.Huesped = huesped;
-        this.numAdultos = numadultos;
-        this.numNinos = numniños;
-        this.numInfantes = numinfantes;
-        this.Incentivos = incentivos;
-        this.Hotel = hotel;
-        this.Habitacion = habitacion;
-        this.Idioma = idioma;
-        this.PickUpLobby = pickuplobby;
-        this.nombreAgencia = nombreagencia;
-        this.nombreRepresentante = nombrerepresentante;
-        this.Observaciones = observaciones;
-        this.status = status;
-        this.tour_padre = tour_padre;
-        this.idIdioma = idIdioma;
-        this.color = color;
-        this.apoyo = apoyo;
-
-    }
 
     @Override
     public Object getProperty(int arg0) {
@@ -131,7 +106,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
             case 19:
             return color;
             case 20:
-                return apoyo;
+                return idapoyo;
 
 
 
@@ -297,7 +272,7 @@ public class Entity_CuponesHoja implements KvmSerializable {
                 color = val.toString();
                 break;
             case 20:
-                apoyo = val.toString();
+                idapoyo = Integer.parseInt(val.toString());
                 break;
 
             default:break;
