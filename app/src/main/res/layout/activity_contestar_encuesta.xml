@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="@style/ToolbarStyle" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,8 +27,6 @@
             android:name="com.example.mobilesdblack.ejemplo2.FragmentParent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true" />
     </RelativeLayout>

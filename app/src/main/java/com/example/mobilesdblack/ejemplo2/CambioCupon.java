@@ -291,7 +291,7 @@ public class CambioCupon extends AppCompatActivity {
             TipoErrorWS = 0;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "CambiarCupon";
             final String SOAP_ACTION = "http://suarpe.com/CambiarCupon";
 

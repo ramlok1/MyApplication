@@ -2,6 +2,8 @@
 package com.example.mobilesdblack.ejemplo2;
 
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -55,6 +58,9 @@ public class FragmentParent extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.my_tab_layout);
         adapter = new ViewPagerAdapter(getFragmentManager(), getActivity(), viewPager, tabLayout);
         viewPager.setAdapter(adapter);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#ee7d00"));
+        tabLayout.setSelectedTabIndicatorHeight(7);
+
 
     }
 
@@ -76,6 +82,7 @@ public class FragmentParent extends Fragment {
                 posicion =  tab.getPosition();
                 //ViewFragment = adapter.getTabView(posicion);
 
+
             }
 
             @Override
@@ -95,6 +102,7 @@ public class FragmentParent extends Fragment {
         FragmentChild fragmentChild = new FragmentChild();
         fragmentChild.setArguments(bundle);
         adapter.addFrag(fragmentChild, pagename);
+
         adapter.notifyDataSetChanged();
         if (adapter.getCount() > 0) {
             tabLayout.setupWithViewPager(viewPager);
@@ -103,9 +111,12 @@ public class FragmentParent extends Fragment {
                 tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
+
                         return true;
                     }
                 });
+
+
             }
         }
 

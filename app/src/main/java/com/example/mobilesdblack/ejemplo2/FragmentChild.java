@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,12 +70,15 @@ public class FragmentChild extends Fragment {
         tipo = bundle.getInt("tipo");
         posicion = bundle.getInt("posicion");
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         View view ;
         view_parent = inflater.inflate(R.layout.fragment_parent, container, false);
         View view_preguntas = inflater.inflate(R.layout.fragment_child, container, false);
         viewPager = (ViewPager) getActivity().findViewById(R.id.my_viewpager);
          admin = new AdminSQLiteOpenHelper(getActivity(), "cuestionarios", null, variables_publicas.version_local_database);
          bd = admin.getWritableDatabase();
+        final Button btn_nextc = (Button) view_preguntas.findViewById(R.id.btn_nextc);
+        final Button btn_backc = (Button) view_preguntas.findViewById(R.id.btn_backc);
 
 
         if (tipo == 0){
@@ -97,6 +101,8 @@ public class FragmentChild extends Fragment {
             final EditText txt_estado = (EditText) view.findViewById(R.id.txtestado);
             final EditText txt_tel = (EditText) view.findViewById(R.id.txttelefono);
             final Button btn_next = (Button) view.findViewById(R.id.btn_next);
+            final Button btn_back = (Button) view.findViewById(R.id.btn_back);
+
 
             // Obtener mensaje
 
@@ -134,6 +140,16 @@ public class FragmentChild extends Fragment {
                 public void onClick(View view) {
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         pager = true;
+                }
+            });
+
+
+            btn_back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent_cupon = new Intent(getActivity(),SeleccionarCupon.class);
+                    intent_cupon.putExtra("idOpVehi",Integer.toString(variables_publicas.id_op_vehi));
+                    startActivity(intent_cupon);
                 }
             });
 
@@ -193,11 +209,13 @@ public class FragmentChild extends Fragment {
         else {
             pager=false;
 
-            getIDs(view_preguntas);
+
             view_preguntas.setTag("medio" + posicion);
             LinearLayout layout_principal = (LinearLayout) view_preguntas.findViewById(R.id.lay_v_child);
             layout_principal.removeAllViews();
-            LinearLayout contenedor = null;
+            LinearLayout contenedor;
+
+
 
 
 
@@ -207,9 +225,9 @@ public class FragmentChild extends Fragment {
                 Cursor c = bd.rawQuery("select idCuestionarios,pregunta,tipo from cuestionarios where idCategoriaPregunta="+tipo+" order by orden_pregunta", null);
                 if (c != null) {
                     if (c.moveToFirst()) {
-
+                    c1=0;c2=0;
                         do {
-                            c1++;
+
                             contenedor = new LinearLayout(getActivity());
                             contenedor.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100));
                             contenedor.setOrientation((LinearLayout.HORIZONTAL));
@@ -234,9 +252,12 @@ public class FragmentChild extends Fragment {
                             txt_resp.setHint("Type Here");
 
 
+
+
+
                             RatingBar rbar = new RatingBar(getActivity());
                             rbar.setNumStars(5);
-                            rbar.setStepSize(1);
+                            rbar.setStepSize(.5f);
                             Drawable progressDrawable = rbar.getProgressDrawable();
                             if (progressDrawable != null) {
                                 DrawableCompat.setTint(progressDrawable, ContextCompat.getColor(getContext(), R.color.star));
@@ -247,7 +268,7 @@ public class FragmentChild extends Fragment {
 
                             ArrayAdapter<String> spinnerArrayAdapter=null;
                             if (idtipo==3){
-                                c2++;
+
                                 id_spin_p=id_pregunta;
                                 desc_spin=pregunta_desc;
                                 ArrayList<String> spinnerArray = new ArrayList<String>();
@@ -273,18 +294,19 @@ public class FragmentChild extends Fragment {
                                 if (d.moveToFirst()) {
                                     do {
                                         if(idtipo==1) {
+                                            c2++;
                                             rbar.setRating(Integer.parseInt(d.getString(d.getColumnIndex("valor_respuesta"))));
                                         }else if (idtipo==2) {
-                                        txt_resp.setText(d.getString(d.getColumnIndex("valor_respuesta")));
+                                                                                    txt_resp.setText(d.getString(d.getColumnIndex("valor_respuesta")));
                                         }else if (idtipo==3){
-                                            c2--;
+
                                             String resp = d.getString(d.getColumnIndex("valor_respuesta"));
                                             int spinnerPosition = spinnerArrayAdapter.getPosition(resp);
                                             spin.setSelection(spinnerPosition);
 
                                         }
 
-                                        c2++;
+
 
                                     } while (d.moveToNext());
                                 }
@@ -307,13 +329,15 @@ public class FragmentChild extends Fragment {
                                 @Override
                                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
-                                  insert_upd(pregunta_desc,"",Math.round(ratingBar.getRating()), id_pregunta);
+                                    double rating =ratingBar.getRating()*2;
+                                  insert_upd(pregunta_desc,"",(int)rating, id_pregunta);
 
                                 }
                             });
 
                             contenedor.addView(txt_pregunta);
                             if(idtipo==1) {
+                                c1++;
                                 contenedor.addView(rbar);
                             }else if (idtipo==2){
                                 contenedor.addView(txt_resp);
@@ -332,9 +356,8 @@ public class FragmentChild extends Fragment {
                 String error = e.getMessage().toString();
 
             }
-            final Button btn_nextc = (Button) view_preguntas.findViewById(R.id.btn_nextc);
-            btn_nextc.setFocusable(true);
-            btn_nextc.setFocusableInTouchMode(true);
+
+
             btn_nextc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -353,9 +376,23 @@ public class FragmentChild extends Fragment {
 
                 }
             });
+
+
+            btn_backc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    btn_backc.requestFocus();
+
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                        pager = true;
+
+
+                }
+            });
+
         }
 
-
+        btn_nextc.requestFocus();
         if(pager) {
             return view_parent;
         }else{
@@ -363,10 +400,7 @@ public class FragmentChild extends Fragment {
         }
     }
 
-    private void getIDs(View view) {
-        textViewChildName = (TextView) view.findViewById(R.id.textViewChild);
-        textViewChildName.setText(childname);
-    }
+
 
     public final static boolean ValidaEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
@@ -400,7 +434,7 @@ public class FragmentChild extends Fragment {
                 } while (d.moveToNext());
             } else {
 
-                c2++;
+
                 ContentValues cv = new ContentValues();
                 cv.put("idReservaDetalle", variables_publicas.idReservaDetalle);
                 cv.put("idCupon", variables_publicas.numcupon);
@@ -408,7 +442,9 @@ public class FragmentChild extends Fragment {
                 cv.put("pregunta", pregunta);
                 if (valor_star==0) {
                     cv.put("valor_respuesta", resp_abierta);
+
                 }else{
+                    c2++;
                     cv.put("valor_respuesta", Integer.toString(valor_star));
                 }
                 cv.put("fechaDetalle", dateFormat.format(date));

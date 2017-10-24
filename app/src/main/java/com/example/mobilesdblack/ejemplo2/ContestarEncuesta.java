@@ -63,12 +63,13 @@ public class ContestarEncuesta extends AppCompatActivity {
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("dfgdf");
+
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.homeb);
         }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -154,12 +155,6 @@ public class ContestarEncuesta extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -815,7 +815,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "ObtenerCupones";
             final String SOAP_ACTION = "http://suarpe.com/ObtenerCupones";
 
@@ -936,7 +936,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "DownApoyo";
             final String SOAP_ACTION = "http://suarpe.com/DownApoyo";
 
@@ -1055,7 +1055,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL = "http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL = "http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "Abordar";
             final String SOAP_ACTION = "http://suarpe.com/Abordar";
 
@@ -1129,7 +1129,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "MarcarNoShow";
             final String SOAP_ACTION = "http://suarpe.com/MarcarNoShow";
 
@@ -1204,7 +1204,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "CambiarCupon";
             final String SOAP_ACTION = "http://suarpe.com/CambiarCupon";
 
@@ -1279,7 +1279,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "CambiarPAX";
             final String SOAP_ACTION = "http://suarpe.com/CambiarPAX";
 
@@ -1356,7 +1356,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "AbordarSinCupon";
             final String SOAP_ACTION = "http://suarpe.com/AbordarSinCupon";
 
@@ -1435,7 +1435,7 @@ public class Operacion extends AppCompatActivity {
             boolean resul = true;
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "InsertaEncuesta";
             final String SOAP_ACTION = "http://suarpe.com/InsertaEncuesta";
 
@@ -1505,7 +1505,7 @@ public class Operacion extends AppCompatActivity {
 
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "InsertaEncuestaEnc";
             final String SOAP_ACTION = "http://suarpe.com/InsertaEncuestaEnc";
 
@@ -1583,7 +1583,7 @@ public class Operacion extends AppCompatActivity {
 
 
             final String NAMESPACE = "http://suarpe.com/";
-            final String URL="http://desarrollo19.cloudapp.net/WSGonaturalDev/WS.asmx";
+            final String URL="http://desarrollo19.cloudapp.net/WSGonatural/WS.asmx";
             final String METHOD_NAME = "Updatepickups";
             final String SOAP_ACTION = "http://suarpe.com/Updatepickups";
 
@@ -1664,7 +1664,7 @@ public class Operacion extends AppCompatActivity {
         Connection conn = null;
         String ConnURL = null;
 
-        String url = "jdbc:jtds:sqlserver://sqlintep.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalDev";
+        String url = "jdbc:jtds:sqlserver://sqlintep.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
         String driver = "net.sourceforge.jtds.jdbc.Driver";
         String userName = "sa";
         String password = "Tamalito2017";

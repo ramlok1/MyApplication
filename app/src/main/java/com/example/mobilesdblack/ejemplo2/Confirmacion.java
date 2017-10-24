@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ public class Confirmacion extends AppCompatActivity {
     variables_publicas variables=new variables_publicas();
     private Integer versionBD = variables.version_local_database;
     TextView txt_enc,txt_detalle;
+    Button btn_f;
     String numCupon = "";
 
     @Override
@@ -28,7 +30,15 @@ public class Confirmacion extends AppCompatActivity {
 
         txt_detalle = (TextView) findViewById(R.id.lblMensajeFinal);
         txt_enc = (TextView) findViewById(R.id.lblGracias);
+        btn_f = (Button) findViewById(R.id.btn_NextTemp);
 
+        if(variables_publicas.idioma==3){
+          btn_f.setText("Finish");
+        }
+
+        if(variables_publicas.idioma==4){
+            btn_f.setText("Finir");
+        }
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "cuestionarios", null, variables_publicas.version_local_database);
         SQLiteDatabase bd = admin.getWritableDatabase();

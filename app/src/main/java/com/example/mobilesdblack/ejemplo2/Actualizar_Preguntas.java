@@ -54,7 +54,7 @@ public class Actualizar_Preguntas extends Activity {
         Connection conn = null;
         String ConnURL = null;
 
-        String url = "jdbc:jtds:sqlserver://mobilesdSQLIT.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
+        String url = "jdbc:jtds:sqlserver://mobilesdSQLIT.cloudapp.net;instance=SQLEXPRESS;DatabaseName=goNaturalDev";
         String driver = "net.sourceforge.jtds.jdbc.Driver";
         String userName = "usercs";
         String password = "";

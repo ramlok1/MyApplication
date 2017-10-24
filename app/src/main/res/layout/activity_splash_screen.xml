@@ -18,7 +18,7 @@
         android:layout_marginBottom="50dp"
         android:layout_marginTop="19dp"
         android:gravity="center"
-        android:text="BIENVENIDO"
+        android:text="APP Pruebas con Información Real"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="80sp" />
 
