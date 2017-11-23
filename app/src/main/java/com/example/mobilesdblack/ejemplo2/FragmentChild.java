@@ -87,6 +87,7 @@ public class FragmentChild extends Fragment {
             TextView name = (TextView) view.findViewById(R.id.txtNombreE);
             TextView hotel = (TextView) view.findViewById(R.id.txtHotelE);
             TextView bmensaje = (TextView) view.findViewById(R.id.txtmensaje);
+            TextView nom = (TextView) view.findViewById(R.id.textView10);
 
              lblpais = (TextView) view.findViewById(R.id.lblpais);
              lblestado = (TextView) view.findViewById(R.id.lblest);
@@ -126,12 +127,14 @@ public class FragmentChild extends Fragment {
                 lblpais.setText("Country:");
                 lblestado.setText("State:");
                 lblnumber.setText("Phone:");
+                nom.setText("Name:");
             }
 
             if(variables_publicas.idioma==4){
                 lblpais.setText("Pays:");
                 lblestado.setText("État:");
                 lblnumber.setText("Téléphone:");
+                nom.setText("Nom:");
             }
 
 
@@ -257,7 +260,7 @@ public class FragmentChild extends Fragment {
 
                             RatingBar rbar = new RatingBar(getActivity());
                             rbar.setNumStars(5);
-                            rbar.setStepSize(.5f);
+                            rbar.setStepSize(1);
                             Drawable progressDrawable = rbar.getProgressDrawable();
                             if (progressDrawable != null) {
                                 DrawableCompat.setTint(progressDrawable, ContextCompat.getColor(getContext(), R.color.star));
@@ -329,7 +332,7 @@ public class FragmentChild extends Fragment {
                                 @Override
                                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
-                                    double rating =ratingBar.getRating()*2;
+                                    double rating =ratingBar.getRating()+5;
                                   insert_upd(pregunta_desc,"",(int)rating, id_pregunta);
 
                                 }

@@ -18,7 +18,7 @@
         android:layout_marginBottom="50dp"
         android:layout_marginTop="19dp"
         android:gravity="center"
-        android:text="APP Pruebas con Información Real"
+        android:text="APP Pruebas con Información Produccion"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="80sp" />
 
@@ -43,7 +43,7 @@
         android:background="#2f3958"
         android:gravity="center"
         android:scrollbarSize="30dp"
-        android:text="Powered by MobileSD    ©2017 Todos los derechos reservados"
+        android:text="Powered by Intep    ©2017 Todos los derechos reservados"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

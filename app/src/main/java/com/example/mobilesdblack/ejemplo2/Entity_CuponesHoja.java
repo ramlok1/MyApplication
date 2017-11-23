@@ -31,7 +31,8 @@ public class Entity_CuponesHoja implements KvmSerializable {
     public int idIdioma;
     public String color;
     public int idapoyo;
-
+    public String hentrada;
+    public String hsalida;
 
     public Entity_CuponesHoja()
     {
@@ -56,6 +57,8 @@ public class Entity_CuponesHoja implements KvmSerializable {
         idIdioma = 0;
         color = "";
         idapoyo = 0;
+        hentrada = "";
+        hsalida = "";
 
     }
 
@@ -107,7 +110,10 @@ public class Entity_CuponesHoja implements KvmSerializable {
             return color;
             case 20:
                 return idapoyo;
-
+            case 21:
+                return hentrada;
+            case 22:
+                return hsalida;
 
 
 
@@ -273,6 +279,12 @@ public class Entity_CuponesHoja implements KvmSerializable {
                 break;
             case 20:
                 idapoyo = Integer.parseInt(val.toString());
+                break;
+            case 21:
+                hentrada = val.toString();
+                break;
+            case 22:
+                hsalida = val.toString();
                 break;
 
             default:break;

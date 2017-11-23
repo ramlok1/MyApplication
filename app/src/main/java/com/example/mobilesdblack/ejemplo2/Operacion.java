@@ -209,7 +209,7 @@ public class Operacion extends AppCompatActivity {
 
 
     // Damos de alta los usuarios en nuestra aplicación
-    public void alta_cupones(long idReservaDetalle,long idOpVehi,long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma,String color,int idapoyo )
+    public void alta_cupones(long idReservaDetalle,long idOpVehi,long idDetalleOpVehi, String numCupon, String Huesped, int numAdultos, int numNinos, int numInfantes, int Incentivos, String Hotel,String Habitacion , String Idioma ,String PickUpLobby ,String nombreAgencia , String nombreRepresentante ,String Observaciones,  boolean habilitado, int status, int tour_padre, int ididioma,String color,int idapoyo,String hentrada,String hsalida )
     {
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
@@ -242,6 +242,8 @@ public class Operacion extends AppCompatActivity {
         registro.put("ididioma", ididioma);
         registro.put("color", color);
         registro.put("idapoyo", idapoyo);
+        registro.put("hentrada", hentrada);
+        registro.put("hsalida", hsalida);
 
         // los inserto en la base de datos
         bd.insert("cupones",null, registro);
@@ -865,6 +867,8 @@ public class Operacion extends AppCompatActivity {
                     cuponesHoja.idIdioma = Integer.parseInt((ic.getProperty(18).toString()));
                     cuponesHoja.color = ic.getProperty(19).toString();
                     cuponesHoja.idapoyo = Integer.parseInt((ic.getProperty(20).toString()));
+                    cuponesHoja.hentrada = ic.getProperty(21).toString();
+                    cuponesHoja.hsalida = ic.getProperty(22).toString();
 
                     CuponesHoja[i] = cuponesHoja;
                 }
@@ -879,7 +883,7 @@ public class Operacion extends AppCompatActivity {
                         l_touridi.add(ti_data);
                         actualizar_preguntas(CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma);
                     }
-                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color,CuponesHoja[i].idapoyo);
+                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color,CuponesHoja[i].idapoyo,CuponesHoja[i].hentrada,CuponesHoja[i].hsalida);
 
                 }
                 actualizar_datos_resp_mensaje();
@@ -985,6 +989,8 @@ public class Operacion extends AppCompatActivity {
                     cuponesHoja.idIdioma = Integer.parseInt((ic.getProperty(18).toString()));
                     cuponesHoja.color = ic.getProperty(19).toString();
                     cuponesHoja.idapoyo = Integer.parseInt((ic.getProperty(20).toString()));
+                    cuponesHoja.hentrada = ic.getProperty(21).toString();
+                    cuponesHoja.hsalida = ic.getProperty(22).toString();
 
                     CuponesHoja[i] = cuponesHoja;
                 }
@@ -994,7 +1000,7 @@ public class Operacion extends AppCompatActivity {
                 BorrarApoyo();
 
                 for(int i=0; i<CuponesHoja.length; i++){ //dar alta
-                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color,CuponesHoja[i].idapoyo);
+                    alta_cupones(CuponesHoja[i].idReservaDetalle,CuponesHoja[i].idOpVehi,CuponesHoja[i].idDetalleOpVehi, CuponesHoja[i].numCupon, CuponesHoja[i].Huesped, CuponesHoja[i].numAdultos, CuponesHoja[i].numNinos, CuponesHoja[i].numInfantes, CuponesHoja[i].Incentivos, CuponesHoja[i].Hotel, CuponesHoja[i].Habitacion, CuponesHoja[i].Idioma, CuponesHoja[i].PickUpLobby, CuponesHoja[i].nombreAgencia, CuponesHoja[i].nombreRepresentante,CuponesHoja[i].Observaciones,  Boolean.TRUE, CuponesHoja[i].status,CuponesHoja[i].tour_padre,CuponesHoja[i].idIdioma,CuponesHoja[i].color,CuponesHoja[i].idapoyo,CuponesHoja[i].hentrada,CuponesHoja[i].hsalida);
                 }
                 CargaCuponesLocales();
 
@@ -1664,10 +1670,10 @@ public class Operacion extends AppCompatActivity {
         Connection conn = null;
         String ConnURL = null;
 
-        String url = "jdbc:jtds:sqlserver://sqlintep.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
+        String url = "jdbc:jtds:sqlserver://sqlmobilis.cloudapp.net:60000;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
         String driver = "net.sourceforge.jtds.jdbc.Driver";
-        String userName = "sa";
-        String password = "Tamalito2017";
+        String userName = "gonatural";
+        String password = "0x91794FC158FB1435F17EC604B33F1BCA4BD7E03B";
 
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");

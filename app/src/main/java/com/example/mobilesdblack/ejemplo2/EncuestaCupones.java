@@ -167,7 +167,7 @@ public class EncuestaCupones extends Activity {
         Connection conn = null;
         String ConnURL = null;
 
-        String url = "jdbc:jtds:sqlserver://mobilesdSQLIT.cloudapp.net;instance=SQLEXPRESS;DatabaseName=goNaturalDev";
+        String url = "jdbc:jtds:sqlserver://mobilesdSQLIT.cloudapp.net;instance=SQLEXPRESS;DatabaseName=GoNaturalV2";
         String driver = "net.sourceforge.jtds.jdbc.Driver";
         String userName = "usercs";
         String password = "";

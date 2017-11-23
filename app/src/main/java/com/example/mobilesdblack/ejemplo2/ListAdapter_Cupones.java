@@ -199,7 +199,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
                     @Override
                     public void onClick(View view) {
 
-                        if (lblhe.getText() == "") {
+                        if (lblhe.getText().equals("00:00") || lblhe.getText() == "") {
 
                             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
 
@@ -224,7 +224,7 @@ public class ListAdapter_Cupones extends ArrayAdapter<Entity_CuponesHoja> {
                     @Override
                     public void onClick(View view) {
 
-                        if (lblhs.getText() == "") {
+                        if (lblhs.getText().equals("00:00") || lblhs.getText() == "") {
                             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(),
 
                                     "cuestionarios", null, variables_publicas.version_local_database);

@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +56,7 @@ public class CambioCupon extends AppCompatActivity {
         setContentView(R.layout.activity_cambio_cupon);
 
         Bundle b = getIntent().getExtras();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         cupon_numero = b.getString("cupon");
         idReservaDetalle = b.getInt("idReservaDetalle");
         VieneDeOperacion = true;

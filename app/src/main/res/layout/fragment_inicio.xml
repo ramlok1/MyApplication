@@ -51,12 +51,12 @@
             android:id="@+id/lblest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/lblpais"
+            android:layout_alignStart="@+id/lblpais"
+            android:layout_below="@+id/txtpais"
             android:text="Estado:"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="35dp"
-            android:layout_below="@+id/txtpais"
-            android:layout_alignLeft="@+id/lblpais"
-            android:layout_alignStart="@+id/lblpais" />
+            android:textSize="35dp" />
 
         <TextView
             android:id="@+id/lbltel"
@@ -73,13 +73,13 @@
             android:id="@+id/txtestado"
             android:layout_width="400dp"
             android:layout_height="50dp"
+            android:layout_alignLeft="@+id/txtpais"
+            android:layout_alignStart="@+id/txtpais"
+            android:layout_below="@+id/txtpais"
             android:layout_gravity="center"
             android:inputType="textPersonName"
             android:maxLines="1"
-            android:textSize="25dp"
-            android:layout_below="@+id/txtpais"
-            android:layout_alignLeft="@+id/txtpais"
-            android:layout_alignStart="@+id/txtpais" />
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/lblpais"
@@ -131,7 +131,7 @@
 
         <TextView
             android:id="@+id/txtNombreE"
-            android:layout_width="wrap_content"
+            android:layout_width="600dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView10"
             android:layout_alignBottom="@+id/textView10"
@@ -141,7 +141,7 @@
             android:layout_marginStart="343dp"
             android:text="Harding Malcolm"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="35dp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/txtHotelE"
@@ -169,23 +169,23 @@
             android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/right"
             android:layout_below="@+id/lblest"
-            android:layout_toRightOf="@+id/txt_email"
-            android:layout_toEndOf="@+id/txt_email"
             android:layout_marginLeft="50dp"
-            android:layout_marginStart="50dp" />
+            android:layout_marginStart="50dp"
+            android:layout_toEndOf="@+id/txt_email"
+            android:layout_toRightOf="@+id/txt_email"
+            android:background="@drawable/right" />
 
         <Button
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/lbltel"
             android:layout_marginLeft="52dp"
             android:layout_marginStart="52dp"
-            android:background="@drawable/left"
-            android:layout_alignTop="@+id/lbltel"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:background="@drawable/left" />
 
     </RelativeLayout>
 
